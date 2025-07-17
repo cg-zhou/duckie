@@ -1,4 +1,4 @@
-# Duckie 🦆
+# Duckie
 
 [English](./README.md)
 
