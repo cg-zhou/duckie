@@ -1,6 +1,7 @@
 ﻿using Duckie.Utils;
 using Duckie.Utils.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -15,12 +16,9 @@ namespace Duckie.Views
 
         private string path = string.Empty;
 
-        private void ButtonOpen_Click(object sender, RoutedEventArgs e)
+        private void Open(string filePath)
         {
-            if (!PathUtils.SelectImageFile(out path))
-            {
-                return;
-            }
+            path = filePath;
             var bitmapImage = File.ReadAllBytes(path).ToBitmapImage();
 
             // Get the DPI of the primary monitor
@@ -29,6 +27,14 @@ namespace Duckie.Views
             image.Source = bitmapImage;
             image.Width = bitmapImage.PixelWidth / transform.M11;
             image.Height = bitmapImage.PixelHeight / transform.M22;
+        }
+
+        private void ButtonOpen_Click(object sender, RoutedEventArgs e)
+        {
+            if (PathUtils.SelectImageFile(out string selectedPath))
+            {
+                Open(selectedPath);
+            }
         }
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
@@ -50,6 +56,24 @@ namespace Duckie.Views
             File.WriteAllBytes(icoPath, ico);
 
             PathUtils.Reveal(icoPath);
+        }
+
+        private void ImageView_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effects = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Copy : DragDropEffects.None;
+        }
+
+        private void ImageView_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                var file = files.FirstOrDefault();
+                if (file != null)
+                {
+                    Open(file);
+                }
+            }
         }
     }
 }
