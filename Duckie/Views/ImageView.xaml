@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="Duckie.Views.ImageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Duckie.Views"
+             xmlns:common="clr-namespace:Duckie.Views.Common"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <DockPanel>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0 0 0 10">
+            <Button Content="Open" Click="ButtonOpen_Click" />
+            <Button Content="Export Ico" Click="ButtonSave_Click" Margin="10 0 0 0" />
+        </StackPanel>
+        <DockPanel>
+            <Grid>
+                <Rectangle>
+                    <Rectangle.Fill>
+                        <DrawingBrush TileMode="Tile" Viewport="0,0,20,20" ViewportUnits="Absolute">
+                            <DrawingBrush.Drawing>
+                                <DrawingGroup>
+                                    <GeometryDrawing Brush="#FFEEEEEE">
+                                        <GeometryDrawing.Geometry>
+                                            <RectangleGeometry Rect="0,0,20,20" />
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                    <GeometryDrawing Brush="#FFDDDDDD">
+                                        <GeometryDrawing.Geometry>
+                                            <RectangleGeometry Rect="0,0,10,10" />
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                    <GeometryDrawing Brush="#FFDDDDDD">
+                                        <GeometryDrawing.Geometry>
+                                            <RectangleGeometry Rect="10,10,10,10" />
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                </DrawingGroup>
+                            </DrawingBrush.Drawing>
+                        </DrawingBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <common:ScrollViewerEx>
+                    <Image x:Name="image" />
+                </common:ScrollViewerEx>
+            </Grid>
+        </DockPanel>
+    </DockPanel>
+</UserControl>

@@ -1,0 +1,13 @@
+﻿################################################################################
+# 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
+################################################################################
+
+/.vs/Duckie
+/Duckie/bin
+/Duckie/obj
+/Duckie.Pack/AppPackages
+/Duckie.Pack/bin/AnyCPU
+/Duckie.Pack/BundleArtifacts
+/Duckie.Pack/obj
+*.user
+*.cache
