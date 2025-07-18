@@ -1,5 +1,6 @@
 ﻿using Duckie.Utils;
 using Duckie.Utils.Drawing;
+using System;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -31,9 +32,18 @@ namespace Duckie.Views
 
         private void ButtonOpen_Click(object sender, RoutedEventArgs e)
         {
-            if (PathUtils.SelectImageFile(out string selectedPath))
+            if (!PathUtils.SelectImageFile(out string selectedPath))
+            {
+                return;
+            }
+
+            try
             {
                 Open(selectedPath);
+            }
+            catch (Exception exception)
+            {
+                UiUtils.Error(exception, $"Failed to open image: {selectedPath}");
             }
         }
 
@@ -55,7 +65,7 @@ namespace Duckie.Views
                 .ToIco();
             File.WriteAllBytes(icoPath, ico);
 
-            PathUtils.Reveal(icoPath);
+            UiUtils.Info($"The icon has been exported: {icoPath}");
         }
 
         private void ImageView_DragEnter(object sender, DragEventArgs e)

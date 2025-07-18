@@ -22,22 +22,6 @@ namespace Duckie.Utils
             return false;
         }
 
-        public static void Reveal(string path)
-        {
-            if (File.Exists(path))
-            {
-                Process.Start("explorer.exe", $"/select, \"{path}\"");
-            }
-            else if (Directory.Exists(path))
-            {
-                Process.Start(path);
-            }
-            else
-            {
-                throw new Exception($"Can't find path: {path}");
-            }
-        }
-
         public static string GetAlternativePath(string path)
         {
             var folder = Directory.GetParent(path).FullName;
