@@ -1,25 +1,39 @@
-# Duckie
+# Duckie - Advanced ICO Converter
 
 [中文](./README.zh-CN.md)
 
-A minimalist Windows (WPF) tool to convert images into `.ico` files.
+A professional Windows (WPF) tool to convert images into high-quality `.ico` files with advanced features.
 
 ---
 
 ## ✨ Features
 
-- **Minimalist by Design**: A clean, straightforward UI with no distractions.
-- **Drag & Drop**: Simply drag your image file into the app window to start the conversion.
-- **Efficient Conversion**: Quickly convert major image formats (like PNG, JPG, BMP) into a multi-size `.ico` file.
-- **Lightweight**: Small, fast, and light on system resources.
+- **Professional Image Conversion**: Convert PNG, JPG, BMP, and GIF files to high-quality ICO icons with multiple standard sizes (16x16 to 256x256).
+- **Modern Interface**: Beautiful, modern toolbar with grouped controls and professional styling.
+- **Image Editing Tools**: Built-in rotation (90° clockwise/counter-clockwise) and flip (horizontal/vertical) tools with intuitive icons.
+- **Zoom & Preview**: Real-time image preview with zoom controls (10%-300%) and fit-to-window functionality.
+- **Smart Drag & Drop**: Intelligent file handling with visual feedback during drag operations.
+- **Status Information**: View image dimensions and current status in the status bar.
+- **Minimalist Design**: Clean, modern interface with grouped tool sections for better organization.
+- **Lightweight & Fast**: Small footprint, quick startup, efficient processing.
 
 ## 🚀 How to Use
 
+### Image Conversion
 1.  **Open** the Duckie app.
-2.  **Drag** your image file (e.g., a `.png`) into the app window.
-3.  **Save** the `.ico` file from the dialog box.
+2.  **Load** your image by dragging it into the app window or clicking "Open" to browse.
+3.  **Edit** your image if needed:
+    - Use the Transform tools: rotate 90° clockwise/counter-clockwise, flip horizontally/vertically
+    - Use the Zoom tools: zoom in/out with buttons, adjust with slider, or fit to window
+    - All tools are organized in modern grouped sections for easy access
+4.  **Export** by clicking "Export Ico" to save the `.ico` file.
 
-That's it! Your icon is ready.
+### Advanced Features
+- **Modern Toolbar**: Professionally designed toolbar with grouped tool sections (Transform & Zoom).
+- **Image Editing**: Icon-based tools for rotation and flipping with hover effects and tooltips.
+- **Zoom Controls**: Comprehensive zoom from 10% to 300% with slider, buttons, and fit-to-window.
+- **Smart Drag & Drop**: Enhanced drag-and-drop with visual feedback and intelligent file handling.
+- **Status Information**: Real-time display of image dimensions and current status.
 
 ## 📦 Microsoft Store
 
