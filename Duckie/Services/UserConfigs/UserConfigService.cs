@@ -34,6 +34,8 @@ namespace Duckie.Services.UserConfigs
                 Indent = true
             };
 
+            Directory.CreateDirectory(Directory.GetParent(Path).FullName);
+
             using (var xmlWriter = XmlWriter.Create(Path, settings))
             {
                 var namespaces = new XmlSerializerNamespaces();

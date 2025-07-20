@@ -1,41 +1,53 @@
-# Duckie - Advanced ICO Converter
+# Duckie - Image Processing & PAC Management Tool
 
 [中文](./README.zh-CN.md)
 
-A professional Windows (WPF) tool to convert images into high-quality `.ico` files with advanced features.
+A professional Windows (WPF) application combining image processing capabilities with PAC (Proxy Auto-Configuration) management.
 
 ---
 
 ## ✨ Features
 
-- **Professional Image Conversion**: Convert PNG, JPG, BMP, and GIF files to high-quality ICO icons with multiple standard sizes (16x16 to 256x256).
-- **Modern Interface**: Beautiful, modern toolbar with grouped controls and professional styling.
-- **Image Editing Tools**: Built-in rotation (90° clockwise/counter-clockwise) and flip (horizontal/vertical) tools with intuitive icons.
-- **Zoom & Preview**: Real-time image preview with zoom controls (10%-300%) and fit-to-window functionality.
-- **Smart Drag & Drop**: Intelligent file handling with visual feedback during drag operations.
-- **Status Information**: View image dimensions and current status in the status bar.
-- **Minimalist Design**: Clean, modern interface with grouped tool sections for better organization.
-- **Lightweight & Fast**: Small footprint, quick startup, efficient processing.
+### Image Processing
+- **Image Editing Tools**: Rotate (90° clockwise/counter-clockwise) and flip (horizontal/vertical) with intuitive controls
+- **Zoom & Preview**: Real-time preview with zoom controls (10%-300%) and fit-to-window functionality
+- **Smart Drag & Drop**: Intelligent file handling with visual feedback during drag operations
+- **Format Support**: Handle PNG, JPG, BMP, and other common image formats
+
+### PAC Management
+- **Configuration Management**: Add, edit, and delete PAC configurations with user-friendly dialogs
+- **Quick Switching**: One-click switching between different PAC configurations or direct connection
+- **Visual Status**: Clear indicators showing active/inactive PAC configurations
+- **Registry Integration**: Automatic Windows proxy settings management
+
+### General
+- **Modern Interface**: Clean, professional design with consistent styling
+- **Dual Functionality**: Switch between Image Processing and PAC Management modes
+- **Lightweight & Fast**: Optimized memory usage and responsive performance
 
 ## 🚀 How to Use
 
-### Image Conversion
-1.  **Open** the Duckie app.
-2.  **Load** your image by dragging it into the app window or clicking "Open" to browse.
-3.  **Edit** your image if needed:
-    - Use the Transform tools: rotate 90° clockwise/counter-clockwise, flip horizontally/vertically
-    - Use the Zoom tools: zoom in/out with buttons, adjust with slider, or fit to window
-    - All tools are organized in modern grouped sections for easy access
-4.  **Export** by clicking "Export Ico" to save the `.ico` file.
+### Image Processing Mode
+1. **Switch to Image Processing**: Use the menu `Functions > Image Processing`
+2. **Load Image**: Drag & drop or click "Open" to load your image
+3. **Edit Image**:
+   - **Transform**: Rotate 90° clockwise/counter-clockwise, flip horizontally/vertically
+   - **Zoom**: Use zoom controls (10%-300%) or fit to window
+4. **Export**: Click "Export" to save your processed image
 
-### Advanced Features
-- **Modern Toolbar**: Professionally designed toolbar with grouped tool sections (Transform & Zoom).
-- **Image Editing**: Icon-based tools for rotation and flipping with hover effects and tooltips.
-- **Zoom Controls**: Comprehensive zoom from 10% to 300% with slider, buttons, and fit-to-window.
-- **Smart Drag & Drop**: Enhanced drag-and-drop with visual feedback and intelligent file handling.
-- **Status Information**: Real-time display of image dimensions and current status.
+### PAC Management Mode
+1. **Switch to PAC Management**: Use the menu `Functions > PAC Management`
+2. **Add PAC**: Click "Add PAC" to create new proxy configurations
+3. **Manage Configurations**:
+   - **Edit**: Click "Edit" button on any PAC configuration
+   - **Delete**: Click "Delete" button to remove configurations
+   - **Apply**: Click on any configuration card to activate it
+4. **Direct Connection**: Click "No PAC" card to disable proxy
 
-## 📦 Microsoft Store
+## 🎯 Key Benefits
 
-[Link to Microsoft Store will be here once published]
+- **Unified Tool**: Combine image editing and proxy management in one application
+- **Memory Optimized**: Efficient resource management with proper cleanup
+- **User Friendly**: Intuitive interface with clear visual feedback
+- **Professional**: Enterprise-ready with robust error handling
 

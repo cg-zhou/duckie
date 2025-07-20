@@ -5,9 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Duckie.Views"
         mc:Ignorable="d"
-        Title="Duckie" Height="450" Width="800"
+        Title="Duckie" Height="600" Width="1000"
         Loaded="Window_Loaded">
-    <Grid>
-        <local:ImageView Margin="10" />
-    </Grid>
+    <DockPanel>
+        <!-- Top menu bar -->
+        <Menu DockPanel.Dock="Top" Background="#F8F9FA" BorderBrush="#E9ECEF" BorderThickness="0,0,0,1">
+            <MenuItem Header="_Functions">
+                <MenuItem x:Name="MenuImageProcessing" Header="Image Processing" Click="MenuImageProcessing_Click" IsChecked="True"/>
+                <MenuItem x:Name="MenuPacManagement" Header="PAC Management" Click="MenuPacManagement_Click"/>
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="About" Click="MenuAbout_Click"/>
+            </MenuItem>
+        </Menu>
+
+        <!-- 主内容区域 -->
+        <Grid>
+            <!-- 图像处理区域 -->
+            <local:ImageView x:Name="ImageViewControl" Margin="10" Visibility="Visible"/>
+
+            <!-- PAC管理区域 -->
+            <local:PacManageView x:Name="PacManageViewControl" Margin="10" Visibility="Collapsed"/>
+        </Grid>
+    </DockPanel>
 </Window>
