@@ -9,7 +9,7 @@
   <Identity
     Name="cg-zhou.Duckie"
     Publisher="CN=5323EEEF-91A4-4A08-A844-F91ECC9E9856"
-    Version="0.2.5.0" />
+    Version="0.2.10.0" />
 
   <Properties>
     <DisplayName>Duckie</DisplayName>
