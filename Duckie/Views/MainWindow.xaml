@@ -4,28 +4,96 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Duckie.Views"
+        xmlns:controls="clr-namespace:Duckie.Views.Controls"
         mc:Ignorable="d"
         Title="Duckie" Height="600" Width="1000"
         Loaded="Window_Loaded">
-    <DockPanel>
-        <!-- Top menu bar -->
-        <Menu DockPanel.Dock="Top" Background="#F8F9FA" BorderBrush="#E9ECEF" BorderThickness="0,0,0,1">
-            <MenuItem Header="_Functions">
-                <MenuItem x:Name="MenuImageProcessing" Header="Image Processing" Click="MenuImageProcessing_Click" IsChecked="True"/>
-                <MenuItem x:Name="MenuPacManagement" Header="PAC Management" Click="MenuPacManagement_Click"/>
-            </MenuItem>
-            <MenuItem Header="_Help">
-                <MenuItem Header="About" Click="MenuAbout_Click"/>
-            </MenuItem>
-        </Menu>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="SidebarColumn" Width="120"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <!-- 主内容区域 -->
-        <Grid>
-            <!-- 图像处理区域 -->
+        <!-- Left sidebar navigation -->
+        <Border Grid.Column="0" Background="#F8F9FA" BorderBrush="#E9ECEF" BorderThickness="0,0,1,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Toggle button only -->
+                <Border Grid.Row="0" Padding="0,16,0,8">
+                    <Button x:Name="ToggleButton" Width="40" Height="40"
+                            Click="ToggleButton_Click"
+                            Background="Transparent" BorderThickness="0"
+                            ToolTip="Toggle sidebar" Cursor="Hand"
+                            HorizontalAlignment="Center">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}"
+                                                    CornerRadius="6" Padding="8">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#E9ECEF"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter Property="Background" Value="#DEE2E6"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <Canvas Width="24" Height="24">
+                            <Path x:Name="ToggleIcon" Data="M3,6 L21,6 M3,12 L21,12 M3,18 L21,18"
+                                  Stroke="#495057" StrokeThickness="1.5"/>
+                        </Canvas>
+                    </Button>
+                </Border>
+
+                <!-- Main navigation items -->
+                <StackPanel Grid.Row="1" Margin="0,8,0,0">
+                    <!-- Image Processing -->
+                    <controls:NavigationMenuItem x:Name="NavImageProcessing"
+                                                 IconData="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z M13.96,12.29L11.21,15.83L9.25,13.47L6.5,17H17.5L13.96,12.29Z"
+                                                 Text="Image"
+                                                 Click="MenuImageProcessing_Click"/>
+
+                    <!-- PAC Management -->
+                    <controls:NavigationMenuItem x:Name="NavPacManagement"
+                                                 IconData="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M11,16.5L6.5,12L7.91,10.59L11,13.67L16.59,8.09L18,9.5L11,16.5Z"
+                                                 Text="PAC"
+                                                 Click="MenuPacManagement_Click"/>
+                </StackPanel>
+
+                <!-- Bottom navigation items -->
+                <StackPanel Grid.Row="2" Margin="0,16,0,16">
+                    <!-- About -->
+                    <controls:NavigationMenuItem x:Name="NavAbout"
+                                                 IconData="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"
+                                                 Text="About"
+                                                 Click="MenuAbout_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Main content area -->
+        <Grid Grid.Column="1">
+            <!-- Image processing area -->
             <local:ImageView x:Name="ImageViewControl" Margin="10" Visibility="Visible"/>
 
-            <!-- PAC管理区域 -->
+            <!-- PAC management area -->
             <local:PacManageView x:Name="PacManageViewControl" Margin="10" Visibility="Collapsed"/>
         </Grid>
-    </DockPanel>
+    </Grid>
 </Window>
