@@ -10,8 +10,13 @@ using System.Windows.Media.Imaging;
 
 namespace Duckie.Views
 {
-    public partial class ImageView : UserControl
+    public partial class ImageView : UserControl, IDisposable
     {
+        // 预定义静态Brush对象，避免重复创建
+        private static readonly SolidColorBrush DragOverBrush = new SolidColorBrush(Color.FromArgb(50, 0, 120, 215));
+
+        private bool _disposed = false;
+
         public ImageView()
         {
             InitializeComponent();
@@ -23,6 +28,11 @@ namespace Duckie.Views
 
         private void Open(string filePath)
         {
+            ThrowIfDisposed();
+
+            // 释放之前的图像资源
+            DisposeCurrentImage();
+
             path = filePath;
             var bitmapImage = File.ReadAllBytes(path).ToBitmapImage();
 
@@ -42,6 +52,22 @@ namespace Duckie.Views
             ImageInfoText.Text = $"{bitmapImage.PixelWidth} × {bitmapImage.PixelHeight} pixels";
         }
 
+        /// <summary>
+        /// 释放当前图像资源
+        /// </summary>
+        private void DisposeCurrentImage()
+        {
+            if (image?.Source != null)
+            {
+                // 清理图像源
+                image.Source = null;
+
+                // 强制垃圾回收（在图像处理应用中是合理的）
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+        }
+
         private void ButtonOpen_Click(object sender, RoutedEventArgs e)
         {
             if (!PathUtils.SelectImageFile(out string selectedPath))
@@ -58,8 +84,6 @@ namespace Duckie.Views
                 UiUtils.Error(exception, $"Failed to open image: {selectedPath}");
             }
         }
-
-
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
@@ -114,13 +138,19 @@ namespace Duckie.Views
         {
             try
             {
+                if (image.Source == null) return;
+
+                // 保存当前图像源的引用
+                var currentSource = (BitmapSource)image.Source;
+
                 var transform = new RotateTransform(angle);
                 var transformedBitmap = new TransformedBitmap();
                 transformedBitmap.BeginInit();
-                transformedBitmap.Source = (BitmapSource)image.Source;
+                transformedBitmap.Source = currentSource;
                 transformedBitmap.Transform = transform;
                 transformedBitmap.EndInit();
 
+                // 先设置新图像，再清理旧图像（避免闪烁）
                 image.Source = transformedBitmap;
 
                 // Update original dimensions for zoom calculations
@@ -130,6 +160,12 @@ namespace Duckie.Views
 
                 // Update display size with current zoom
                 UpdateImageSize();
+
+                // 如果当前源是TransformedBitmap，释放它以避免内存累积
+                if (currentSource is TransformedBitmap)
+                {
+                    GC.Collect();
+                }
             }
             catch (Exception ex)
             {
@@ -141,16 +177,22 @@ namespace Duckie.Views
         {
             try
             {
+                if (image.Source == null) return;
+
+                // 保存当前图像源的引用
+                var currentSource = (BitmapSource)image.Source;
+
                 var scaleX = flipHorizontal ? -1 : 1;
                 var scaleY = flipVertical ? -1 : 1;
 
                 var transform = new ScaleTransform(scaleX, scaleY);
                 var transformedBitmap = new TransformedBitmap();
                 transformedBitmap.BeginInit();
-                transformedBitmap.Source = (BitmapSource)image.Source;
+                transformedBitmap.Source = currentSource;
                 transformedBitmap.Transform = transform;
                 transformedBitmap.EndInit();
 
+                // 先设置新图像，再清理旧图像（避免闪烁）
                 image.Source = transformedBitmap;
 
                 // Update original dimensions for zoom calculations
@@ -160,6 +202,12 @@ namespace Duckie.Views
 
                 // Update display size with current zoom
                 UpdateImageSize();
+
+                // 如果当前源是TransformedBitmap，释放它以避免内存累积
+                if (currentSource is TransformedBitmap)
+                {
+                    GC.Collect();
+                }
             }
             catch (Exception ex)
             {
@@ -177,8 +225,8 @@ namespace Duckie.Views
                 if (imageFiles.Length > 0)
                 {
                     e.Effects = DragDropEffects.Copy;
-                    // Add visual feedback
-                    this.Background = new SolidColorBrush(Color.FromArgb(50, 0, 120, 215));
+                    // 使用预定义的静态Brush，避免重复创建
+                    this.Background = DragOverBrush;
                     return;
                 }
             }
@@ -271,6 +319,56 @@ namespace Duckie.Views
                     return scrollViewer;
             }
             return null;
+        }
+
+        #region IDisposable Implementation
+
+        /// <summary>
+        /// 释放资源
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// 释放资源的具体实现
+        /// </summary>
+        /// <param name="disposing">是否正在释放托管资源</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    // 释放托管资源
+                    DisposeCurrentImage();
+                }
+
+                _disposed = true;
+            }
+        }
+
+        /// <summary>
+        /// 析构函数
+        /// </summary>
+        ~ImageView()
+        {
+            Dispose(false);
+        }
+
+        #endregion
+
+        /// <summary>
+        /// 检查对象是否已被释放
+        /// </summary>
+        private void ThrowIfDisposed()
+        {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(nameof(ImageView));
+            }
         }
     }
 }

@@ -11,96 +11,7 @@
              Drop="ImageView_Drop"
              DragEnter="ImageView_DragEnter"
              DragLeave="ImageView_DragLeave">
-    <UserControl.Resources>
-        <!-- Modern Button Styles -->
-        <Style x:Key="ModernButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="BorderBrush" Value="#DEE2E6"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Padding" Value="12,6"/>
-            <Setter Property="FontSize" Value="13"/>
-            <Setter Property="Foreground" Value="#495057"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="4" Padding="{TemplateBinding Padding}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#F8F9FA"/>
-                                <Setter Property="BorderBrush" Value="#ADB5BD"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" Value="#E9ECEF"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="PrimaryButtonStyle" TargetType="Button" BasedOn="{StaticResource ModernButtonStyle}">
-            <Setter Property="Background" Value="#007BFF"/>
-            <Setter Property="BorderBrush" Value="#007BFF"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="4" Padding="{TemplateBinding Padding}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#0056B3"/>
-                                <Setter Property="BorderBrush" Value="#0056B3"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" Value="#004085"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="ToolButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Width" Value="28"/>
-            <Setter Property="Height" Value="28"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="4">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#F8F9FA"/>
-                                <Setter Property="BorderBrush" Value="#DEE2E6"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" Value="#E9ECEF"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </UserControl.Resources>
+    <!-- 样式已移动到全局主题文件中，减少内存占用 -->
 
     <DockPanel>
         <!-- Modern Toolbar -->
@@ -211,7 +122,7 @@
                 </StackPanel>
             </Grid>
         </Border>
-        <StatusBar DockPanel.Dock="Bottom" Height="25">
+        <StatusBar DockPanel.Dock="Bottom" Height="25" Padding="6 0">
             <StatusBarItem>
                 <TextBlock x:Name="StatusText" Text="Ready" />
             </StatusBarItem>
@@ -221,10 +132,12 @@
         </StatusBar>
         <DockPanel>
             <Grid>
+                <!-- 优化的棋盘背景 - 保持视觉效果，减少内存占用 -->
                 <Rectangle>
                     <Rectangle.Fill>
                         <DrawingBrush TileMode="Tile" Viewport="0,0,20,20" ViewportUnits="Absolute">
                             <DrawingBrush.Drawing>
+                                <!-- 使用更简单的实现，但保持棋盘效果 -->
                                 <DrawingGroup>
                                     <GeometryDrawing Brush="#FFEEEEEE">
                                         <GeometryDrawing.Geometry>
@@ -233,12 +146,10 @@
                                     </GeometryDrawing>
                                     <GeometryDrawing Brush="#FFDDDDDD">
                                         <GeometryDrawing.Geometry>
-                                            <RectangleGeometry Rect="0,0,10,10" />
-                                        </GeometryDrawing.Geometry>
-                                    </GeometryDrawing>
-                                    <GeometryDrawing Brush="#FFDDDDDD">
-                                        <GeometryDrawing.Geometry>
-                                            <RectangleGeometry Rect="10,10,10,10" />
+                                            <GeometryGroup>
+                                                <RectangleGeometry Rect="0,0,10,10" />
+                                                <RectangleGeometry Rect="10,10,10,10" />
+                                            </GeometryGroup>
                                         </GeometryDrawing.Geometry>
                                     </GeometryDrawing>
                                 </DrawingGroup>
