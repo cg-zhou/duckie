@@ -3,7 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-namespace Duckie.Utils
+namespace Duckie.Utils.Ui
 {
     internal class NotifyIconUtils
     {
@@ -19,10 +19,15 @@ namespace Duckie.Utils
 
             notifyIcon.Click += NotifyIcon_Click;
 
-            if (AppUtils.TryGetResourceStream("duck.ico", out var stream))
+            if (AppUtils.TryGetEmbeddedResource("duck.ico", out var stream))
             {
                 SetIcon(stream);
             }
+        }
+
+        public static void Release()
+        {
+            SetIcon(null);
         }
 
         private static void SetIcon(Stream stream)
@@ -32,8 +37,15 @@ namespace Duckie.Utils
                 notifyIcon.Icon.Dispose();
             }
 
-            var icon = new Icon(stream);
-            notifyIcon.Icon = icon;
+            if (stream != null)
+            {
+                var icon = new Icon(stream);
+                notifyIcon.Icon = icon;
+            }
+            else
+            {
+                notifyIcon.Icon = null;
+            }
         }
 
         private static void NotifyIcon_Click(object sender, EventArgs e)

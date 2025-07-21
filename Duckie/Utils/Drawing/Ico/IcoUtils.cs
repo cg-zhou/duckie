@@ -1,12 +1,11 @@
-﻿using Duckie.Utils.Drawing.Icons;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 
-namespace Duckie.Utils.Drawing
+namespace Duckie.Utils.Drawing.Ico
 {
     internal static class IcoUtils
     {

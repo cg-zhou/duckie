@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Duckie.Utils.HotKeys
 {
-    internal class Item
+    internal class HotKeyItem
     {
         public int Id { get; set; }
         public KeyModifiers Modifiers { get; set; }

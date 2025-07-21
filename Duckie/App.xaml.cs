@@ -1,4 +1,4 @@
-﻿using Duckie.Utils;
+﻿using Duckie.Utils.Ui;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -12,6 +12,16 @@ namespace Duckie
         {
             UiUtils.Warning($"Exception: {e.Exception.Message}{e.Exception.InnerException?.Message}", "Warning");
             e.Handled = true;
+        }
+
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            NotifyIconUtils.Initialize();
+        }
+
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            NotifyIconUtils.Release();
         }
     }
 }

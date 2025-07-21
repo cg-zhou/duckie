@@ -14,7 +14,7 @@ namespace Duckie.Utils.HotKeys
 
         private static void Form_KeyPressed(object sender, int id)
         {
-            if (Items.TryGetValue(id, out var item))
+            if (items.TryGetValue(id, out var item))
             {
                 item.Action.Invoke();
             }
@@ -22,7 +22,7 @@ namespace Duckie.Utils.HotKeys
 
         private static int id = 9527;
 
-        private static Dictionary<int, Item> Items { get; set; } = new Dictionary<int, Item>();
+        private static Dictionary<int, HotKeyItem> items { get; set; } = new Dictionary<int, HotKeyItem>();
         private static HotKeyForm form = new HotKeyForm();
         private static object lockObj = new object();
 
@@ -32,7 +32,7 @@ namespace Duckie.Utils.HotKeys
             {
                 ++id;
 
-                var hotKeyItem = new Item
+                var hotKeyItem = new HotKeyItem
                 {
                     Id = id,
                     Modifiers = modifiers,
@@ -40,7 +40,7 @@ namespace Duckie.Utils.HotKeys
                     Action = action
                 };
 
-                Items[hotKeyItem.Id] = hotKeyItem;
+                items[hotKeyItem.Id] = hotKeyItem;
 
                 Interop.RegisterHotKey(form.Handle, hotKeyItem.Id, modifiers, keys);
 

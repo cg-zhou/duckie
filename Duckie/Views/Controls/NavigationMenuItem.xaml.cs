@@ -1,30 +1,28 @@
+using Duckie.Utils.Ui;
+using Duckie.Views.Common;
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace Duckie.Views.Controls
 {
-    /// <summary>
-    /// Navigation menu item component
-    /// </summary>
     public partial class NavigationMenuItem : UserControl
     {
-        public static readonly DependencyProperty IconDataProperty =
-            DependencyProperty.Register("IconData", typeof(string), typeof(NavigationMenuItem), 
-                new PropertyMetadata(string.Empty, OnIconDataChanged));
+        public static readonly DependencyProperty IconTypeProperty =
+            DependencyProperty.Register(nameof(IconType), typeof(IconType), typeof(NavigationMenuItem),
+                new PropertyMetadata(IconType.Search, OnIconTypeChanged));
 
         public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register("Text", typeof(string), typeof(NavigationMenuItem), 
+            DependencyProperty.Register(nameof(Text), typeof(string), typeof(NavigationMenuItem),
                 new PropertyMetadata(string.Empty, OnTextChanged));
 
         public static readonly DependencyProperty IsSelectedProperty =
-            DependencyProperty.Register("IsSelected", typeof(bool), typeof(NavigationMenuItem), 
+            DependencyProperty.Register(nameof(IsSelected), typeof(bool), typeof(NavigationMenuItem),
                 new PropertyMetadata(false, OnIsSelectedChanged));
 
         public static readonly DependencyProperty IsTextVisibleProperty =
-            DependencyProperty.Register("IsTextVisible", typeof(bool), typeof(NavigationMenuItem), 
+            DependencyProperty.Register(nameof(IsTextVisible), typeof(bool), typeof(NavigationMenuItem),
                 new PropertyMetadata(true, OnIsTextVisibleChanged));
 
         public event EventHandler<RoutedEventArgs> Click;
@@ -34,10 +32,10 @@ namespace Duckie.Views.Controls
             InitializeComponent();
         }
 
-        public string IconData
+        public IconType IconType
         {
-            get { return (string)GetValue(IconDataProperty); }
-            set { SetValue(IconDataProperty, value); }
+            get { return (IconType)GetValue(IconTypeProperty); }
+            set { SetValue(IconTypeProperty, value); }
         }
 
         public string Text
@@ -58,7 +56,7 @@ namespace Duckie.Views.Controls
             set { SetValue(IsTextVisibleProperty, value); }
         }
 
-        private static void OnIconDataChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnIconTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is NavigationMenuItem control)
             {
@@ -92,17 +90,7 @@ namespace Duckie.Views.Controls
 
         private void UpdateIcon()
         {
-            if (!string.IsNullOrEmpty(IconData))
-            {
-                try
-                {
-                    IconPath.Data = Geometry.Parse(IconData);
-                }
-                catch
-                {
-                    // Ignore invalid geometry
-                }
-            }
+            Icon.IconType = IconType;
         }
 
         private void UpdateText()
@@ -112,39 +100,18 @@ namespace Duckie.Views.Controls
 
         private void UpdateSelectedState()
         {
-            try
+            var template = MenuButton.Template;
+            if (template != null)
             {
-                var template = MenuButton.Template;
-                if (template != null)
+                MenuButton.ApplyTemplate();
+                var indicator = template.FindName("SelectionIndicator", MenuButton) as Rectangle;
+                if (indicator != null)
                 {
-                    MenuButton.ApplyTemplate();
-                    var indicator = template.FindName("SelectionIndicator", MenuButton) as Rectangle;
-                    if (indicator != null)
-                    {
-                        indicator.Visibility = IsSelected ? Visibility.Visible : Visibility.Collapsed;
-                    }
+                    indicator.Visibility = IsSelected ? Visibility.Visible : Visibility.Collapsed;
                 }
+            }
 
-                if (IsSelected)
-                {
-                    MenuButton.Background = new SolidColorBrush(Color.FromRgb(0xE3, 0xF2, 0xFD));
-                    IconPath.Fill = new SolidColorBrush(Color.FromRgb(0x00, 0x7A, 0xCC));
-                    TextBlock.Foreground = new SolidColorBrush(Color.FromRgb(0x00, 0x7A, 0xCC));
-                }
-                else
-                {
-                    MenuButton.Background = Brushes.Transparent;
-                    IconPath.Fill = new SolidColorBrush(Color.FromRgb(0x49, 0x50, 0x57));
-                    TextBlock.Foreground = new SolidColorBrush(Color.FromRgb(0x49, 0x50, 0x57));
-                }
-            }
-            catch
-            {
-                // Fallback: simple background change
-                MenuButton.Background = IsSelected ? 
-                    new SolidColorBrush(Color.FromRgb(0xE3, 0xF2, 0xFD)) : 
-                    Brushes.Transparent;
-            }
+            MenuButton.Background = IsSelected ? ThemeUtils.SelectedBrush : ThemeUtils.NoneBrush;
         }
 
         private void UpdateTextVisibility()

@@ -3,11 +3,11 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net480</TargetFramework>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>resources\duck.ico</ApplicationIcon>
+    <ApplicationIcon>EmbeddedResources\duck.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <EmbeddedResource Include="resources\duck.ico" />
+    <EmbeddedResource Include="EmbeddedResources\duck.ico" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Windows.Forms" />

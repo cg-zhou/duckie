@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace Duckie.Utils.Drawing.Icons
+namespace Duckie.Utils.Drawing.Ico
 {
     [StructLayout(LayoutKind.Sequential)]
     internal struct IcoHeader

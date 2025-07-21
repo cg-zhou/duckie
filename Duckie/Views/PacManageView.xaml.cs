@@ -1,13 +1,10 @@
 using Duckie.Services;
 using Duckie.Services.UserConfigs;
-using Duckie.Utils;
+using Duckie.Utils.Ui;
 using Duckie.Views.Common;
 using System;
-using System.Globalization;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -279,7 +276,7 @@ namespace Duckie.Views
         private void AddPacButton_Click(object sender, RoutedEventArgs e)
         {
             var content = new PacEditContent();
-            var dialog = CommonDialog.Create(
+            var dialog = DialogEx.Create(
                 "Add PAC Configuration",
                 content,
                 DialogButtons.OKCancel,
@@ -318,7 +315,7 @@ namespace Duckie.Views
             if (sender is Button button && button.Tag is PacConfig pac)
             {
                 var content = new PacEditContent(pac);
-                var dialog = CommonDialog.Create(
+                var dialog = DialogEx.Create(
                     "Edit PAC Configuration",
                     content,
                     DialogButtons.OKCancel,

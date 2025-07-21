@@ -1,6 +1,5 @@
-﻿using Duckie.Utils;
+﻿using Duckie.Utils.Ui;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -30,11 +29,6 @@ namespace Duckie
                 Show();
                 Activate();
             }
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            NotifyIconUtils.Initialize();
         }
 
         /// <summary>
@@ -130,7 +124,7 @@ namespace Duckie
             UpdateNavigationState();
             NavImageProcessing.IsSelected = true;
 
-            Title = "Duckie - Image Processing";
+            Title = "Duckie - Image";
         }
 
         private void ShowPacManagement()
@@ -142,7 +136,7 @@ namespace Duckie
             UpdateNavigationState();
             NavPacManagement.IsSelected = true;
 
-            Title = "Duckie - PAC Management";
+            Title = "Duckie - PAC";
         }
     }
 }

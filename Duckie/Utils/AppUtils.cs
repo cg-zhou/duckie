@@ -27,9 +27,9 @@ namespace Duckie.Utils
         public static string EntryAssemblyName { get; }
         public static string EntryAssemblyNameWithoutExtension { get; }
 
-        public static bool TryGetResourceStream(string fileName, out Stream stream)
+        public static bool TryGetEmbeddedResource(string fileName, out Stream stream)
         {
-            var resourceName = $"{EntryAssemblyNameWithoutExtension}.resources.{fileName}";
+            var resourceName = $"{EntryAssemblyNameWithoutExtension}.EmbeddedResources.{fileName}";
             stream = EntryAssembly.GetManifestResourceStream(resourceName);
             return stream != null;
         }

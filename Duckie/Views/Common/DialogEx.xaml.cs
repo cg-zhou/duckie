@@ -6,14 +6,13 @@ namespace Duckie.Views.Common
 {
     public enum DialogButtons
     {
-        OK,
-        OKCancel,
-        YesNo
+        OK = 1,
+        OKCancel = 2
     }
 
-    public partial class CommonDialog : Window
+    public partial class DialogEx : Window
     {
-        private CommonDialog()
+        private DialogEx()
         {
             InitializeComponent();
         }
@@ -23,7 +22,7 @@ namespace Duckie.Views.Common
             ContentArea.Content = content;
         }
 
-        private void SetButtons(DialogButtons buttons, Action<CommonDialog> okHandler = null)
+        private void SetButtons(DialogButtons buttons, Action<DialogEx> okHandler = null)
         {
             ButtonPanel.Children.Clear();
 
@@ -40,7 +39,7 @@ namespace Duckie.Views.Common
             }
         }
 
-        private void AddButton(string text, bool isPrimary, bool result, Action<CommonDialog> clickHandler = null)
+        private void AddButton(string text, bool isPrimary, bool result, Action<DialogEx> clickHandler = null)
         {
             var button = new Button
             {
@@ -71,9 +70,9 @@ namespace Duckie.Views.Common
             ButtonPanel.Children.Add(button);
         }
 
-        public static CommonDialog Create(string title, UIElement content, DialogButtons buttons = DialogButtons.OKCancel, Action<CommonDialog> okHandler = null)
+        public static DialogEx Create(string title, UIElement content, DialogButtons buttons = DialogButtons.OKCancel, Action<DialogEx> okHandler = null)
         {
-            var dialog = new CommonDialog
+            var dialog = new DialogEx
             {
                 Title = title,
                 Owner = App.MainWindow

@@ -40,43 +40,21 @@
                             <TextBlock Text="Transform" FontSize="11" Foreground="#6C757D"
                                        VerticalAlignment="Center" Margin="0,0,8,0"/>
 
-                            <!-- B 270° Counter-clockwise (Left) -->
-                            <Button Click="ButtonRotate270_Click" Style="{StaticResource ToolButtonStyle}"
-                                    ToolTip="Rotate 90° Counter-clockwise" Margin="0,0,4,0">
-                                <Canvas Width="20" Height="20">
-                                    <Path Data="M10,16 A6,6 0 1,0 4,10 L6,10 A4,4 0 1,1 10,14 Z" Fill="#495057" />
-                                    <Path Data="M3,8 L5,10 L3,12" Stroke="#495057" StrokeThickness="1.5" Fill="#495057" />
-                                </Canvas>
-                            </Button>
+                            <!-- Rotate 270° Counter-clockwise (Left) -->
+                            <common:ButtonIcon Click="ButtonRotate270_Click" ToolTip="Rotate 90° Counter-clockwise"
+                                               Margin="0,0,4,0" IconType="ArrowCounterClockwise"/>
 
                             <!-- Rotate 90° Clockwise (Right) -->
-                            <Button Click="ButtonRotate90_Click" Style="{StaticResource ToolButtonStyle}"
-                                    ToolTip="Rotate 90° Clockwise" Margin="0,0,8,0">
-                                <Canvas Width="20" Height="20">
-                                    <Path Data="M10,16 A6,6 0 1,1 16,10 L14,10 A4,4 0 1,0 10,14 Z" Fill="#495057" />
-                                    <Path Data="M17,12 L15,10 L17,8" Stroke="#495057" StrokeThickness="1.5" Fill="#495057" />
-                                </Canvas>
-                            </Button>
+                            <common:ButtonIcon Click="ButtonRotate90_Click" ToolTip="Rotate 90° Clockwise"
+                                               Margin="0,0,8,0" IconType="ArrowClockwise"/>
 
                             <!-- Flip Horizontal -->
-                            <Button Click="ButtonFlipH_Click" Style="{StaticResource ToolButtonStyle}"
-                                    ToolTip="Flip Horizontal" Margin="0,0,4,0">
-                                <Canvas Width="20" Height="20">
-                                    <Rectangle Canvas.Left="3" Canvas.Top="6" Width="5" Height="8" Fill="#495057" />
-                                    <Rectangle Canvas.Left="12" Canvas.Top="6" Width="5" Height="8" Fill="#ADB5BD" />
-                                    <Line X1="10" Y1="4" X2="10" Y2="16" Stroke="#6C757D" StrokeThickness="1" StrokeDashArray="2,2" />
-                                </Canvas>
-                            </Button>
+                            <common:ButtonIcon Click="ButtonFlipH_Click" ToolTip="Flip Horizontal"
+                                               Margin="0,0,4,0" IconType="FlipHorizontalFill"/>
 
                             <!-- Flip Vertical -->
-                            <Button Click="ButtonFlipV_Click" Style="{StaticResource ToolButtonStyle}"
-                                    ToolTip="Flip Vertical">
-                                <Canvas Width="20" Height="20">
-                                    <Rectangle Canvas.Left="6" Canvas.Top="3" Width="8" Height="5" Fill="#495057" />
-                                    <Rectangle Canvas.Left="6" Canvas.Top="12" Width="8" Height="5" Fill="#ADB5BD" />
-                                    <Line X1="4" Y1="10" X2="16" Y2="10" Stroke="#6C757D" StrokeThickness="1" StrokeDashArray="2,2" />
-                                </Canvas>
-                            </Button>
+                            <common:ButtonIcon Click="ButtonFlipV_Click" ToolTip="Flip Vertical"
+                                               IconType="FlipVerticalFill"/>
                         </StackPanel>
                     </Border>
 
@@ -87,36 +65,16 @@
                             <TextBlock Text="Zoom" FontSize="11" Foreground="#6C757D"
                                        VerticalAlignment="Center" Margin="0,0,8,0"/>
 
-                            <Button Click="ButtonZoomOut_Click" Style="{StaticResource ToolButtonStyle}"
-                                    ToolTip="Zoom Out" Margin="0,0,4,0">
-                                <Canvas Width="20" Height="20">
-                                    <Ellipse Canvas.Left="4" Canvas.Top="4" Width="12" Height="12"
-                                             Stroke="#495057" StrokeThickness="1.5" Fill="Transparent" />
-                                    <Line X1="7" Y1="10" X2="13" Y2="10" Stroke="#495057" StrokeThickness="1.5" />
-                                </Canvas>
-                            </Button>
+                            <common:ButtonIcon Click="ButtonZoomOut_Click" ToolTip="Zoom Out"
+                                               Margin="0,0,4,0" IconType="ZoomIn"/>
 
                             <Slider x:Name="ZoomSlider" Width="80" Minimum="0.1" Maximum="3.0" Value="1.0"
                                     VerticalAlignment="Center" Margin="0,0,4,0" ValueChanged="ZoomSlider_ValueChanged" />
 
-                            <Button Click="ButtonZoomIn_Click" Style="{StaticResource ToolButtonStyle}"
-                                    ToolTip="Zoom In" Margin="0,0,8,0">
-                                <Canvas Width="20" Height="20">
-                                    <Ellipse Canvas.Left="4" Canvas.Top="4" Width="12" Height="12"
-                                             Stroke="#495057" StrokeThickness="1.5" Fill="Transparent" />
-                                    <Line X1="7" Y1="10" X2="13" Y2="10" Stroke="#495057" StrokeThickness="1.5" />
-                                    <Line X1="10" Y1="7" X2="10" Y2="13" Stroke="#495057" StrokeThickness="1.5" />
-                                </Canvas>
-                            </Button>
+                            <common:ButtonIcon Click="ButtonZoomIn_Click" ToolTip="Zoom In"
+                                               Margin="0,0,8,0" IconType="ZoomOut"/>
 
-                            <Button Click="ButtonZoomFit_Click" Style="{StaticResource ToolButtonStyle}"
-                                    ToolTip="Fit to Window">
-                                <Canvas Width="20" Height="20">
-                                    <Rectangle Canvas.Left="4" Canvas.Top="4" Width="12" Height="12"
-                                               Stroke="#495057" StrokeThickness="1.5" Fill="Transparent" />
-                                    <Rectangle Canvas.Left="6" Canvas.Top="6" Width="8" Height="8" Fill="#ADB5BD" />
-                                </Canvas>
-                            </Button>
+                            <common:ButtonIcon Click="ButtonZoomFit_Click" ToolTip="Fit to Window" IconType="ExpandSolid"/>
                         </StackPanel>
                     </Border>
                 </StackPanel>

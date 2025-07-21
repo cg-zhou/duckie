@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Duckie.Utils
+namespace Duckie.Utils.Ui
 {
     internal static class UiUtils
     {

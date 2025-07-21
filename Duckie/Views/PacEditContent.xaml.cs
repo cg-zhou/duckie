@@ -1,5 +1,5 @@
 using Duckie.Services.UserConfigs;
-using Duckie.Utils;
+using Duckie.Utils.Ui;
 using System.Windows;
 using System.Windows.Controls;
 
