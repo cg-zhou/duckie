@@ -96,7 +96,7 @@ namespace Duckie
         /// </summary>
         private void MenuAbout_Click(object sender, RoutedEventArgs e)
         {
-            UiUtils.Info("Duckie - Image Processing and PAC Management Tool\nVersion: 1.0", "About");
+            ShowAbout();
         }
 
         /// <summary>
@@ -119,6 +119,7 @@ namespace Duckie
         {
             ImageViewControl.Visibility = Visibility.Visible;
             PacManageViewControl.Visibility = Visibility.Collapsed;
+            AboutViewControl.Visibility = Visibility.Collapsed;
 
             // Update navigation state
             UpdateNavigationState();
@@ -131,12 +132,26 @@ namespace Duckie
         {
             ImageViewControl.Visibility = Visibility.Collapsed;
             PacManageViewControl.Visibility = Visibility.Visible;
+            AboutViewControl.Visibility = Visibility.Collapsed;
 
             // Update navigation state
             UpdateNavigationState();
             NavPacManagement.IsSelected = true;
 
             Title = "Duckie - PAC";
+        }
+
+        private void ShowAbout()
+        {
+            ImageViewControl.Visibility = Visibility.Collapsed;
+            PacManageViewControl.Visibility = Visibility.Collapsed;
+            AboutViewControl.Visibility = Visibility.Visible;
+
+            // Update navigation state
+            UpdateNavigationState();
+            NavAbout.IsSelected = true;
+
+            Title = "Duckie - About";
         }
     }
 }

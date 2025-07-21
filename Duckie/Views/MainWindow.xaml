@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Duckie.Views"
         xmlns:controls="clr-namespace:Duckie.Views.Controls" xmlns:common="clr-namespace:Duckie.Views.Common"
         mc:Ignorable="d"
-        Title="Duckie" Height="300" Width="500">
+        WindowStartupLocation="CenterScreen"
+        Title="Duckie" Height="450" Width="750">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition x:Name="SidebarColumn" Width="120"/>
@@ -49,6 +50,9 @@
 
             <!-- PAC management area -->
             <local:PacManageView x:Name="PacManageViewControl" Margin="10" Visibility="Collapsed"/>
+
+            <!-- About area -->
+            <local:AboutView x:Name="AboutViewControl" Margin="10" Visibility="Collapsed"/>
         </Grid>
     </Grid>
 </Window>

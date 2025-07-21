@@ -14,6 +14,9 @@ namespace Duckie.Views.Common
         Information,
         InformationLine,
         Image,
-        AlignJustify
+        AlignJustify,
+        MicrosoftStore,
+        Email,
+        Github
     }
 }
