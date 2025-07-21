@@ -23,7 +23,7 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel Grid.Row="0" Margin="14,8,0,0" HorizontalAlignment="Left">
-                    <common:ButtonIcon IconType="Image" />
+                    <common:IconButton IconType="AlignJustify" Click="ToggleButton_Click" />
                 </StackPanel>
                 <!-- Main navigation items -->
                 <StackPanel Grid.Row="1" Margin="0,8,0,0">

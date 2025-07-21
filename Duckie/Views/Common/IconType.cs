@@ -13,6 +13,7 @@ namespace Duckie.Views.Common
         Network,
         Information,
         InformationLine,
-        Image
+        Image,
+        AlignJustify
     }
 }

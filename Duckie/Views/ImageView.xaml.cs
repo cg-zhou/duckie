@@ -21,6 +21,8 @@ namespace Duckie.Views
         public ImageView()
         {
             InitializeComponent();
+
+            MouseWheel += ImageView_MouseWheel;
         }
 
         private string path = string.Empty;
@@ -48,6 +50,12 @@ namespace Duckie.Views
             ZoomSlider.Value = 1.0;
             UpdateImageSize();
 
+            // Enable all controls
+            EnableImageControls(true);
+
+            // Default to fit to window
+            ButtonZoomFit_Click(null, null);
+
             // Update status
             StatusText.Text = $"Loaded: {Path.GetFileName(filePath)}";
             ImageInfoText.Text = $"{bitmapImage.PixelWidth} × {bitmapImage.PixelHeight} pixels";
@@ -63,10 +71,35 @@ namespace Duckie.Views
                 // 清理图像源
                 image.Source = null;
 
+                // Disable all controls when no image is loaded
+                EnableImageControls(false);
+
                 // 强制垃圾回收（在图像处理应用中是合理的）
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
             }
+        }
+
+        /// <summary>
+        /// 启用或禁用图像相关控件
+        /// </summary>
+        /// <param name="enabled">是否启用</param>
+        private void EnableImageControls(bool enabled)
+        {
+            // Transform controls
+            RotateLeftButton.IsEnabled = enabled;
+            RotateRightButton.IsEnabled = enabled;
+            FlipHButton.IsEnabled = enabled;
+            FlipVButton.IsEnabled = enabled;
+
+            // Zoom controls
+            ZoomOutButton.IsEnabled = enabled;
+            ZoomInButton.IsEnabled = enabled;
+            ZoomSlider.IsEnabled = enabled;
+            FitToWindowButton.IsEnabled = enabled;
+
+            // Save button
+            SaveButton.IsEnabled = enabled;
         }
 
         private void ButtonOpen_Click(object sender, RoutedEventArgs e)
@@ -227,7 +260,7 @@ namespace Duckie.Views
                 {
                     e.Effects = DragDropEffects.Copy;
                     // 使用预定义的静态Brush，避免重复创建
-                    this.Background = DragOverBrush;
+                    Background = DragOverBrush;
                     return;
                 }
             }
@@ -237,13 +270,13 @@ namespace Duckie.Views
         private void ImageView_DragLeave(object sender, DragEventArgs e)
         {
             // Remove visual feedback
-            this.Background = Brushes.Transparent;
+            Background = Brushes.Transparent;
         }
 
         private void ImageView_Drop(object sender, DragEventArgs e)
         {
             // Remove visual feedback
-            this.Background = Brushes.Transparent;
+            Background = Brushes.Transparent;
 
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
@@ -252,8 +285,15 @@ namespace Duckie.Views
 
                 if (imageFiles.Length > 0)
                 {
-                    // Open the first image file
-                    Open(imageFiles[0]);
+                    try
+                    {
+                        // Open the first image file
+                        Open(imageFiles[0]);
+                    }
+                    catch (Exception exception)
+                    {
+                        UiUtils.Error(exception, $"Failed to open image: {imageFiles[0]}");
+                    }
                 }
             }
         }
@@ -264,6 +304,29 @@ namespace Duckie.Views
             return extension == ".jpg" || extension == ".jpeg" || extension == ".png" ||
                    extension == ".gif" || extension == ".bmp";
         }
+
+        private void ImageView_MouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        {
+            // 只有在按下 Ctrl 键且有图像时才处理缩放
+            if (System.Windows.Input.Keyboard.Modifiers == System.Windows.Input.ModifierKeys.Control &&
+                image.Source != null)
+            {
+                // 计算缩放增量
+                double zoomDelta = e.Delta > 0 ? 0.1 : -0.1;
+                double newZoom = ZoomSlider.Value + zoomDelta;
+
+                // 限制在滑块的范围内
+                newZoom = Math.Max(ZoomSlider.Minimum, Math.Min(ZoomSlider.Maximum, newZoom));
+
+                // 应用新的缩放值
+                ZoomSlider.Value = newZoom;
+
+                // 标记事件已处理，防止页面滚动
+                e.Handled = true;
+            }
+        }
+
+
 
         private void UpdateImageSize()
         {

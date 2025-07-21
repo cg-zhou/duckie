@@ -7,11 +7,6 @@ namespace Duckie.Views.Common
 {
     internal partial class ScrollViewerEx : ScrollViewer
     {
-        public ScrollViewerEx()
-            : base()
-        {
-        }
-
         public static readonly DependencyProperty OrientProperty = DependencyProperty.Register(
             nameof(Orient), typeof(OrientType), typeof(ScrollViewerEx),
             new PropertyMetadata(OrientType.Both));
@@ -40,6 +35,15 @@ namespace Duckie.Views.Common
             }
 
             if (ScrollInfo == null)
+            {
+                return;
+            }
+
+            var isShiftCtrlKeyDown = Keyboard.IsKeyDown(Key.LeftCtrl)
+                || Keyboard.IsKeyDown(Key.RightCtrl)
+                || Keyboard.IsKeyDown(Key.LeftAlt)
+                || Keyboard.IsKeyDown(Key.RightAlt);
+            if (isShiftCtrlKeyDown)
             {
                 return;
             }
