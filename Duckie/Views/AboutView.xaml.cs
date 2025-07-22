@@ -1,7 +1,6 @@
-using Duckie.Utils.Ui;
-using System.Diagnostics;
+using Duckie.Utils;
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Navigation;
 
 namespace Duckie.Views
 {
@@ -10,23 +9,22 @@ namespace Duckie.Views
         public AboutView()
         {
             InitializeComponent();
+            Loaded += AboutView_Loaded;
         }
 
-        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        private void AboutView_Loaded(object sender, RoutedEventArgs e)
         {
-            try
+            if (MsixPackageUtils.TryGetMsixPackageName(out var packageName))
             {
-                Process.Start(new ProcessStartInfo
-                {
-                    FileName = e.Uri.AbsoluteUri,
-                    UseShellExecute = true
-                });
-                e.Handled = true;
+                ShowMsixInfo(packageName);
             }
-            catch
-            {
-                UiUtils.Warning($"Failed to open {e.Uri.AbsoluteUri}");
-            }
+        }
+
+        private void ShowMsixInfo(string packageName)
+        {
+            RuntimeTitle.Text = $"MSIX Package: {packageName}";
+            RuntimeDescription.Text = "Some features may be limited due to Microsoft Store restrictions";
+            RuntimeInfoBorder.Visibility = Visibility.Visible;
         }
     }
 }

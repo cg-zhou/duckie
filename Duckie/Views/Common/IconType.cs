@@ -17,6 +17,7 @@ namespace Duckie.Views.Common
         AlignJustify,
         MicrosoftStore,
         Email,
-        Github
+        Github,
+        GlobeLight
     }
 }

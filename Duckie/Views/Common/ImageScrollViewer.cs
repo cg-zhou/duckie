@@ -1,4 +1,3 @@
-using System;
 using System.Windows;
 using System.Windows.Input;
 
@@ -26,7 +25,7 @@ namespace Duckie.Views.Common
                 _isDragging = true;
                 _lastMousePosition = e.GetPosition(this);
                 CaptureMouse();
-                
+
                 // 使用正确的手形光标
                 Cursor = Cursors.Hand;
                 e.Handled = true;

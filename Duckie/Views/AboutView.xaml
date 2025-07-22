@@ -8,61 +8,49 @@
              d:DesignHeight="450" d:DesignWidth="800"
              Background="White">
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-        <StackPanel Margin="40" MaxWidth="600" HorizontalAlignment="Center">
-            <!-- App Title -->
-            <StackPanel HorizontalAlignment="Center" Margin="0,0,0,40">
-                <TextBlock Text="Duckie" FontSize="32" FontWeight="Bold" Foreground="#333" HorizontalAlignment="Center"/>
-                <TextBlock Text="Version 1.0" FontSize="14" Foreground="#666" Margin="0,4,0,0" HorizontalAlignment="Center"/>
-            </StackPanel>
+        <DockPanel Margin="0 40" MaxWidth="600" HorizontalAlignment="Center">
+            <StackPanel DockPanel.Dock="Top">
+                <!-- App Title -->
+                <StackPanel HorizontalAlignment="Center" Margin="0,0,0,20">
+                    <common:TextEx Text="Duckie" FontSize="32" FontWeight="Bold" Foreground="#333" HorizontalAlignment="Center"/>
+                    <common:TextEx Text="Version 1.0" FontSize="14" Foreground="#666" Margin="0,4,0,0" HorizontalAlignment="Center"/>
+                </StackPanel>
 
-            <!-- Description -->
-            <TextBlock TextWrapping="Wrap" FontSize="14" Foreground="#555" LineHeight="22" Margin="0,0,0,30" HorizontalAlignment="Center" TextAlignment="Center">
-                Image Processing and PAC Management Tool
-                <LineBreak/>
-                A lightweight open-source utility
-            </TextBlock>
+                <StackPanel HorizontalAlignment="Center" Margin="0,0,0,40">
+                    <!-- Description -->
+                    <common:TextEx TextWrapping="Wrap" FontSize="14" Foreground="#555" HorizontalAlignment="Center" TextAlignment="Center">
+                        Image Processing and PAC Management Tool
+                    </common:TextEx>
+                    <common:TextEx TextWrapping="Wrap" FontSize="14" Foreground="#555" HorizontalAlignment="Center" TextAlignment="Center">
+                        A lightweight open-source utility
+                    </common:TextEx>
+
+                    <!-- Runtime Environment Info -->
+                    <Border x:Name="RuntimeInfoBorder" Background="#F8F9FA" BorderBrush="#DEE2E6" BorderThickness="1" 
+                        CornerRadius="4" Padding="12,8" Margin="0,16,0,0" Visibility="Collapsed">
+                        <StackPanel>
+                            <common:TextEx x:Name="RuntimeTitle" FontSize="12" FontWeight="SemiBold" Foreground="#495057" HorizontalAlignment="Center"/>
+                            <common:TextEx x:Name="RuntimeDescription" FontSize="11" Foreground="#6C757D" Margin="0,2,0,0" 
+                                   HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </StackPanel>
 
             <!-- Links Section -->
-            <StackPanel HorizontalAlignment="Center">
-                <!-- Microsoft Store -->
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,12" HorizontalAlignment="Center">
-                    <common:IconEx IconType="MicrosoftStore" IconSize="16" VerticalAlignment="Center" Margin="0,0,8,0"/>
-                    <TextBlock VerticalAlignment="Center">
-                        <Hyperlink NavigateUri="https://apps.microsoft.com/detail/9msz8m2wxzc4"
-                                   RequestNavigate="Hyperlink_RequestNavigate"
-                                   Foreground="{StaticResource PrimaryTextBrush}" TextDecorations="Underline"
-                                   ToolTip="https://apps.microsoft.com/detail/9msz8m2wxzc4">
-                            <TextBlock Text="Microsoft Store" FontSize="14" />
-                        </Hyperlink>
-                    </TextBlock>
-                </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" DockPanel.Dock="Bottom">
+                <common:LinkEx IconType="GlobeLight" NavigateUri="https://cg-zhou.top"
+                               Text="Duckie" VerticalAlignment="Center" Margin="10 0"/>
 
-                <!-- GitHub Repository -->
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,12" HorizontalAlignment="Center">
-                    <common:IconEx IconType="Github" IconSize="16" VerticalAlignment="Center" Margin="0,0,8,0"/>
-                    <TextBlock VerticalAlignment="Center">
-                        <Hyperlink NavigateUri="https://github.com/cg-zhou/duckie"
-                                   RequestNavigate="Hyperlink_RequestNavigate"
-                                   Foreground="{StaticResource PrimaryTextBrush}" TextDecorations="Underline"
-                                   ToolTip="https://github.com/cg-zhou/duckie">
-                            <TextBlock Text="GitHub Repository" FontSize="14"/>
-                        </Hyperlink>
-                    </TextBlock>
-                </StackPanel>
+                <common:LinkEx IconType="MicrosoftStore" NavigateUri="https://apps.microsoft.com/detail/9msz8m2wxzc4"
+                              Text="Microsoft Store" VerticalAlignment="Center" Margin="10 0"/>
 
-                <!-- Email Contact -->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <common:IconEx IconType="Email" IconSize="16" VerticalAlignment="Center" Margin="0,0,8,0"/>
-                    <TextBlock VerticalAlignment="Center">
-                        <Hyperlink NavigateUri="mailto:z_cg@foxmail.com"
-                                   RequestNavigate="Hyperlink_RequestNavigate"
-                                   Foreground="{StaticResource PrimaryTextBrush}" TextDecorations="Underline"
-                                   ToolTip="z_cg@foxmail.com">
-                            <TextBlock Text="Contact Email" FontSize="14"/>
-                        </Hyperlink>
-                    </TextBlock>
-                </StackPanel>
+                <common:LinkEx IconType="Github" NavigateUri="https://github.com/cg-zhou/duckie"
+                               Text="GitHub" VerticalAlignment="Center" Margin="10 0"/>
+
+                <common:LinkEx IconType="Email" NavigateUri="mailto:z_cg@foxmail.com"
+                               Text="Email" VerticalAlignment="Center" Margin="10 0"/>
             </StackPanel>
-        </StackPanel>
+        </DockPanel>
     </ScrollViewer>
 </UserControl>

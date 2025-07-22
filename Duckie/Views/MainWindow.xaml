@@ -7,7 +7,7 @@
         xmlns:controls="clr-namespace:Duckie.Views.Controls" xmlns:common="clr-namespace:Duckie.Views.Common"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Duckie" Height="450" Width="750">
+        Title="Duckie" Height="420" Width="760">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition x:Name="SidebarColumn" Width="120"/>
