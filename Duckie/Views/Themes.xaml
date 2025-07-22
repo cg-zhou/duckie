@@ -4,8 +4,8 @@
     <SolidColorBrush x:Key="PrimaryBrush" Color="#0069BA"/>
     <SolidColorBrush x:Key="SelectedBrush" Color="#EAEAEA"/>
     <SolidColorBrush x:Key="HoverBrush" Color="#EDEDED"/>
-    <SolidColorBrush x:Key="PrimaryTextBrush" Color="#202020"/>
-    <SolidColorBrush x:Key="IconBrush" Color="#495057"/>
+    <SolidColorBrush x:Key="PrimaryTextBrush" Color="#333"/>
+    <SolidColorBrush x:Key="IconBrush" Color="#333"/>
 
     <Style TargetType="TextBox">
         <Setter Property="Padding" Value="3 2"/>
@@ -74,9 +74,9 @@
         <Setter Property="Background" Value="White"/>
         <Setter Property="BorderBrush" Value="#DEE2E6"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Padding" Value="12,6"/>
-        <Setter Property="FontSize" Value="13"/>
-        <Setter Property="Foreground" Value="#495057"/>
+        <Setter Property="Padding" Value="10,4"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>

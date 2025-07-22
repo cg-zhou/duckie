@@ -17,7 +17,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
-                            <Grid Background="{TemplateBinding Background}">
+                            <Grid x:Name="BackgroundGrid" Background="{TemplateBinding Background}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="12"/>
                                     <ColumnDefinition Width="*"/>
@@ -28,16 +28,16 @@
                                            Fill="#0065B8" Width="4" Margin="6 10 0 10" Visibility="Collapsed"/>
                                 <!-- Content area -->
                                 <Grid Grid.Column="1" Margin="8,0,0,0">
-                                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                       VerticalAlignment="Center"/>
                                 </Grid>
                             </Grid>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#E9ECEF"/>
+                                    <Setter TargetName="BackgroundGrid" Property="Background" Value="#E9ECEF"/>
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="True">
-                                    <Setter Property="Background" Value="#DEE2E6"/>
+                                    <Setter TargetName="BackgroundGrid" Property="Background" Value="#DEE2E6"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>

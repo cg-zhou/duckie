@@ -18,10 +18,10 @@
 
                 <StackPanel HorizontalAlignment="Center" Margin="0,0,0,40">
                     <!-- Description -->
-                    <common:TextEx TextWrapping="Wrap" FontSize="14" Foreground="#555" HorizontalAlignment="Center" TextAlignment="Center">
+                    <common:TextEx TextAlignment="Center" FontSize="14">
                         Image Processing and PAC Management Tool
                     </common:TextEx>
-                    <common:TextEx TextWrapping="Wrap" FontSize="14" Foreground="#555" HorizontalAlignment="Center" TextAlignment="Center">
+                    <common:TextEx TextAlignment="Center" FontSize="14" Margin="0 8 0 0">
                         A lightweight open-source utility
                     </common:TextEx>
 

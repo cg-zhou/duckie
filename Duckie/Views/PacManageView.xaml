@@ -11,7 +11,7 @@
 
     <DockPanel>
         <!-- 顶部工具栏 - 与ImageView风格一致 -->
-        <Border DockPanel.Dock="Top" Background="#F8F9FA" BorderBrush="#E9ECEF" BorderThickness="0,0,0,1" Padding="15,10">
+        <Border DockPanel.Dock="Top" Background="#F8F9FA" BorderBrush="#E9ECEF" BorderThickness="0,0,0,1" Padding="10, 6">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>

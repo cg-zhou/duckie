@@ -1,5 +1,4 @@
-﻿using Duckie.Utils.Ui;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -8,14 +7,14 @@ namespace Duckie
     public partial class MainWindow : Window
     {
         private bool _isSidebarCollapsed = false;
-        private const double CollapsedWidth = 60;
+        private const double CollapsedWidth = 54;
         private const double ExpandedWidth = 120;
 
         public MainWindow()
         {
             InitializeComponent();
             UpdateNavigationState();
-            ShowImageProcessing(); // Set default view
+            ShowImageProcessing();
         }
 
         public void Toggle()

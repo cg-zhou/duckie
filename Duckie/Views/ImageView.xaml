@@ -16,7 +16,7 @@
 
     <DockPanel>
         <!-- Modern Toolbar -->
-        <Border DockPanel.Dock="Top" Background="#F8F9FA" BorderBrush="#E9ECEF" BorderThickness="0,0,0,1" Padding="15,10">
+        <Border DockPanel.Dock="Top" Background="#F8F9FA" BorderBrush="#E9ECEF" BorderThickness="0,0,0,1" Padding="10,6">
             <DockPanel>
                 <!-- Save Button (Right) -->
                 <Button x:Name="SaveButton" Content="Export ICO" Click="ButtonSave_Click"
