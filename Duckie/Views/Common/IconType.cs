@@ -18,6 +18,11 @@ namespace Duckie.Views.Common
         MicrosoftStore,
         Email,
         Github,
-        GlobeLight
+        GlobeLight,
+        Globe,
+        ChromeMinimize,
+        ChromeMaximize,
+        ChromeRestore,
+        ChromeClose
     }
 }

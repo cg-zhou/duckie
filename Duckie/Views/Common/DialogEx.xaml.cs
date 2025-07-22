@@ -1,3 +1,4 @@
+using Duckie.Utils.Localization;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,12 +30,12 @@ namespace Duckie.Views.Common
             switch (buttons)
             {
                 case DialogButtons.OK:
-                    AddButton("OK", true, true, okHandler);
+                    AddButton(EmbeddedLocalizationManager.Instance.GetString("Btn_OK"), true, true, okHandler);
                     break;
 
                 case DialogButtons.OKCancel:
-                    AddButton("Cancel", false, false);
-                    AddButton("OK", true, true, okHandler);
+                    AddButton(EmbeddedLocalizationManager.Instance.GetString("Btn_Cancel"), false, false);
+                    AddButton(EmbeddedLocalizationManager.Instance.GetString("Btn_OK"), true, true, okHandler);
                     break;
             }
         }

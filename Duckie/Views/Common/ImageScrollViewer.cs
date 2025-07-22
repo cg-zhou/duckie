@@ -19,15 +19,13 @@ namespace Duckie.Views.Common
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            // 只有在有内容时才启用拖动
             if (Content != null)
             {
                 _isDragging = true;
                 _lastMousePosition = e.GetPosition(this);
                 CaptureMouse();
 
-                // 使用正确的手形光标
-                Cursor = Cursors.Hand;
+                Cursor = Cursors.ScrollAll;
                 e.Handled = true;
             }
             else

@@ -57,5 +57,18 @@ namespace Duckie.Services.UserConfigs
             config.Pacs = pacs;
             Set(config);
         }
+
+        public static void SetLanguage(string language)
+        {
+            var config = Get();
+            config.Language = language;
+            Set(config);
+        }
+
+        public static string GetLanguage()
+        {
+            var config = Get();
+            return config.Language ?? "en-US";
+        }
     }
 }

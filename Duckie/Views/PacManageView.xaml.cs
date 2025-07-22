@@ -1,5 +1,6 @@
 using Duckie.Services;
 using Duckie.Services.UserConfigs;
+using Duckie.Utils.Localization;
 using Duckie.Utils.Ui;
 using Duckie.Views.Common;
 using System;
@@ -59,7 +60,7 @@ namespace Duckie.Views
             }
             catch (Exception ex)
             {
-                UiUtils.Error(ex, "Failed to load PAC configurations");
+                UiUtils.Error(ex, EmbeddedLocalizationManager.Instance.GetString("Error_FailedToLoadPAC"));
             }
         }
 
@@ -106,7 +107,7 @@ namespace Duckie.Views
                 // "No PAC" item
                 var titleText = new TextBlock
                 {
-                    Text = "No PAC",
+                    Text = EmbeddedLocalizationManager.Instance.GetString("Label_NoPAC"),
                     FontSize = 14,
                     FontWeight = FontWeights.SemiBold,
                     Foreground = new SolidColorBrush(Color.FromRgb(0x33, 0x33, 0x33))
@@ -115,7 +116,7 @@ namespace Duckie.Views
 
                 var descText = new TextBlock
                 {
-                    Text = "Direct connection without proxy",
+                    Text = EmbeddedLocalizationManager.Instance.GetString("Label_DirectConnection"),
                     FontSize = 12,
                     Foreground = new SolidColorBrush(Color.FromRgb(0x66, 0x66, 0x66)),
                     Margin = new Thickness(0, 2, 0, 0)
@@ -155,7 +156,7 @@ namespace Duckie.Views
 
                 var editButton = new Button
                 {
-                    Content = "Edit",
+                    Content = EmbeddedLocalizationManager.Instance.GetString("Btn_Edit"),
                     Width = 60,
                     Height = 32,
                     Margin = new Thickness(0, 0, 8, 0),
@@ -167,7 +168,7 @@ namespace Duckie.Views
 
                 var deleteButton = new Button
                 {
-                    Content = "Delete",
+                    Content = EmbeddedLocalizationManager.Instance.GetString("Btn_Delete"),
                     Width = 70,
                     Height = 32,
                     Tag = pac
@@ -236,14 +237,16 @@ namespace Duckie.Views
                 var success = PacManagerService.ApplyPacConfig(pac);
                 if (success)
                 {
-                    var message = pac == null ? "PAC cleared" : $"Applied PAC: {pac.Name}";
+                    var message = pac == null
+                        ? EmbeddedLocalizationManager.Instance.GetString("Status_PACCleared")
+                        : EmbeddedLocalizationManager.Instance.GetString("Status_PACSwitch", pac.Name);
                     StatusText.Text = message;
                     LoadPacConfigs(); // Reload to update status
                 }
             }
             catch (Exception ex)
             {
-                UiUtils.Error(ex, "Failed to apply PAC configuration");
+                UiUtils.Error(ex, EmbeddedLocalizationManager.Instance.GetString("Error_FailedToUpdatePAC"));
             }
         }
 
@@ -260,13 +263,13 @@ namespace Duckie.Views
                 if (e.IsSuccess)
                 {
                     var message = e.CurrentConfig == null
-                        ? "PAC cleared"
-                        : $"Switched to PAC: {e.CurrentConfig.Name}";
+                        ? EmbeddedLocalizationManager.Instance.GetString("Status_PACCleared")
+                        : EmbeddedLocalizationManager.Instance.GetString("Status_PACSwitch", e.CurrentConfig.Name);
                     StatusText.Text = message;
                 }
                 else
                 {
-                    StatusText.Text = $"PAC operation failed: {e.ErrorMessage}";
+                    StatusText.Text = EmbeddedLocalizationManager.Instance.GetString("Status_PACFailed", e.ErrorMessage);
                 }
             });
         }
@@ -277,7 +280,7 @@ namespace Duckie.Views
         {
             var content = new PacEditContent();
             var dialog = DialogEx.Create(
-                "Add PAC Configuration",
+                EmbeddedLocalizationManager.Instance.GetString("Dialog_AddPAC"),
                 content,
                 DialogButtons.OKCancel,
                 (d) =>
@@ -289,19 +292,19 @@ namespace Duckie.Views
                             var success = PacManagerService.AddPacConfig(content.PacConfig.Name, content.PacConfig.Uri);
                             if (success)
                             {
-                                StatusText.Text = $"PAC configuration '{content.PacConfig.Name}' added successfully";
+                                StatusText.Text = EmbeddedLocalizationManager.Instance.GetString("Status_PACAdded", content.PacConfig.Name);
                                 LoadPacConfigs();
                                 d.DialogResult = true;
                                 d.Close();
                             }
                             else
                             {
-                                UiUtils.Warning("Failed to add PAC. Name or URL may already exist.", "Add PAC Configuration");
+                                UiUtils.Warning(EmbeddedLocalizationManager.Instance.GetString("Error_FailedToAddPAC"), EmbeddedLocalizationManager.Instance.GetString("Dialog_AddPAC"));
                             }
                         }
                         catch (Exception ex)
                         {
-                            UiUtils.Error(ex, "Failed to add PAC configuration");
+                            UiUtils.Error(ex, EmbeddedLocalizationManager.Instance.GetString("Error_FailedToAddPAC"));
                         }
                     }
                 }
@@ -316,7 +319,7 @@ namespace Duckie.Views
             {
                 var content = new PacEditContent(pac);
                 var dialog = DialogEx.Create(
-                    "Edit PAC Configuration",
+                    EmbeddedLocalizationManager.Instance.GetString("Dialog_EditPAC"),
                     content,
                     DialogButtons.OKCancel,
                     (d) =>
@@ -328,19 +331,19 @@ namespace Duckie.Views
                                 var success = PacManagerService.UpdatePacConfig(pac, content.PacConfig.Name, content.PacConfig.Uri);
                                 if (success)
                                 {
-                                    StatusText.Text = $"PAC configuration '{content.PacConfig.Name}' updated successfully";
+                                    StatusText.Text = EmbeddedLocalizationManager.Instance.GetString("Status_PACUpdated", content.PacConfig.Name);
                                     LoadPacConfigs();
                                     d.DialogResult = true;
                                     d.Close();
                                 }
                                 else
                                 {
-                                    UiUtils.Warning("Failed to update PAC configuration", "Update PAC Configuration");
+                                    UiUtils.Warning(EmbeddedLocalizationManager.Instance.GetString("Error_FailedToUpdatePAC"), EmbeddedLocalizationManager.Instance.GetString("Dialog_EditPAC"));
                                 }
                             }
                             catch (Exception ex)
                             {
-                                UiUtils.Error(ex, "Failed to update PAC configuration");
+                                UiUtils.Error(ex, EmbeddedLocalizationManager.Instance.GetString("Error_FailedToUpdatePAC"));
                             }
                         }
                     }
@@ -355,8 +358,8 @@ namespace Duckie.Views
             if (sender is Button button && button.Tag is PacConfig pac)
             {
                 var result = MessageBox.Show(
-                    $"Are you sure you want to delete PAC configuration '{pac.Name}'?",
-                    "Confirm Delete",
+                    EmbeddedLocalizationManager.Instance.GetString("Confirm_DeletePAC", pac.Name),
+                    EmbeddedLocalizationManager.Instance.GetString("Dialog_ConfirmDelete"),
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Question);
 
@@ -367,17 +370,17 @@ namespace Duckie.Views
                         var success = PacManagerService.RemovePacConfig(pac);
                         if (success)
                         {
-                            StatusText.Text = $"PAC configuration '{pac.Name}' deleted successfully";
+                            StatusText.Text = EmbeddedLocalizationManager.Instance.GetString("Status_PACDeleted", pac.Name);
                             LoadPacConfigs();
                         }
                         else
                         {
-                            UiUtils.Warning("Failed to delete PAC configuration", "Delete PAC Configuration");
+                            UiUtils.Warning(EmbeddedLocalizationManager.Instance.GetString("Error_FailedToDeletePAC"), EmbeddedLocalizationManager.Instance.GetString("Dialog_ConfirmDelete"));
                         }
                     }
                     catch (Exception ex)
                     {
-                        UiUtils.Error(ex, "Failed to delete PAC configuration");
+                        UiUtils.Error(ex, EmbeddedLocalizationManager.Instance.GetString("Error_FailedToDeletePAC"));
                     }
                 }
             }

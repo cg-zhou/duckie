@@ -4,17 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Duckie.Views"
-        xmlns:controls="clr-namespace:Duckie.Views.Controls" xmlns:common="clr-namespace:Duckie.Views.Common"
+        xmlns:controls="clr-namespace:Duckie.Views.Controls"
+        xmlns:common="clr-namespace:Duckie.Views.Common"
+        xmlns:loc="clr-namespace:Duckie.Utils.Localization"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Duckie" Height="420" Width="760">
+        Title="{loc:Localize AppTitle}" Height="420" Width="760">
+    <!-- 主内容区域 -->
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="SidebarColumn" Width="120"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="SidebarColumn" Width="120"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <!-- Left sidebar navigation -->
+            <!-- Left sidebar navigation -->
         <Border Grid.Column="0" Background="#F8F9FA" BorderBrush="#E9ECEF" BorderThickness="0,0,1,0">
             <Grid>
                 <Grid.RowDefinitions>
@@ -29,16 +32,16 @@
                 <!-- Main navigation items -->
                 <StackPanel Grid.Row="1" Margin="0,8,0,0">
                     <!-- Image Processing -->
-                    <controls:NavigationMenuItem x:Name="NavImageProcessing" IconType="Image" Text="Image" Click="MenuImageProcessing_Click"/>
+                    <controls:NavigationMenuItem x:Name="NavImageProcessing" IconType="Image" Text="{loc:Localize Nav_Image}" Click="MenuImageProcessing_Click"/>
 
                     <!-- PAC Management -->
-                    <controls:NavigationMenuItem x:Name="NavPacManagement" IconType="Network" Text="PAC" Click="MenuPacManagement_Click"/>
+                    <controls:NavigationMenuItem x:Name="NavPacManagement" IconType="Network" Text="{loc:Localize Nav_PAC}" Click="MenuPacManagement_Click"/>
                 </StackPanel>
 
                 <!-- Bottom navigation items -->
                 <StackPanel Grid.Row="2" Margin="0,16,0,16">
                     <!-- About -->
-                    <controls:NavigationMenuItem x:Name="NavAbout" IconType="InformationLine" Text="About" Click="MenuAbout_Click"/>
+                    <controls:NavigationMenuItem x:Name="NavAbout" IconType="InformationLine" Text="{loc:Localize Nav_About}" Click="MenuAbout_Click"/>
                 </StackPanel>
             </Grid>
         </Border>

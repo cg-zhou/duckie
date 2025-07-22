@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Duckie.Views"
              xmlns:common="clr-namespace:Duckie.Views.Common"
+             xmlns:loc="clr-namespace:Duckie.Utils.Localization"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              AllowDrop="True"
@@ -19,7 +20,7 @@
         <Border DockPanel.Dock="Top" Background="#F8F9FA" BorderBrush="#E9ECEF" BorderThickness="0,0,0,1" Padding="10,6">
             <DockPanel>
                 <!-- Save Button (Right) -->
-                <Button x:Name="SaveButton" Content="Export ICO" Click="ButtonSave_Click"
+                <Button x:Name="SaveButton" Content="{loc:Localize Btn_ExportICO}" Click="ButtonSave_Click"
                         Style="{StaticResource ModernButtonStyle}" DockPanel.Dock="Right" IsEnabled="False"/>
 
                 <!-- Separator -->
@@ -28,7 +29,7 @@
                 <!-- Main Toolbar (Left) -->
                 <StackPanel Orientation="Horizontal">
                     <!-- Open Button -->
-                    <Button Content="Open" Click="ButtonOpen_Click"
+                    <Button Content="{loc:Localize Btn_Open}" Click="ButtonOpen_Click"
                             Style="{StaticResource ModernButtonStyle}"/>
 
                     <!-- Separator -->
@@ -37,19 +38,19 @@
                     <!-- Transform Group -->
                     <StackPanel Orientation="Horizontal">
                         <!-- Rotate 270° Counter-clockwise (Left) -->
-                        <common:IconButton x:Name="RotateLeftButton" Click="ButtonRotate270_Click" ToolTip="Rotate 90° Counter-clockwise"
+                        <common:IconButton x:Name="RotateLeftButton" Click="ButtonRotate270_Click" ToolTip="{loc:Localize Tooltip_RotateLeft}"
                                            Margin="0,0,4,0" IconType="ArrowCounterClockwise" IsEnabled="False"/>
 
                         <!-- Rotate 90° Clockwise (Right) -->
-                        <common:IconButton x:Name="RotateRightButton" Click="ButtonRotate90_Click" ToolTip="Rotate 90° Clockwise"
+                        <common:IconButton x:Name="RotateRightButton" Click="ButtonRotate90_Click" ToolTip="{loc:Localize Tooltip_RotateRight}"
                                            Margin="0,0,8,0" IconType="ArrowClockwise" IsEnabled="False"/>
 
                         <!-- Flip Horizontal -->
-                        <common:IconButton x:Name="FlipHButton" Click="ButtonFlipH_Click" ToolTip="Flip Horizontal"
+                        <common:IconButton x:Name="FlipHButton" Click="ButtonFlipH_Click" ToolTip="{loc:Localize Tooltip_FlipHorizontal}"
                                            Margin="0,0,4,0" IconType="FlipHorizontalFill" IsEnabled="False"/>
 
                         <!-- Flip Vertical -->
-                        <common:IconButton x:Name="FlipVButton" Click="ButtonFlipV_Click" ToolTip="Flip Vertical"
+                        <common:IconButton x:Name="FlipVButton" Click="ButtonFlipV_Click" ToolTip="{loc:Localize Tooltip_FlipVertical}"
                                            IconType="FlipVerticalFill" IsEnabled="False"/>
                     </StackPanel>
 
@@ -58,16 +59,16 @@
 
                     <!-- Zoom Group -->
                     <StackPanel Orientation="Horizontal">
-                        <common:IconButton x:Name="ZoomOutButton" Click="ButtonZoomOut_Click" ToolTip="Zoom Out"
+                        <common:IconButton x:Name="ZoomOutButton" Click="ButtonZoomOut_Click" ToolTip="{loc:Localize Tooltip_ZoomOut}"
                                            Margin="0,0,4,0" IconType="ZoomOut" IsEnabled="False"/>
 
                         <Slider x:Name="ZoomSlider" Width="80" Minimum="0.1" Maximum="3.0" Value="1.0"
                                 VerticalAlignment="Center" Margin="0,0,4,0" ValueChanged="ZoomSlider_ValueChanged" IsEnabled="False"/>
 
-                        <common:IconButton x:Name="ZoomInButton" Click="ButtonZoomIn_Click" ToolTip="Zoom In"
+                        <common:IconButton x:Name="ZoomInButton" Click="ButtonZoomIn_Click" ToolTip="{loc:Localize Tooltip_ZoomIn}"
                                            Margin="0,0,8,0" IconType="ZoomIn" IsEnabled="False"/>
 
-                        <common:IconButton x:Name="FitToWindowButton" Click="ButtonZoomFit_Click" ToolTip="Fit to Window"
+                        <common:IconButton x:Name="FitToWindowButton" Click="ButtonZoomFit_Click" ToolTip="{loc:Localize Tooltip_FitToWindow}"
                                            IconType="ExpandSolid" IsEnabled="False"/>
                     </StackPanel>
                 </StackPanel>
@@ -75,7 +76,7 @@
         </Border>
         <StatusBar DockPanel.Dock="Bottom" Height="25" Padding="6 0">
             <StatusBarItem>
-                <TextBlock x:Name="StatusText" Text="Ready" />
+                <TextBlock x:Name="StatusText" Text="{loc:Localize Status_Ready}" />
             </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Right">
                 <TextBlock x:Name="ImageInfoText" Text="" />

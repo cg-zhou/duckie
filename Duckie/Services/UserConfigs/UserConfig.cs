@@ -7,5 +7,6 @@ namespace Duckie.Services.UserConfigs
     {
         public ProxyConfig Proxy { get; set; } = new ProxyConfig();
         public PacConfig[] Pacs { get; set; } = new PacConfig[0];
+        public string Language { get; set; } = "en-US";
     }
 }

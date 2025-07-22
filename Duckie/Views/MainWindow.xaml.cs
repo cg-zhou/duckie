@@ -1,4 +1,10 @@
-﻿using System.Windows;
+﻿using Duckie.Utils.Localization;
+using Duckie.Views.Common;
+using System;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -124,7 +130,7 @@ namespace Duckie
             UpdateNavigationState();
             NavImageProcessing.IsSelected = true;
 
-            Title = "Duckie - Image";
+            Title = EmbeddedLocalizationManager.Instance.GetString("Title_Image");
         }
 
         private void ShowPacManagement()
@@ -137,7 +143,7 @@ namespace Duckie
             UpdateNavigationState();
             NavPacManagement.IsSelected = true;
 
-            Title = "Duckie - PAC";
+            Title = EmbeddedLocalizationManager.Instance.GetString("Title_PAC");
         }
 
         private void ShowAbout()
@@ -150,7 +156,7 @@ namespace Duckie
             UpdateNavigationState();
             NavAbout.IsSelected = true;
 
-            Title = "Duckie - About";
+            Title = EmbeddedLocalizationManager.Instance.GetString("Title_About");
         }
     }
 }
