@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Duckie.Utils.Ui;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Duckie.Views.Common
@@ -9,6 +10,7 @@ namespace Duckie.Views.Common
         {
             IsReadOnly = true;
             BorderThickness = new Thickness(0);
+            Background = ThemeUtils.NoneBrush;
         }
     }
 }

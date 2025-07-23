@@ -423,7 +423,7 @@ namespace Duckie.Utils.Localization
         /// <returns>本地化字符串</returns>
         public static string Localize(this string key, params object[] args)
         {
-            return EmbeddedLocalizationManager.Instance.GetString(key, args);
+            return LocUtils.GetString(key, args);
         }
     }
 }

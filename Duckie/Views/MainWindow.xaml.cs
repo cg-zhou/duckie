@@ -130,7 +130,7 @@ namespace Duckie
             UpdateNavigationState();
             NavImageProcessing.IsSelected = true;
 
-            Title = EmbeddedLocalizationManager.Instance.GetString("Title_Image");
+            Title = LocUtils.GetString("Title_Image");
         }
 
         private void ShowPacManagement()
@@ -143,7 +143,7 @@ namespace Duckie
             UpdateNavigationState();
             NavPacManagement.IsSelected = true;
 
-            Title = EmbeddedLocalizationManager.Instance.GetString("Title_PAC");
+            Title = LocUtils.GetString("Title_PAC");
         }
 
         private void ShowAbout()
@@ -156,7 +156,7 @@ namespace Duckie
             UpdateNavigationState();
             NavAbout.IsSelected = true;
 
-            Title = EmbeddedLocalizationManager.Instance.GetString("Title_About");
+            Title = LocUtils.GetString("Title_About");
         }
     }
 }

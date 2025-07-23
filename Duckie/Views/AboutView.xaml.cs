@@ -31,15 +31,15 @@ namespace Duckie.Views
 
         private void ShowMsixInfo(string packageName)
         {
-            RuntimeTitle.Text = EmbeddedLocalizationManager.Instance.GetString("MSIXPackage", packageName);
-            RuntimeDescription.Text = EmbeddedLocalizationManager.Instance.GetString("MSIXRestriction");
+            RuntimeTitle.Text = LocUtils.GetString("MSIXPackage", packageName);
+            RuntimeDescription.Text = LocUtils.GetString("MSIXRestriction");
             RuntimeInfoBorder.Visibility = Visibility.Visible;
         }
 
         private void InitializeLanguageComboBox()
         {
             // 设置当前选中的语言
-            var currentCulture = EmbeddedLocalizationManager.Instance.CurrentCulture;
+            var currentCulture = LocUtils.CurrentCulture;
             var currentLanguageTag = currentCulture.Name;
 
             foreach (ComboBoxItem item in LanguageComboBox.Items)
@@ -75,7 +75,7 @@ namespace Duckie.Views
             {
                 if (toggleButton.Template?.FindName("LanguageText", toggleButton) is TextBlock languageText)
                 {
-                    var currentCulture = EmbeddedLocalizationManager.Instance.CurrentCulture;
+                    var currentCulture = LocUtils.CurrentCulture;
                     languageText.Text = currentCulture.Name == "zh-CN" ? "简体中文" : "English";
                 }
             }

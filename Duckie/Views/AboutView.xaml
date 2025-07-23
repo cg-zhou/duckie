@@ -9,7 +9,7 @@
              d:DesignHeight="450" d:DesignWidth="800"
              Background="White">
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-        <DockPanel Margin="0 40" MaxWidth="600" HorizontalAlignment="Center">
+        <DockPanel Margin="0 30" MaxWidth="600" HorizontalAlignment="Center">
             <StackPanel DockPanel.Dock="Top">
                 <!-- App Title -->
                 <StackPanel HorizontalAlignment="Center" Margin="0,0,0,20">
@@ -17,7 +17,7 @@
                     <common:TextEx Text="{loc:Localize Version}" FontSize="14" Foreground="#666" Margin="0,4,0,0" HorizontalAlignment="Center"/>
                 </StackPanel>
 
-                <StackPanel HorizontalAlignment="Center" Margin="0,0,0,40">
+                <StackPanel HorizontalAlignment="Center" Margin="0,0,0,30">
                     <!-- Description -->
                     <common:TextEx TextAlignment="Center" FontSize="14" Text="{loc:Localize AppDescription}"/>
                     <common:TextEx TextAlignment="Center" FontSize="14" Margin="0 8 0 0" Text="{loc:Localize AppSubtitle}"/>
@@ -28,16 +28,13 @@
                         <StackPanel>
                             <common:TextEx x:Name="RuntimeTitle" FontSize="12" FontWeight="SemiBold" Foreground="#495057" HorizontalAlignment="Center"/>
                             <common:TextEx x:Name="RuntimeDescription" FontSize="11" Foreground="#6C757D" Margin="0,2,0,0" 
-                                   HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                           HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
                         </StackPanel>
                     </Border>
                 </StackPanel>
 
                 <!-- Settings Section -->
-                <StackPanel HorizontalAlignment="Center" Margin="0,20,0,40">
-                    <common:TextEx Text="{loc:Localize Settings}" FontSize="16" FontWeight="SemiBold"
-                                   Foreground="#333" HorizontalAlignment="Center" Margin="0,0,0,16"/>
-
+                <StackPanel HorizontalAlignment="Center" Margin="0,0,0,40">
                     <!-- Language Setting -->
                     <Border Background="#F8F9FA" BorderBrush="#DEE2E6" BorderThickness="1"
                             CornerRadius="6" Padding="16" MaxWidth="300">
@@ -49,12 +46,10 @@
                             </Grid.ColumnDefinitions>
 
                             <!-- Language Icon -->
-                            <Path Grid.Column="0" Data="{StaticResource Globe}"
-                                  Fill="#666" Stretch="Uniform" Width="16" Height="16"
-                                  VerticalAlignment="Center" Margin="0,0,12,0"/>
+                            <common:IconEx IconType="Earth"/>
 
                             <!-- Language Label -->
-                            <common:TextEx Grid.Column="1" Text="{loc:Localize Nav_Language}"
+                            <common:TextEx Grid.Column="1" Text="{loc:Localize Nav_Language}" Margin="8 0 10 0"
                                            FontSize="14" Foreground="#333" VerticalAlignment="Center"/>
 
                             <!-- Language ComboBox -->
@@ -148,7 +143,7 @@
 
             <!-- Links Section -->
             <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" DockPanel.Dock="Bottom">
-                <common:LinkEx IconType="GlobeLight" NavigateUri="https://cg-zhou.top"
+                <common:LinkEx IconType="Globe" NavigateUri="https://cg-zhou.top"
                                Text="Duckie" VerticalAlignment="Center" Margin="10 0"/>
 
                 <common:LinkEx IconType="MicrosoftStore" NavigateUri="https://apps.microsoft.com/detail/9msz8m2wxzc4"

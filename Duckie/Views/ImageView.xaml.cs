@@ -58,7 +58,7 @@ namespace Duckie.Views
             ButtonZoomFit_Click(null, null);
 
             // Update status
-            StatusText.Text = EmbeddedLocalizationManager.Instance.GetString("Status_Loaded", Path.GetFileName(filePath));
+            StatusText.Text = LocUtils.GetString("Status_Loaded", Path.GetFileName(filePath));
             ImageInfoText.Text = $"{bitmapImage.PixelWidth} × {bitmapImage.PixelHeight} pixels";
         }
 
@@ -116,7 +116,7 @@ namespace Duckie.Views
             }
             catch (Exception exception)
             {
-                UiUtils.Error(exception, EmbeddedLocalizationManager.Instance.GetString("Error_FailedToOpenImage", selectedPath));
+                UiUtils.Error(exception, LocUtils.GetString("Error_FailedToOpenImage", selectedPath));
             }
         }
 
@@ -124,7 +124,7 @@ namespace Duckie.Views
         {
             if (image.Source == null)
             {
-                UiUtils.Warning(EmbeddedLocalizationManager.Instance.GetString("Error_PleaseOpenImage"), EmbeddedLocalizationManager.Instance.GetString("Error_SaveImage"));
+                UiUtils.Warning(LocUtils.GetString("Error_PleaseOpenImage"), LocUtils.GetString("Error_SaveImage"));
                 return;
             }
 
@@ -138,7 +138,7 @@ namespace Duckie.Views
                 .ToIco();
             File.WriteAllBytes(icoPath, ico);
 
-            UiUtils.Info(EmbeddedLocalizationManager.Instance.GetString("Success_IconExported", icoPath));
+            UiUtils.Info(LocUtils.GetString("Success_IconExported", icoPath));
         }
 
 
@@ -204,7 +204,7 @@ namespace Duckie.Views
             }
             catch (Exception ex)
             {
-                UiUtils.Error(ex, EmbeddedLocalizationManager.Instance.GetString("Error_FailedToRotateImage"));
+                UiUtils.Error(ex, LocUtils.GetString("Error_FailedToRotateImage"));
             }
         }
 
@@ -246,7 +246,7 @@ namespace Duckie.Views
             }
             catch (Exception ex)
             {
-                UiUtils.Error(ex, EmbeddedLocalizationManager.Instance.GetString("Error_FailedToFlipImage"));
+                UiUtils.Error(ex, LocUtils.GetString("Error_FailedToFlipImage"));
             }
         }
 
@@ -293,7 +293,7 @@ namespace Duckie.Views
                     }
                     catch (Exception exception)
                     {
-                        UiUtils.Error(exception, EmbeddedLocalizationManager.Instance.GetString("Error_FailedToOpenImage", imageFiles[0]));
+                        UiUtils.Error(exception, LocUtils.GetString("Error_FailedToOpenImage", imageFiles[0]));
                     }
                 }
             }

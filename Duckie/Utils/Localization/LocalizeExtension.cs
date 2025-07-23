@@ -71,7 +71,7 @@ namespace Duckie.Utils.Localization
             }
 
             // 否则直接返回当前值
-            return EmbeddedLocalizationManager.Instance.GetString(Key, Args);
+            return LocUtils.GetString(Key, Args);
         }
     }
 
@@ -93,7 +93,7 @@ namespace Duckie.Utils.Localization
         {
             if (parameter is LocalizationParameter param && !string.IsNullOrEmpty(param.Key))
             {
-                return EmbeddedLocalizationManager.Instance.GetString(param.Key, param.Args);
+                return LocUtils.GetString(param.Key, param.Args);
             }
 
             return "[Invalid Parameter]";
@@ -102,40 +102,6 @@ namespace Duckie.Utils.Localization
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
-        }
-    }
-
-    /// <summary>
-    /// 简化的本地化标记扩展，直接返回字符串值
-    /// 使用方式：{local:Loc ResourceKey}
-    /// </summary>
-    public class LocExtension : MarkupExtension
-    {
-        public string Key { get; set; }
-
-        public LocExtension()
-        {
-        }
-
-        public LocExtension(string key)
-        {
-            Key = key;
-        }
-
-        public override object ProvideValue(IServiceProvider serviceProvider)
-        {
-            if (string.IsNullOrEmpty(Key))
-            {
-                return "[Missing Key]";
-            }
-
-            // 在设计时返回键名
-            if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
-            {
-                return $"[{Key}]";
-            }
-
-            return EmbeddedLocalizationManager.Instance.GetString(Key);
         }
     }
 }
