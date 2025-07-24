@@ -27,6 +27,12 @@ namespace Duckie.Utils
         public static string EntryAssemblyName { get; }
         public static string EntryAssemblyNameWithoutExtension { get; }
 
+        public static string GetAppVersion()
+        {
+            var version = EntryAssembly.GetName().Version;
+            return $"{version.Major}.{version.Minor}.{version.Build}";
+        }
+
         public static bool TryGetEmbeddedResource(string fileName, out Stream stream)
         {
             var resourceName = $"{EntryAssemblyNameWithoutExtension}.EmbeddedResources.{fileName}";

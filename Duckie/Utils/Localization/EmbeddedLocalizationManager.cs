@@ -1,8 +1,8 @@
+using Duckie.Services.UserConfigs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using Duckie.Services.UserConfigs;
 using System.Threading;
 
 namespace Duckie.Utils.Localization
@@ -15,7 +15,7 @@ namespace Duckie.Utils.Localization
     {
         private static EmbeddedLocalizationManager _instance;
         private static readonly object _lock = new object();
-        
+
         private CultureInfo _currentCulture;
         private readonly Dictionary<string, Dictionary<string, string>> _resources;
 
@@ -41,10 +41,10 @@ namespace Duckie.Utils.Localization
         {
             _resources = new Dictionary<string, Dictionary<string, string>>();
             InitializeResources();
-            
+
             // 设置默认文化
             _currentCulture = CultureInfo.CurrentUICulture;
-            
+
             // 应用当前文化
             ApplyCulture(_currentCulture);
         }
@@ -88,7 +88,7 @@ namespace Duckie.Utils.Localization
             try
             {
                 var cultureName = _currentCulture.Name;
-                
+
                 // 尝试获取当前文化的资源
                 if (_resources.TryGetValue(cultureName, out var cultureResources) &&
                     cultureResources.TryGetValue(key, out var value))
@@ -202,19 +202,19 @@ namespace Duckie.Utils.Localization
                 ["AppTitle"] = "Duckie",
                 ["AppDescription"] = "Image Processing and PAC Management Tool",
                 ["AppSubtitle"] = "A lightweight open-source utility",
-                
+
                 // Navigation
                 ["Nav_Image"] = "Image",
                 ["Nav_PAC"] = "PAC",
                 ["Nav_About"] = "About",
                 ["Nav_Language"] = "Language",
                 ["Settings"] = "Settings",
-                
+
                 // Window Titles
                 ["Title_Image"] = "Duckie - Image",
                 ["Title_PAC"] = "Duckie - PAC",
                 ["Title_About"] = "Duckie - About",
-                
+
                 // Image Processing
                 ["Btn_Open"] = "Open",
                 ["Btn_ExportICO"] = "Export ICO",
@@ -225,20 +225,20 @@ namespace Duckie.Utils.Localization
                 ["Tooltip_ZoomIn"] = "Zoom In",
                 ["Tooltip_ZoomOut"] = "Zoom Out",
                 ["Tooltip_FitToWindow"] = "Fit to Window",
-                
+
                 // PAC Management
                 ["Btn_AddPAC"] = "Add PAC",
                 ["Btn_Edit"] = "Edit",
                 ["Btn_Delete"] = "Delete",
                 ["Label_NoPAC"] = "No PAC",
                 ["Label_DirectConnection"] = "Direct Connection",
-                
+
                 // Dialog Titles
                 ["Dialog_AddPAC"] = "Add PAC Configuration",
                 ["Dialog_EditPAC"] = "Edit PAC Configuration",
                 ["Dialog_LanguageSettings"] = "Language Settings",
                 ["Dialog_ConfirmDelete"] = "Confirm Delete",
-                
+
                 // Form Labels
                 ["Label_ConfigName"] = "Configuration Name:",
                 ["Label_PACURL"] = "PAC URL:",
@@ -248,7 +248,7 @@ namespace Duckie.Utils.Localization
                 ["Label_SelectLanguage"] = "Select Language:",
                 ["Label_LanguageNote"] = "Note: Language changes will take effect immediately.",
                 ["Label_LanguageRestart"] = "Some UI elements may require application restart to fully update.",
-                
+
                 // Status Messages
                 ["Status_Ready"] = "Ready",
                 ["Status_Loaded"] = "Loaded: {0}",
@@ -258,7 +258,7 @@ namespace Duckie.Utils.Localization
                 ["Status_PACCleared"] = "PAC cleared",
                 ["Status_PACSwitch"] = "Switched to PAC: {0}",
                 ["Status_PACFailed"] = "PAC operation failed: {0}",
-                
+
                 // Error Messages
                 ["Error_Warning"] = "Warning",
                 ["Error_Error"] = "Error",
@@ -272,21 +272,21 @@ namespace Duckie.Utils.Localization
                 ["Error_FailedToLoadPAC"] = "Failed to load PAC configurations",
                 ["Error_FailedToRotateImage"] = "Failed to rotate image",
                 ["Error_FailedToFlipImage"] = "Failed to flip image",
-                
+
                 // Success Messages
                 ["Success_IconExported"] = "The icon has been exported: {0}",
-                
+
                 // Common Buttons
                 ["Btn_OK"] = "OK",
                 ["Btn_Cancel"] = "Cancel",
                 ["Btn_Yes"] = "Yes",
                 ["Btn_No"] = "No",
-                
+
                 // Confirmation Messages
                 ["Confirm_DeletePAC"] = "Are you sure you want to delete PAC configuration '{0}'?",
-                
+
                 // Version Info
-                ["Version"] = "Version 1.0",
+                ["Version"] = $"Version {AppUtils.GetAppVersion()}",
                 ["MSIXPackage"] = "MSIX Package: {0}",
                 ["MSIXRestriction"] = "Some features may be limited due to Microsoft Store restrictions"
             };
@@ -384,7 +384,7 @@ namespace Duckie.Utils.Localization
                 ["Confirm_DeletePAC"] = "确定要删除PAC配置 '{0}' 吗？",
 
                 // Version Info
-                ["Version"] = "版本 1.0",
+                ["Version"] = $"版本 {AppUtils.GetAppVersion()}",
                 ["MSIXPackage"] = "MSIX包：{0}",
                 ["MSIXRestriction"] = "由于Microsoft Store限制，某些功能可能受限"
             };

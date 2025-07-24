@@ -29,7 +29,7 @@
 
         <!-- 主内容区域 - 与ImageView风格一致 -->
         <DockPanel>
-            <StatusBar DockPanel.Dock="Bottom" Height="25" Padding="6 0">
+            <StatusBar DockPanel.Dock="Bottom" Height="30" Padding="6 0" Background="#EEEEF2">
                 <StatusBarItem>
                     <TextBlock x:Name="StatusText" Text="{loc:Localize Status_Ready}" />
                 </StatusBarItem>

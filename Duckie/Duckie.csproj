@@ -5,6 +5,7 @@
     <UseWPF>true</UseWPF>
     <ApplicationIcon>EmbeddedResources\duck.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Version>0.4.0</Version>
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="EmbeddedResources\duck.ico" />
