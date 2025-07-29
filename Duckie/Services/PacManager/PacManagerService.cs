@@ -3,7 +3,7 @@ using Duckie.Utils.Registry;
 using System;
 using System.Linq;
 
-namespace Duckie.Services
+namespace Duckie.Services.PacManager
 {
     /// <summary>
     /// PAC management service, responsible for PAC configuration switching, application and status management

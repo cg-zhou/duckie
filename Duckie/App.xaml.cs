@@ -1,4 +1,5 @@
-﻿using Duckie.Utils.Localization;
+﻿using Duckie.Utils.HotKeys;
+using Duckie.Utils.Localization;
 using Duckie.Utils.Ui;
 using System.Windows;
 using System.Windows.Threading;
@@ -20,6 +21,8 @@ namespace Duckie
             LocUtils.Initialize();
 
             NotifyIconUtils.Initialize();
+
+            HotKeyManager.RegisterServices();
         }
 
         private void Application_Exit(object sender, ExitEventArgs e)

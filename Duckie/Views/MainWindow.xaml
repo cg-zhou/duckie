@@ -9,6 +9,7 @@
         xmlns:loc="clr-namespace:Duckie.Utils.Localization"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
+        Closing="Window_Closing"
         Title="{loc:Localize AppTitle}" Height="420" Width="760">
     <!-- 主内容区域 -->
     <Grid>
@@ -40,6 +41,9 @@
 
                 <!-- Bottom navigation items -->
                 <StackPanel Grid.Row="2" Margin="0,16,0,16">
+                    <!-- Settings -->
+                    <controls:NavigationMenuItem x:Name="NavSettings" IconType="SettingLine" Text="{loc:Localize Nav_Settings}" Click="MenuSettings_Click"/>
+                    
                     <!-- About -->
                     <controls:NavigationMenuItem x:Name="NavAbout" IconType="InformationLine" Text="{loc:Localize Nav_About}" Click="MenuAbout_Click"/>
                 </StackPanel>
@@ -53,6 +57,9 @@
 
             <!-- PAC management area -->
             <local:PacManageView x:Name="PacManageViewControl" Margin="10" Visibility="Collapsed"/>
+
+            <!-- Settings area -->
+            <local:SettingsView x:Name="SettingsViewControl" Margin="10" Visibility="Collapsed"/>
 
             <!-- About area -->
             <local:AboutView x:Name="AboutViewControl" Margin="10" Visibility="Collapsed"/>

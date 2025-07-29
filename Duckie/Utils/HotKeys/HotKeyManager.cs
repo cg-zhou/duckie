@@ -1,11 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Duckie.Utils.HotKeys
 {
     internal static partial class HotKeyManager
     {
+        public static IHotKeyService[] GetHotKeyServices()
+        {
+            return typeof(HotKeyManager).Assembly
+                .GetTypes()
+                .Where(x => x.GetInterfaces().Contains(typeof(IHotKeyService)))
+                .Select(x => Activator.CreateInstance(x))
+                .OfType<IHotKeyService>()
+                .ToArray();
+        }
+
+        public static void RegisterServices()
+        {
+            var hotKeyServices = GetHotKeyServices();
+            foreach (var hotKeyService in hotKeyServices)
+            {
+                Register(hotKeyService, hotKeyService.Modifiers, hotKeyService.Keys);
+            }
+        }
+
         static HotKeyManager()
         {
             form = new HotKeyForm();
@@ -14,54 +34,56 @@ namespace Duckie.Utils.HotKeys
 
         private static void Form_KeyPressed(object sender, int id)
         {
-            if (items.TryGetValue(id, out var item))
+            foreach (var item in items.Where(x => x.Id == id))
             {
-                item.Action.Invoke();
+                item.Service.Run();
             }
         }
 
         private static int id = 9527;
 
-        private static Dictionary<int, HotKeyItem> items { get; set; } = new Dictionary<int, HotKeyItem>();
+        private static List<HotKeyItem> items { get; set; } = new List<HotKeyItem>();
         private static HotKeyForm form = new HotKeyForm();
         private static object lockObj = new object();
 
-        public static int Register(KeyModifiers modifiers, Keys keys, Action action)
+        public static int Register(IHotKeyService hotKeyService, KeyModifiers modifiers, Keys keys)
         {
+            Unregister(hotKeyService);
+
             lock (lockObj)
             {
                 ++id;
 
-                var hotKeyItem = new HotKeyItem
+                var item = new HotKeyItem
                 {
                     Id = id,
-                    Modifiers = modifiers,
-                    Keys = keys,
-                    Action = action
+                    Service = hotKeyService
                 };
 
-                items[hotKeyItem.Id] = hotKeyItem;
+                items.Add(item);
 
-                Interop.RegisterHotKey(form.Handle, hotKeyItem.Id, modifiers, keys);
+                Interop.RegisterHotKey(form.Handle, item.Id, modifiers, keys);
 
                 return id;
             }
         }
 
-        public static void Unregister(IEnumerable<int> ids)
+        public static void Unregister(IHotKeyService hotKeyService)
         {
             lock (lockObj)
             {
-                foreach (var id in ids)
+                var removedIds = new List<int>();
+                foreach (var item in items)
                 {
-                    Interop.UnregisterHotKey(form.Handle, id);
+                    if (item.Service.Name == hotKeyService.Name)
+                    {
+                        removedIds.Add(item.Id);
+                        Interop.UnregisterHotKey(form.Handle, item.Id);
+                    }
                 }
-            }
-        }
 
-        public static void Unregister(int id)
-        {
-            Unregister(new[] { id });
+                items.RemoveAll(x => removedIds.Contains(x.Id));
+            }
         }
     }
 }

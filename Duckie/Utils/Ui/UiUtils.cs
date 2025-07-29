@@ -38,5 +38,10 @@ namespace Duckie.Utils.Ui
                 : $"{text}{Environment.NewLine}{LocUtils.GetString("Error_Exception", e.Message + e.InnerException?.Message)}";
             MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
+        public static void BeginInvoke(Action action)
+        {
+            App.MainWindow.Dispatcher.BeginInvoke(action);
+        }
     }
 }

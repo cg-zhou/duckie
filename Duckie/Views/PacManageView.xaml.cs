@@ -1,4 +1,4 @@
-using Duckie.Services;
+using Duckie.Services.PacManager;
 using Duckie.Services.UserConfigs;
 using Duckie.Utils.Localization;
 using Duckie.Utils.Ui;

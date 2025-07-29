@@ -23,6 +23,8 @@ namespace Duckie.Views.Common
         ChromeMinimize,
         ChromeMaximize,
         ChromeRestore,
-        ChromeClose
+        ChromeClose,
+        SettingLine,
+        Delete
     }
 }

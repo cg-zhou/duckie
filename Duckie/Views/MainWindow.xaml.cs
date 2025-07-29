@@ -1,10 +1,7 @@
 ﻿using Duckie.Utils.Localization;
-using Duckie.Views.Common;
-using System;
+using Duckie.Utils.Ui;
+using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -105,6 +102,14 @@ namespace Duckie
         }
 
         /// <summary>
+        /// Show settings page
+        /// </summary>
+        private void MenuSettings_Click(object sender, RoutedEventArgs e)
+        {
+            ShowSettings();
+        }
+
+        /// <summary>
         /// Update navigation button states with visual feedback
         /// </summary>
         private void UpdateNavigationState()
@@ -112,6 +117,7 @@ namespace Duckie
             // Reset all navigation buttons
             NavImageProcessing.IsSelected = false;
             NavPacManagement.IsSelected = false;
+            NavSettings.IsSelected = false;
             NavAbout.IsSelected = false;
         }
 
@@ -124,6 +130,7 @@ namespace Duckie
         {
             ImageViewControl.Visibility = Visibility.Visible;
             PacManageViewControl.Visibility = Visibility.Collapsed;
+            SettingsViewControl.Visibility = Visibility.Collapsed;
             AboutViewControl.Visibility = Visibility.Collapsed;
 
             // Update navigation state
@@ -137,6 +144,7 @@ namespace Duckie
         {
             ImageViewControl.Visibility = Visibility.Collapsed;
             PacManageViewControl.Visibility = Visibility.Visible;
+            SettingsViewControl.Visibility = Visibility.Collapsed;
             AboutViewControl.Visibility = Visibility.Collapsed;
 
             // Update navigation state
@@ -146,10 +154,25 @@ namespace Duckie
             Title = LocUtils.GetString("Title_PAC");
         }
 
+        private void ShowSettings()
+        {
+            ImageViewControl.Visibility = Visibility.Collapsed;
+            PacManageViewControl.Visibility = Visibility.Collapsed;
+            SettingsViewControl.Visibility = Visibility.Visible;
+            AboutViewControl.Visibility = Visibility.Collapsed;
+
+            // Update navigation state
+            UpdateNavigationState();
+            NavSettings.IsSelected = true;
+
+            Title = LocUtils.GetString("Title_Settings");
+        }
+
         private void ShowAbout()
         {
             ImageViewControl.Visibility = Visibility.Collapsed;
             PacManageViewControl.Visibility = Visibility.Collapsed;
+            SettingsViewControl.Visibility = Visibility.Collapsed;
             AboutViewControl.Visibility = Visibility.Visible;
 
             // Update navigation state
@@ -157,6 +180,14 @@ namespace Duckie
             NavAbout.IsSelected = true;
 
             Title = LocUtils.GetString("Title_About");
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            if (!UiUtils.Confirm("Are you sure to exit?", "Exit"))
+            {
+                e.Cancel = true;
+            }
         }
     }
 }

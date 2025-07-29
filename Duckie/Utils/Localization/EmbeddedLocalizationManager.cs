@@ -207,6 +207,7 @@ namespace Duckie.Utils.Localization
                 ["Nav_Image"] = "Image",
                 ["Nav_PAC"] = "PAC",
                 ["Nav_About"] = "About",
+                ["Nav_Settings"] = "Settings",
                 ["Nav_Language"] = "Language",
                 ["Settings"] = "Settings",
 
@@ -305,6 +306,7 @@ namespace Duckie.Utils.Localization
                 ["Nav_Image"] = "图像",
                 ["Nav_PAC"] = "代理",
                 ["Nav_About"] = "关于",
+                ["Nav_Settings"] = "设置",
                 ["Nav_Language"] = "语言",
                 ["Settings"] = "设置",
 
