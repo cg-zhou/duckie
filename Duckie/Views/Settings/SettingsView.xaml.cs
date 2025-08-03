@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -59,15 +61,18 @@ namespace Duckie.Views
             var hotKeyServices = HotKeyManager.GetHotKeyServices();
             foreach (var service in hotKeyServices)
             {
-                var item = new HotKeySettingsItem
+                foreach (var hotKeyAction in service.Register())
                 {
-                    Service = service,
-                    Name = service.Name,
-                    Modifiers = service.Modifiers,
-                    Keys = service.Keys
-                };
-                item.UpdateHotKeyDisplay();
-                HotKeyItems.Add(item);
+                    var item = new HotKeySettingsItem
+                    {
+                        HotKeyAction = hotKeyAction,
+                        Name = hotKeyAction.Name,
+                        Modifiers = hotKeyAction.Modifiers,
+                        Keys = hotKeyAction.Keys
+                    };
+                    item.UpdateHotKeyDisplay();
+                    HotKeyItems.Add(item);
+                }
             }
         }
 
@@ -118,30 +123,54 @@ namespace Duckie.Views
                 return;
             }
 
+            var key = e.Key;
+            if (e.Key == Key.System)
+            {
+                key = e.SystemKey;
+            }
+            else if (e.Key == Key.ImeProcessed)
+            {
+                key = e.ImeProcessedKey;
+            }
+
             // 忽略修饰键单独按下
-            if (e.Key == Key.LeftCtrl || e.Key == Key.RightCtrl ||
-                e.Key == Key.LeftAlt || e.Key == Key.RightAlt ||
-                e.Key == Key.LeftShift || e.Key == Key.RightShift ||
-                e.Key == Key.LWin || e.Key == Key.RWin)
+            if (key == Key.LeftCtrl || key == Key.RightCtrl ||
+                key == Key.LeftAlt || key == Key.RightAlt ||
+                key == Key.LeftShift || key == Key.RightShift ||
+                key == Key.LWin || key == Key.RWin)
             {
                 return;
             }
 
+            Debug.WriteLine($"{key} {e.Key} {e.SystemKey} {e.ImeProcessedKey} {Keyboard.IsKeyDown(Key.LeftShift)} {Keyboard.IsKeyDown(Key.LeftAlt)}");
+
             // 获取修饰键
             var modifiers = KeyModifiers.None;
             if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+            {
                 modifiers |= KeyModifiers.Control;
+            }
+
             if (Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt))
+            {
                 modifiers |= KeyModifiers.Alt;
+            }
             if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
+            {
                 modifiers |= KeyModifiers.Shift;
+            }
+
             if (Keyboard.IsKeyDown(Key.LWin) || Keyboard.IsKeyDown(Key.RWin))
+            {
                 modifiers |= KeyModifiers.Win;
+            }
 
             // 转换为Windows Forms的Keys
-            var keys = ConvertToWindowsFormsKeys(e.Key);
+            var keys = ConvertToWindowsFormsKeys(key);
             if (keys == System.Windows.Forms.Keys.None)
+            {
                 return;
+            }
 
             // 更新热键设置
             UpdateHotKey(item, modifiers, keys);
@@ -164,7 +193,7 @@ namespace Duckie.Views
             try
             {
                 // 先取消之前的注册
-                HotKeyManager.Unregister(item.Service);
+                HotKeyManager.Unregister(item.HotKeyAction);
 
                 // 更新设置项
                 item.Modifiers = modifiers;
@@ -172,7 +201,7 @@ namespace Duckie.Views
                 item.UpdateHotKeyDisplay();
 
                 // 注册新的快捷键
-                HotKeyManager.Register(item.Service, modifiers, keys);
+                HotKeyManager.Register(item.HotKeyAction, modifiers, keys);
             }
             catch (Exception ex)
             {
@@ -185,7 +214,7 @@ namespace Duckie.Views
             try
             {
                 // 取消注册
-                HotKeyManager.Unregister(item.Service);
+                HotKeyManager.Unregister(item.HotKeyAction);
 
                 // 清除设置
                 item.Modifiers = KeyModifiers.None;
@@ -229,7 +258,7 @@ namespace Duckie.Views
 
     public class HotKeySettingsItem : INotifyPropertyChanged
     {
-        public IHotKeyService Service { get; set; }
+        public HotKeyAction HotKeyAction { get; set; }
         public string Name { get; set; }
         public KeyModifiers Modifiers { get; set; }
         public System.Windows.Forms.Keys Keys { get; set; }
@@ -259,16 +288,48 @@ namespace Duckie.Views
             var parts = new List<string>();
 
             if (Modifiers.HasFlag(KeyModifiers.Control))
+            {
                 parts.Add("Ctrl");
+            }
+
             if (Modifiers.HasFlag(KeyModifiers.Alt))
+            {
                 parts.Add("Alt");
+            }
+
             if (Modifiers.HasFlag(KeyModifiers.Shift))
+            {
                 parts.Add("Shift");
+            }
+
             if (Modifiers.HasFlag(KeyModifiers.Win))
+            {
                 parts.Add("Windows");
+            }
 
             if (Keys != System.Windows.Forms.Keys.None)
-                parts.Add(Keys.ToString());
+            {
+                var keyName = Keys.ToString();
+                var match = Regex.Match(keyName, @"D(\d)");
+                if (match.Success)
+                {
+                    keyName = match.Groups[1].Value;
+                }
+
+                if (keyName.Equals(Key.OemTilde.ToString(), StringComparison.OrdinalIgnoreCase))
+                {
+                    keyName = "`";
+                }
+                else if (keyName.Equals(Key.OemPlus.ToString(), StringComparison.OrdinalIgnoreCase))
+                {
+                    keyName = "+";
+                }
+                else if (keyName.Equals(Key.OemMinus.ToString(), StringComparison.OrdinalIgnoreCase))
+                {
+                    keyName = "-";
+                }
+                parts.Add(keyName);
+            }
 
             HotKeyDisplay = string.Join(" + ", parts);
         }

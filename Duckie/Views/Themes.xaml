@@ -6,6 +6,7 @@
     <SolidColorBrush x:Key="HoverBrush" Color="#EDEDED"/>
     <SolidColorBrush x:Key="PrimaryTextBrush" Color="#333"/>
     <SolidColorBrush x:Key="IconBrush" Color="#333"/>
+    <SolidColorBrush x:Key="DisabledIconBrush" Color="#BBB"/>
 
     <Style TargetType="TextBox">
         <Setter Property="Padding" Value="3 2"/>

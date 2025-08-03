@@ -133,7 +133,7 @@
                     
                     <Border Background="#F8F9FA" BorderBrush="#DEE2E6" BorderThickness="1"
                             CornerRadius="6" Padding="16">
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="300">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
                             <ItemsControl x:Name="HotKeysItemsControl">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
@@ -165,39 +165,12 @@
                                                          ToolTip="{loc:Localize Settings_HotKey_Tooltip}"/>
                                                 
                                                 <!-- Clear Button -->
-                                                <Button Grid.Column="2" x:Name="ClearButton"
-                                                        Width="24" Height="24" Margin="8,0,0,0"
-                                                        Background="Transparent" BorderThickness="0"
-                                                        Click="ClearButton_Click"
-                                                        Tag="{Binding}"
-                                                        ToolTip="{loc:Localize Settings_HotKey_Clear}"
-                                                        IsEnabled="{Binding HasHotKey}">
-                                                    <common:IconEx IconType="Delete" Width="12" Height="12" Foreground="#666"/>
-                                                    <Button.Style>
-                                                        <Style TargetType="Button">
-                                                            <Setter Property="Template">
-                                                                <Setter.Value>
-                                                                    <ControlTemplate TargetType="Button">
-                                                                        <Border x:Name="border" Background="{TemplateBinding Background}"
-                                                                                BorderBrush="{TemplateBinding BorderBrush}"
-                                                                                BorderThickness="{TemplateBinding BorderThickness}"
-                                                                                CornerRadius="12">
-                                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                                        </Border>
-                                                                        <ControlTemplate.Triggers>
-                                                                            <Trigger Property="IsMouseOver" Value="True">
-                                                                                <Setter TargetName="border" Property="Background" Value="#F0F0F0"/>
-                                                                            </Trigger>
-                                                                            <Trigger Property="IsPressed" Value="True">
-                                                                                <Setter TargetName="border" Property="Background" Value="#E0E0E0"/>
-                                                                            </Trigger>
-                                                                        </ControlTemplate.Triggers>
-                                                                    </ControlTemplate>
-                                                                </Setter.Value>
-                                                            </Setter>
-                                                        </Style>
-                                                    </Button.Style>
-                                                </Button>
+                                                <common:IconButton Grid.Column="2" Click="ClearButton_Click"
+                                                                   Tag="{Binding}"
+                                                                   IconType="Delete"
+                                                                   Margin="8 0 0 0"
+                                                                   ToolTip="{loc:Localize Settings_HotKey_Clear}"
+                                                                   IsEnabled="{Binding HasHotKey}" />
                                             </Grid>
                                         </Border>
                                     </DataTemplate>

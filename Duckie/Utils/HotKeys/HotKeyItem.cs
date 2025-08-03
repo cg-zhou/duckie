@@ -3,6 +3,6 @@
     internal class HotKeyItem
     {
         public int Id { get; set; }
-        public IHotKeyService Service { get; set; }
+        public HotKeyAction HotKeyAction { get; set; }
     }
 }

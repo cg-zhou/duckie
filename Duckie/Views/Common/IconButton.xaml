@@ -19,7 +19,10 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="4">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <local:IconEx x:Name="IconElement"
+                                          IconSize="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IconSize}"
+                                          IconType="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IconType}"
+                                          IconColor="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IconColor}" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
@@ -29,14 +32,13 @@
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="border" Property="Background" Value="#E9ECEF"/>
                             </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="IconElement" Property="IconColor" Value="{StaticResource DisabledIconBrush}"/>
+                            </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
     </Button.Style>
-    <local:IconEx x:Name="Icon"
-                  IconSize="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=IconSize}"
-                  IconType="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=IconType}"
-                  IconColor="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=IconColor}" />
 </Button>

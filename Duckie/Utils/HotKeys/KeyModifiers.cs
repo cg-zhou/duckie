@@ -1,14 +1,14 @@
 ﻿using System;
 
-namespace Duckie.Utils.HotKeys
+namespace Duckie.Utils.HotKeys;
+
+[Flags]
+public enum KeyModifiers
 {
-    [Flags]
-    public enum KeyModifiers
-    {
-        None = 0,
-        Alt = 1,
-        Control = 2,
-        Shift = 4,
-        Win = 8
-    }
+    None = 0,
+    Alt = 1,
+    Control = 2,
+    Shift = 4,
+    ALtShift = Alt | Shift,
+    Win = 8
 }
