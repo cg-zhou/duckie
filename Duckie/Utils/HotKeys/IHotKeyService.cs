@@ -1,7 +1,6 @@
-﻿namespace Duckie.Utils.HotKeys
+﻿namespace Duckie.Utils.HotKeys;
+
+public interface IHotKeyService
 {
-    public interface IHotKeyService
-    {
-        HotKeyAction[] Register();
-    }
+    IEnumerable<HotKeyAction> Register();
 }

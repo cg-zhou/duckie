@@ -10,15 +10,16 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Closing="Window_Closing"
+        Visibility="Hidden"
         Title="{loc:Localize AppTitle}" Height="420" Width="760">
     <!-- 主内容区域 -->
     <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition x:Name="SidebarColumn" Width="120"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="SidebarColumn" Width="120"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-            <!-- Left sidebar navigation -->
+        <!-- Left sidebar navigation -->
         <Border Grid.Column="0" Background="#F8F9FA" BorderBrush="#E9ECEF" BorderThickness="0,0,1,0">
             <Grid>
                 <Grid.RowDefinitions>
@@ -43,7 +44,7 @@
                 <StackPanel Grid.Row="2" Margin="0,16,0,16">
                     <!-- Settings -->
                     <controls:NavigationMenuItem x:Name="NavSettings" IconType="SettingLine" Text="{loc:Localize Nav_Settings}" Click="MenuSettings_Click"/>
-                    
+
                     <!-- About -->
                     <controls:NavigationMenuItem x:Name="NavAbout" IconType="InformationLine" Text="{loc:Localize Nav_About}" Click="MenuAbout_Click"/>
                 </StackPanel>

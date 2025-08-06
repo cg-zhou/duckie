@@ -1,42 +1,40 @@
-using Duckie.Utils.Ui;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Duckie.Views.Common
+namespace Duckie.Views.Common;
+
+public partial class IconButton : Button
 {
-    public partial class IconButton : Button
+    public static readonly DependencyProperty IconSizeProperty =
+        DependencyProperty.Register(nameof(IconSize), typeof(double), typeof(IconButton), new PropertyMetadata(14.0));
+
+    public static readonly DependencyProperty IconTypeProperty =
+        DependencyProperty.Register(nameof(IconType), typeof(IconType), typeof(IconButton), new PropertyMetadata(IconType.Search));
+
+    public static readonly DependencyProperty IconColorProperty =
+        DependencyProperty.Register(nameof(IconColor), typeof(SolidColorBrush), typeof(IconButton), new PropertyMetadata(null));
+
+    public double IconSize
     {
-        public static readonly DependencyProperty IconSizeProperty =
-            DependencyProperty.Register(nameof(IconSize), typeof(double), typeof(IconButton), new PropertyMetadata(14.0));
+        get { return (double)GetValue(IconSizeProperty); }
+        set { SetValue(IconSizeProperty, value); }
+    }
 
-        public static readonly DependencyProperty IconTypeProperty =
-            DependencyProperty.Register(nameof(IconType), typeof(IconType), typeof(IconButton), new PropertyMetadata(IconType.Search));
+    public IconType IconType
+    {
+        get { return (IconType)GetValue(IconTypeProperty); }
+        set { SetValue(IconTypeProperty, value); }
+    }
 
-        public static readonly DependencyProperty IconColorProperty =
-            DependencyProperty.Register(nameof(IconColor), typeof(SolidColorBrush), typeof(IconButton), new PropertyMetadata(null));
+    public SolidColorBrush IconColor
+    {
+        get { return (SolidColorBrush)GetValue(IconColorProperty); }
+        set { SetValue(IconColorProperty, value); }
+    }
 
-        public double IconSize
-        {
-            get { return (double)GetValue(IconSizeProperty); }
-            set { SetValue(IconSizeProperty, value); }
-        }
-
-        public IconType IconType
-        {
-            get { return (IconType)GetValue(IconTypeProperty); }
-            set { SetValue(IconTypeProperty, value); }
-        }
-
-        public SolidColorBrush IconColor
-        {
-            get { return (SolidColorBrush)GetValue(IconColorProperty); }
-            set { SetValue(IconColorProperty, value); }
-        }
-
-        public IconButton()
-        {
-            InitializeComponent();
-        }
+    public IconButton()
+    {
+        InitializeComponent();
     }
 }

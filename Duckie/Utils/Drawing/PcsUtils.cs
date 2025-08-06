@@ -1,19 +1,17 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 
-namespace Duckie.Utils.Drawing
+namespace Duckie.Utils.Drawing;
+
+/// <summary>
+/// Polar coordinate system
+/// </summary>
+internal static class PcsUtils
 {
-    /// <summary>
-    /// Polar coordinate system
-    /// </summary>
-    internal static class PcsUtils
+    public static PointF Get(double r, double theta, PointF? center = null)
     {
-        public static PointF Get(double r, double theta, PointF? center = null)
-        {
-            var x = Math.Cos(theta * Math.PI / 180) * r + (center?.X ?? 0);
-            var y = Math.Sin(theta * Math.PI / 180) * r + (center?.Y ?? 0);
-            
-            return new PointF((float)x, (float)y);
-        }
+        var x = Math.Cos(theta * Math.PI / 180) * r + (center?.X ?? 0);
+        var y = Math.Sin(theta * Math.PI / 180) * r + (center?.Y ?? 0);
+        
+        return new PointF((float)x, (float)y);
     }
 }

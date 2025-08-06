@@ -5,6 +5,7 @@
     <UseWPF>true</UseWPF>
     <Version>0.4.0</Version>
     <LangVersion>Latest</LangVersion>
+    <ImplicitUsings>true</ImplicitUsings>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -17,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
 </Project>

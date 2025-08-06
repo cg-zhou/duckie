@@ -1,33 +1,36 @@
-﻿using Duckie.Utils.HotKeys;
+﻿using Duckie.Services.PacManager;
+using Duckie.Utils.HotKeys;
 using Duckie.Utils.Localization;
 using Duckie.Utils.Ui;
 using System.Windows;
 using System.Windows.Threading;
 
-namespace Duckie
+namespace Duckie;
+
+public partial class App : Application
 {
-    public partial class App : Application
+    public static new MainWindow MainWindow => Current.MainWindow as MainWindow;
+
+    private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {
-        public static new MainWindow MainWindow => Current.MainWindow as MainWindow;
+        UiUtils.Warning($"Exception: {e.Exception.Message}{e.Exception.InnerException?.Message}", "Warning");
+        e.Handled = true;
+    }
 
-        private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
-        {
-            UiUtils.Warning($"Exception: {e.Exception.Message}{e.Exception.InnerException?.Message}", "Warning");
-            e.Handled = true;
-        }
+    private void Application_Startup(object sender, StartupEventArgs e)
+    {
+        LocUtils.Initialize();
 
-        private void Application_Startup(object sender, StartupEventArgs e)
-        {
-            LocUtils.Initialize();
+        NotifyIconUtils.Initialize();
+        NotifyIconUtils.RefreshContextMenu();
 
-            NotifyIconUtils.Initialize();
+        HotKeyManager.RegisterServices();
 
-            HotKeyManager.RegisterServices();
-        }
+        PacManagerService.RefreshIconBadge();
+    }
 
-        private void Application_Exit(object sender, ExitEventArgs e)
-        {
-            NotifyIconUtils.Release();
-        }
+    private void Application_Exit(object sender, ExitEventArgs e)
+    {
+        NotifyIconUtils.Release();
     }
 }

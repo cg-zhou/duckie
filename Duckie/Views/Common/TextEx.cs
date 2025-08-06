@@ -2,15 +2,14 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Duckie.Views.Common
+namespace Duckie.Views.Common;
+
+internal class TextEx : TextBox
 {
-    internal class TextEx : TextBox
+    public TextEx()
     {
-        public TextEx()
-        {
-            IsReadOnly = true;
-            BorderThickness = new Thickness(0);
-            Background = ThemeUtils.NoneBrush;
-        }
+        IsReadOnly = true;
+        BorderThickness = new Thickness(0);
+        Background = ThemeUtils.NoneBrush;
     }
 }

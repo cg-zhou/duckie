@@ -1,8 +1,7 @@
-﻿namespace Duckie.Utils.Drawing.Ico
+﻿namespace Duckie.Utils.Drawing.Ico;
+
+internal enum ImageType : ushort
 {
-    internal enum ImageType : ushort
-    {
-        Icon = 1,
-        Cursor = 2
-    }
+    Icon = 1,
+    Cursor = 2
 }

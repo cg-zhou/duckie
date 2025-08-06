@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Duckie.Utils.HotKeys;
+﻿namespace Duckie.Utils.HotKeys;
 
 [Flags]
 public enum KeyModifiers

@@ -1,14 +1,13 @@
 using Duckie.Utils.HotKeys;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace Duckie.Services.PacManager;
 
 public class PacManagerHotKeyService : IHotKeyService
 {
-    public HotKeyAction[] Register()
+    public IEnumerable<HotKeyAction> Register()
     {
-        return [new HotKeyAction("ÇÐ»» PAC", KeyModifiers.ALtShift, Keys.D1, Run)];
+        yield return new HotKeyAction("ÇÐ»» PAC", KeyModifiers.ALtShift, Keys.D1, Run);
     }
 
     private void Run()

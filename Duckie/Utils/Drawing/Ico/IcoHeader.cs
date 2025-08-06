@@ -1,12 +1,11 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace Duckie.Utils.Drawing.Ico
+namespace Duckie.Utils.Drawing.Ico;
+
+[StructLayout(LayoutKind.Sequential)]
+internal struct IcoHeader
 {
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct IcoHeader
-    {
-        public ushort Reserved { get; set; }
-        public ImageType ImageType { get; set; }
-        public ushort Numbers { get; set; }
-    }
+    public ushort Reserved { get; set; }
+    public ImageType ImageType { get; set; }
+    public ushort Numbers { get; set; }
 }

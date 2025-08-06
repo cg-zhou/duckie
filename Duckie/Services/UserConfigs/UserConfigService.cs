@@ -4,71 +4,70 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace Duckie.Services.UserConfigs
+namespace Duckie.Services.UserConfigs;
+
+internal class UserConfigService
 {
-    internal class UserConfigService
+    private static string Path => System.IO.Path.Combine(AppUtils.AppDataFolder, "user_config.xml");
+
+    public static UserConfig Get()
     {
-        private static string Path => System.IO.Path.Combine(AppUtils.AppDataFolder, "user_config.xml");
-
-        public static UserConfig Get()
+        if (!File.Exists(Path))
         {
-            if (!File.Exists(Path))
-            {
-                return new UserConfig();
-            }
-
-            var serializer = new XmlSerializer(typeof(UserConfig));
-            using (var reader = new StreamReader(Path))
-            {
-                return (UserConfig)serializer.Deserialize(reader);
-            }
+            return new UserConfig();
         }
 
-        public static void Set(UserConfig userConfig)
+        var serializer = new XmlSerializer(typeof(UserConfig));
+        using (var reader = new StreamReader(Path))
         {
-            var serializer = new XmlSerializer(typeof(UserConfig));
-
-            var settings = new XmlWriterSettings
-            {
-                Encoding = new UTF8Encoding(false),
-                Indent = true
-            };
-
-            Directory.CreateDirectory(Directory.GetParent(Path).FullName);
-
-            using (var xmlWriter = XmlWriter.Create(Path, settings))
-            {
-                var namespaces = new XmlSerializerNamespaces();
-                namespaces.Add(string.Empty, string.Empty);
-                serializer.Serialize(xmlWriter, userConfig, namespaces);
-            }
+            return (UserConfig)serializer.Deserialize(reader);
         }
+    }
 
-        public static void Set(ProxyConfig proxy)
+    public static void Set(UserConfig userConfig)
+    {
+        var serializer = new XmlSerializer(typeof(UserConfig));
+
+        var settings = new XmlWriterSettings
         {
-            var config = Get();
-            config.Proxy = proxy;
-            Set(config);
-        }
+            Encoding = new UTF8Encoding(false),
+            Indent = true
+        };
 
-        public static void Set(PacConfig[] pacs)
-        {
-            var config = Get();
-            config.Pacs = pacs;
-            Set(config);
-        }
+        Directory.CreateDirectory(Directory.GetParent(Path).FullName);
 
-        public static void SetLanguage(string language)
+        using (var xmlWriter = XmlWriter.Create(Path, settings))
         {
-            var config = Get();
-            config.Language = language;
-            Set(config);
+            var namespaces = new XmlSerializerNamespaces();
+            namespaces.Add(string.Empty, string.Empty);
+            serializer.Serialize(xmlWriter, userConfig, namespaces);
         }
+    }
 
-        public static string GetLanguage()
-        {
-            var config = Get();
-            return config.Language ?? "en-US";
-        }
+    public static void Set(ProxyConfig proxy)
+    {
+        var config = Get();
+        config.Proxy = proxy;
+        Set(config);
+    }
+
+    public static void Set(PacConfig[] pacs)
+    {
+        var config = Get();
+        config.Pacs = pacs;
+        Set(config);
+    }
+
+    public static void SetLanguage(string language)
+    {
+        var config = Get();
+        config.Language = language;
+        Set(config);
+    }
+
+    public static string GetLanguage()
+    {
+        var config = Get();
+        return config.Language ?? "en-US";
     }
 }

@@ -5,12 +5,10 @@ namespace Duckie.Services.Volume;
 
 public class VolumeHotKeyService : IHotKeyService
 {
-    public HotKeyAction[] Register()
+    public IEnumerable<HotKeyAction> Register()
     {
-        return [
-            new HotKeyAction("调小音量", KeyModifiers.Alt | KeyModifiers.Shift, Keys.D8, VolumeUtils.VolumeDown),
-            new HotKeyAction("调大音量", KeyModifiers.Alt | KeyModifiers.Shift, Keys.D9, VolumeUtils.VolumeUp),
-            new HotKeyAction("静音/取消静音", KeyModifiers.Alt | KeyModifiers.Shift, Keys.D0, VolumeUtils.ToggleMute),
-            ];
+        yield return new HotKeyAction("璋冨皬闊抽噺", KeyModifiers.Alt | KeyModifiers.Shift, Keys.D8, VolumeUtils.VolumeDown);
+        yield return new HotKeyAction("璋冨ぇ闊抽噺", KeyModifiers.Alt | KeyModifiers.Shift, Keys.D9, VolumeUtils.VolumeUp);
+        yield return new HotKeyAction("闈欓煶/鍙栨秷闈欓煶", KeyModifiers.Alt | KeyModifiers.Shift, Keys.D0, VolumeUtils.ToggleMute);
     }
 }

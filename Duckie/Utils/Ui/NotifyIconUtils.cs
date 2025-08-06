@@ -1,67 +1,113 @@
-﻿using System;
+﻿using Duckie.Utils.Drawing;
+using Duckie.Utils.Drawing.Ico;
+using Duckie.Utils.Registry;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-namespace Duckie.Utils.Ui
+namespace Duckie.Utils.Ui;
+
+internal class NotifyIconUtils
 {
-    internal class NotifyIconUtils
+    private const string icoEmbeddedResourceName = "duck.ico";
+    private static NotifyIcon notifyIcon;
+
+    public static void Initialize()
     {
-        private static NotifyIcon notifyIcon;
-
-        public static void Initialize()
+        notifyIcon = new NotifyIcon
         {
-            notifyIcon = new NotifyIcon
-            {
-                Visible = true,
-                ContextMenuStrip = new ContextMenuStrip()
-            };
+            Visible = true,
+            ContextMenuStrip = new ContextMenuStrip()
+        };
 
-            notifyIcon.Click += NotifyIcon_Click;
+        notifyIcon.Click += NotifyIcon_Click;
 
-            if (AppUtils.TryGetEmbeddedResource("duck.ico", out var stream))
-            {
-                SetIcon(stream);
-            }
+        ResetIco();
+    }
+
+    public static void Release()
+    {
+        SetIcon(null);
+    }
+
+    public static void SetIcoBage(Color color)
+    {
+        if (AppUtils.TryGetEmbeddedResource(icoEmbeddedResourceName, out var stream))
+        {
+            var images = IcoUtils.ParseIco(stream);
+            var image = images.Select(x => x.Value).OrderByDescending(x => x.Width).FirstOrDefault();
+            LogoUtils.DrawBadge(image, color);
+
+            var icon = image.ToIco();
+            SetIcon(icon.ToStream());
+        }
+    }
+
+    public static void ResetIco()
+    {
+        if (AppUtils.TryGetEmbeddedResource(icoEmbeddedResourceName, out var stream))
+        {
+            SetIcon(stream);
+        }
+    }
+
+    private static void SetIcon(Stream stream)
+    {
+        if (notifyIcon.Icon != null)
+        {
+            notifyIcon.Icon.Dispose();
         }
 
-        public static void Release()
+        if (stream != null)
         {
-            SetIcon(null);
+            var icon = new Icon(stream);
+            notifyIcon.Icon = icon;
         }
-
-        private static void SetIcon(Stream stream)
+        else
         {
-            if (notifyIcon.Icon != null)
-            {
-                notifyIcon.Icon.Dispose();
-            }
+            notifyIcon.Icon = null;
+        }
+    }
 
-            if (stream != null)
+    private static void NotifyIcon_Click(object sender, EventArgs e)
+    {
+        if (e is MouseEventArgs mouseEventArgs)
+        {
+            if (mouseEventArgs.Button == MouseButtons.Left)
             {
-                var icon = new Icon(stream);
-                notifyIcon.Icon = icon;
-            }
-            else
-            {
-                notifyIcon.Icon = null;
+                App.MainWindow.Toggle();
             }
         }
+    }
 
-        private static void NotifyIcon_Click(object sender, EventArgs e)
-        {
-            if (e is MouseEventArgs mouseEventArgs)
-            {
-                if (mouseEventArgs.Button == MouseButtons.Left)
-                {
-                    App.MainWindow.Toggle();
-                }
-            }
-        }
+    public static void Notify(string text, string caption)
+    {
+        notifyIcon.ShowBalloonTip(3000, caption, text, ToolTipIcon.None);
+    }
 
-        public static void Notify(string text, string caption)
+    public static void RefreshContextMenu()
+    {
+        var items = notifyIcon.ContextMenuStrip.Items;
+        items.Clear();
+
+        items.Add(new ToolStripMenuItem("Duckie", null, (s, e) => UiUtils.BeginInvoke(App.MainWindow.Show)));
+        items.Add(new ToolStripSeparator());
+
+        var pacMenuItem = new ToolStripMenuItem("Set PAC");
+        pacMenuItem.DropDownItems.Add(new ToolStripMenuItem("None", null, (s, e) => { }));
+        pacMenuItem.DropDownItems.Add(new ToolStripMenuItem("Test2", null, (s, e) => { }) { Checked = true });
+        items.Add(pacMenuItem);
+
+        var isChecked = RegistryUtils.StartUp.Get();
+        items.Add(new ToolStripMenuItem("Launch On Startup", null, (s, e) =>
         {
-            notifyIcon.ShowBalloonTip(3000, caption, text, ToolTipIcon.None);
-        }
+            var isChecked = RegistryUtils.StartUp.Get();
+            RegistryUtils.StartUp.Set(!isChecked);
+
+            RefreshContextMenu();
+        })
+        { Checked = isChecked });
+
+        items.Add(new ToolStripMenuItem("Exit", null, (s, e) => Environment.Exit(0)));
     }
 }
