@@ -29,12 +29,12 @@ public partial class DialogEx : Window
         switch (buttons)
         {
             case DialogButtons.OK:
-                AddButton(LocUtils.GetString("Btn_OK"), true, true, okHandler);
+                AddButton(LocKey.Btn_OK.Text(), true, true, okHandler);
                 break;
 
             case DialogButtons.OKCancel:
-                AddButton(LocUtils.GetString("Btn_Cancel"), false, false);
-                AddButton(LocUtils.GetString("Btn_OK"), true, true, okHandler);
+                AddButton(LocKey.Btn_Cancel.Text(), false, false);
+                AddButton(LocKey.Btn_OK.Text(), true, true, okHandler);
                 break;
         }
     }

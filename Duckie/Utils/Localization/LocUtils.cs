@@ -9,7 +9,7 @@ public static class LocUtils
         EmbeddedLocalizationManager.Instance.LoadSavedLanguage();
     }
 
-    public static string GetString(string key, params object[] args)
+    public static string GetString(LocKey key, params object[] args)
     {
         return EmbeddedLocalizationManager.Instance.GetString(key, args);
     }

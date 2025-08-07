@@ -59,7 +59,7 @@ public partial class PacManageView : UserControl
         }
         catch (Exception ex)
         {
-            UiUtils.Error(ex, LocUtils.GetString("Error_FailedToLoadPAC"));
+            UiUtils.Error(ex, LocKey.Error_FailedToLoadPAC.Text());
         }
     }
 
@@ -106,7 +106,7 @@ public partial class PacManageView : UserControl
             // "No PAC" item
             var titleText = new TextBlock
             {
-                Text = LocUtils.GetString("Label_NoPAC"),
+                Text = LocKey.Label_NoPAC.Text(),
                 FontSize = 14,
                 FontWeight = FontWeights.SemiBold,
                 Foreground = new SolidColorBrush(Color.FromRgb(0x33, 0x33, 0x33))
@@ -115,7 +115,7 @@ public partial class PacManageView : UserControl
 
             var descText = new TextBlock
             {
-                Text = LocUtils.GetString("Label_DirectConnection"),
+                Text = LocKey.Label_DirectConnection.Text(),
                 FontSize = 12,
                 Foreground = new SolidColorBrush(Color.FromRgb(0x66, 0x66, 0x66)),
                 Margin = new Thickness(0, 2, 0, 0)
@@ -155,7 +155,7 @@ public partial class PacManageView : UserControl
 
             var editButton = new Button
             {
-                Content = LocUtils.GetString("Btn_Edit"),
+                Content = LocKey.Btn_Edit.Text(),
                 Width = 60,
                 Height = 32,
                 Margin = new Thickness(0, 0, 8, 0),
@@ -167,7 +167,7 @@ public partial class PacManageView : UserControl
 
             var deleteButton = new Button
             {
-                Content = LocUtils.GetString("Btn_Delete"),
+                Content = LocKey.Btn_Delete.Text(),
                 Width = 70,
                 Height = 32,
                 Tag = pac
@@ -237,15 +237,15 @@ public partial class PacManageView : UserControl
             if (success)
             {
                 var message = pac == null
-                    ? LocUtils.GetString("Status_PACCleared")
-                    : LocUtils.GetString("Status_PACSwitch", pac.Name);
+                    ? LocKey.Status_PACCleared.Text()
+                    : LocKey.Status_PACSwitch.Text(pac.Name);
                 StatusText.Text = message;
                 LoadPacConfigs(); // Reload to update status
             }
         }
         catch (Exception ex)
         {
-            UiUtils.Error(ex, LocUtils.GetString("Error_FailedToUpdatePAC"));
+            UiUtils.Error(ex, LocKey.Error_FailedToUpdatePAC.Text());
         }
     }
 
@@ -262,13 +262,13 @@ public partial class PacManageView : UserControl
             if (e.IsSuccess)
             {
                 var message = e.CurrentConfig == null
-                    ? LocUtils.GetString("Status_PACCleared")
-                    : LocUtils.GetString("Status_PACSwitch", e.CurrentConfig.Name);
+                    ? LocKey.Status_PACCleared.Text()
+                    : LocKey.Status_PACSwitch.Text(e.CurrentConfig.Name);
                 StatusText.Text = message;
             }
             else
             {
-                StatusText.Text = LocUtils.GetString("Status_PACFailed", e.ErrorMessage);
+                StatusText.Text = LocKey.Status_PACFailed.Text(e.ErrorMessage);
             }
         });
     }
@@ -279,7 +279,7 @@ public partial class PacManageView : UserControl
     {
         var content = new PacEditContent();
         var dialog = DialogEx.Create(
-            LocUtils.GetString("Dialog_AddPAC"),
+            LocKey.Dialog_AddPAC.Text(),
             content,
             DialogButtons.OKCancel,
             (d) =>
@@ -291,19 +291,19 @@ public partial class PacManageView : UserControl
                         var success = PacManagerService.AddPacConfig(content.PacConfig.Name, content.PacConfig.Uri);
                         if (success)
                         {
-                            StatusText.Text = LocUtils.GetString("Status_PACAdded", content.PacConfig.Name);
+                            StatusText.Text = LocKey.Status_PACAdded.Text(content.PacConfig.Name);
                             LoadPacConfigs();
                             d.DialogResult = true;
                             d.Close();
                         }
                         else
                         {
-                            UiUtils.Warning(LocUtils.GetString("Error_FailedToAddPAC"), LocUtils.GetString("Dialog_AddPAC"));
+                            UiUtils.Warning(LocKey.Error_FailedToAddPAC.Text(), LocKey.Dialog_AddPAC.Text());
                         }
                     }
                     catch (Exception ex)
                     {
-                        UiUtils.Error(ex, LocUtils.GetString("Error_FailedToAddPAC"));
+                        UiUtils.Error(ex, LocKey.Error_FailedToAddPAC.Text());
                     }
                 }
             }
@@ -318,7 +318,7 @@ public partial class PacManageView : UserControl
         {
             var content = new PacEditContent(pac);
             var dialog = DialogEx.Create(
-                LocUtils.GetString("Dialog_EditPAC"),
+                LocKey.Dialog_EditPAC.Text(),
                 content,
                 DialogButtons.OKCancel,
                 (d) =>
@@ -330,19 +330,19 @@ public partial class PacManageView : UserControl
                             var success = PacManagerService.UpdatePacConfig(pac, content.PacConfig.Name, content.PacConfig.Uri);
                             if (success)
                             {
-                                StatusText.Text = LocUtils.GetString("Status_PACUpdated", content.PacConfig.Name);
+                                StatusText.Text = LocKey.Status_PACUpdated.Text(content.PacConfig.Name);
                                 LoadPacConfigs();
                                 d.DialogResult = true;
                                 d.Close();
                             }
                             else
                             {
-                                UiUtils.Warning(LocUtils.GetString("Error_FailedToUpdatePAC"), LocUtils.GetString("Dialog_EditPAC"));
+                                UiUtils.Warning(LocKey.Error_FailedToUpdatePAC.Text(), LocKey.Dialog_EditPAC.Text());
                             }
                         }
                         catch (Exception ex)
                         {
-                            UiUtils.Error(ex, LocUtils.GetString("Error_FailedToUpdatePAC"));
+                            UiUtils.Error(ex, LocKey.Error_FailedToUpdatePAC.Text());
                         }
                     }
                 }
@@ -357,8 +357,8 @@ public partial class PacManageView : UserControl
         if (sender is Button button && button.Tag is PacConfig pac)
         {
             var result = MessageBox.Show(
-                LocUtils.GetString("Confirm_DeletePAC", pac.Name),
-                LocUtils.GetString("Dialog_ConfirmDelete"),
+                LocKey.Confirm_DeletePAC.Text(pac.Name),
+                LocKey.Dialog_ConfirmDelete.Text(),
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Question);
 
@@ -369,17 +369,17 @@ public partial class PacManageView : UserControl
                     var success = PacManagerService.RemovePacConfig(pac);
                     if (success)
                     {
-                        StatusText.Text = LocUtils.GetString("Status_PACDeleted", pac.Name);
+                        StatusText.Text = LocKey.Status_PACDeleted.Text(pac.Name);
                         LoadPacConfigs();
                     }
                     else
                     {
-                        UiUtils.Warning(LocUtils.GetString("Error_FailedToDeletePAC"), LocUtils.GetString("Dialog_ConfirmDelete"));
+                        UiUtils.Warning(LocKey.Error_FailedToDeletePAC.Text(), LocKey.Dialog_ConfirmDelete.Text());
                     }
                 }
                 catch (Exception ex)
                 {
-                    UiUtils.Error(ex, LocUtils.GetString("Error_FailedToDeletePAC"));
+                    UiUtils.Error(ex, LocKey.Error_FailedToDeletePAC.Text());
                 }
             }
         }

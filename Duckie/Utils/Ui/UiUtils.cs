@@ -13,28 +13,28 @@ internal static class UiUtils
 
     public static void Info(string text, string caption = null)
     {
-        caption = caption ?? LocUtils.GetString("AppTitle");
+        caption = caption ?? LocKey.AppTitle.Text();
         MessageBox.Show(text, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
     }
 
     public static void Warning(string text, string caption = null)
     {
-        caption = caption ?? LocUtils.GetString("Error_Warning");
+        caption = caption ?? LocKey.Error_Warning.Text();
         MessageBox.Show(text, caption, MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }
 
     public static void Error(string text, string caption = null)
     {
-        caption = caption ?? LocUtils.GetString("Error_Error");
+        caption = caption ?? LocKey.Error_Error.Text();
         MessageBox.Show(text, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 
     public static void Error(Exception e, string text = "", string caption = null)
     {
-        caption = caption ?? LocUtils.GetString("Error_Error");
+        caption = caption ?? LocKey.Error_Error.Text();
         var message = string.IsNullOrEmpty(text)
-            ? LocUtils.GetString("Error_Exception", e.Message + e.InnerException?.Message)
-            : $"{text}{Environment.NewLine}{LocUtils.GetString("Error_Exception", e.Message + e.InnerException?.Message)}";
+            ? LocKey.Error_Exception.Text(e.Message + e.InnerException?.Message)
+            : $"{text}{Environment.NewLine}{LocKey.Error_Exception.Text(e.Message + e.InnerException?.Message)}";
         MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 

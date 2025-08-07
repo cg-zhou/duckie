@@ -23,8 +23,8 @@ public partial class AboutView : UserControl
 
     private void ShowMsixInfo(string packageName)
     {
-        RuntimeTitle.Text = LocUtils.GetString("MSIXPackage", packageName);
-        RuntimeDescription.Text = LocUtils.GetString("MSIXRestriction");
+        RuntimeTitle.Text = LocKey.MSIXPackage.Text(packageName);
+        RuntimeDescription.Text = LocKey.MSIXRestriction.Text();
         RuntimeInfoBorder.Visibility = Visibility.Visible;
     }
 }

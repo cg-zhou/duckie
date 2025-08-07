@@ -162,14 +162,14 @@
                                                          GotFocus="HotKeyTextBox_GotFocus"
                                                          LostFocus="HotKeyTextBox_LostFocus"
                                                          Tag="{Binding}"
-                                                         ToolTip="{loc:Localize Settings_HotKey_Tooltip}"/>
+                                                         ToolTip="{loc:Localize Key=Settings_HotKey_Tooltip}"/>
                                                 
                                                 <!-- Clear Button -->
                                                 <common:IconButton Grid.Column="2" Click="ClearButton_Click"
                                                                    Tag="{Binding}"
                                                                    IconType="Delete"
                                                                    Margin="8 0 0 0"
-                                                                   ToolTip="{loc:Localize Settings_HotKey_Clear}"
+                                                                   ToolTip="{loc:Localize Key=Settings_HotKey_Clear}"
                                                                    IsEnabled="{Binding HasHotKey}" />
                                             </Grid>
                                         </Border>

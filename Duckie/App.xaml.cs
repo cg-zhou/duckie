@@ -1,4 +1,6 @@
-﻿using Duckie.Services.PacManager;
+﻿using Duckie.Services.Clipboard;
+using Duckie.Services.PacManager;
+using Duckie.Services.UserConfigs;
 using Duckie.Utils.HotKeys;
 using Duckie.Utils.Localization;
 using Duckie.Utils.Ui;
@@ -27,6 +29,12 @@ public partial class App : Application
         HotKeyManager.RegisterServices();
 
         PacManagerService.RefreshIconBadge();
+
+        var proxyConfig = UserConfigService.Get().Proxy;
+        if (!string.IsNullOrWhiteSpace(proxyConfig?.ProxyUri))
+        {
+            HttpUtils.SetProxy(proxyConfig);
+        }
     }
 
     private void Application_Exit(object sender, ExitEventArgs e)

@@ -56,7 +56,7 @@ public partial class ImageView : UserControl, IDisposable
         ButtonZoomFit_Click(null, null);
 
         // Update status
-        StatusText.Text = LocUtils.GetString("Status_Loaded", Path.GetFileName(filePath));
+        StatusText.Text = LocKey.Status_Loaded.Text(Path.GetFileName(filePath));
         ImageInfoText.Text = $"{bitmapImage.PixelWidth} × {bitmapImage.PixelHeight} pixels";
     }
 
@@ -114,7 +114,7 @@ public partial class ImageView : UserControl, IDisposable
         }
         catch (Exception exception)
         {
-            UiUtils.Error(exception, LocUtils.GetString("Error_FailedToOpenImage", selectedPath));
+            UiUtils.Error(exception, LocKey.Error_FailedToOpenImage.Text(selectedPath));
         }
     }
 
@@ -122,7 +122,7 @@ public partial class ImageView : UserControl, IDisposable
     {
         if (image.Source == null)
         {
-            UiUtils.Warning(LocUtils.GetString("Error_PleaseOpenImage"), LocUtils.GetString("Error_SaveImage"));
+            UiUtils.Warning(LocKey.Error_PleaseOpenImage.Text(), LocKey.Error_SaveImage.Text());
             return;
         }
 
@@ -136,7 +136,7 @@ public partial class ImageView : UserControl, IDisposable
             .ToIco();
         File.WriteAllBytes(icoPath, ico);
 
-        UiUtils.Info(LocUtils.GetString("Success_IconExported", icoPath));
+        UiUtils.Info(LocKey.Success_IconExported.Text(icoPath));
     }
 
 
@@ -202,7 +202,7 @@ public partial class ImageView : UserControl, IDisposable
         }
         catch (Exception ex)
         {
-            UiUtils.Error(ex, LocUtils.GetString("Error_FailedToRotateImage"));
+            UiUtils.Error(ex, LocKey.Error_FailedToRotateImage.Text());
         }
     }
 
@@ -244,7 +244,7 @@ public partial class ImageView : UserControl, IDisposable
         }
         catch (Exception ex)
         {
-            UiUtils.Error(ex, LocUtils.GetString("Error_FailedToFlipImage"));
+            UiUtils.Error(ex, LocKey.Error_FailedToFlipImage.Text());
         }
     }
 
@@ -291,7 +291,7 @@ public partial class ImageView : UserControl, IDisposable
                 }
                 catch (Exception exception)
                 {
-                    UiUtils.Error(exception, LocUtils.GetString("Error_FailedToOpenImage", imageFiles[0]));
+                    UiUtils.Error(exception, LocKey.Error_FailedToOpenImage.Text(imageFiles[0]));
                 }
             }
         }

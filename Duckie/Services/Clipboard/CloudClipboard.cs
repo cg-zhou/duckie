@@ -44,7 +44,7 @@ internal static class CloudClipboard
             catch (Exception e)
             {
                 
-                NotifyIconUtils.Notify("Request failed: " + e.Message, "Cloud Clipboard");
+                NotifyIconUtils.Notify($"Request failed: {e.Message}{e.InnerException?.Message}", "Cloud Clipboard");
             }
         });
     }

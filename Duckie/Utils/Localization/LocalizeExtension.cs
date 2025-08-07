@@ -39,13 +39,13 @@ public class LocalizeExtension : MarkupExtension
     /// <returns>绑定表达式</returns>
     public override object ProvideValue(IServiceProvider serviceProvider)
     {
-        if (string.IsNullOrEmpty(Key))
-        {
-            return "[Missing Key]";
-        }
-
         // 在设计时返回键名，便于设计器显示
         if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
+        {
+            return $"[{Key}]";
+        }
+
+        if (!Enum.TryParse<LocKey>(Key, true, out var locKey))
         {
             return $"[{Key}]";
         }
@@ -55,7 +55,7 @@ public class LocalizeExtension : MarkupExtension
         {
             Source = EmbeddedLocalizationManager.Instance,
             Converter = new LocalizationConverter(),
-            ConverterParameter = new LocalizationParameter { Key = Key, Args = Args },
+            ConverterParameter = new LocalizationParameter { Key = locKey, Args = Args },
             Mode = BindingMode.OneWay
         };
 
@@ -70,7 +70,7 @@ public class LocalizeExtension : MarkupExtension
         }
 
         // 否则直接返回当前值
-        return LocUtils.GetString(Key, Args);
+        return LocUtils.GetString(locKey, Args);
     }
 }
 
@@ -79,7 +79,7 @@ public class LocalizeExtension : MarkupExtension
 /// </summary>
 public class LocalizationParameter
 {
-    public string Key { get; set; }
+    public LocKey Key { get; set; }
     public object[] Args { get; set; }
 }
 
@@ -90,7 +90,7 @@ public class LocalizationConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (parameter is LocalizationParameter param && !string.IsNullOrEmpty(param.Key))
+        if (parameter is LocalizationParameter param)
         {
             return LocUtils.GetString(param.Key, param.Args);
         }

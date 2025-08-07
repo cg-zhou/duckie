@@ -136,7 +136,7 @@ public partial class MainWindow : Window
         UpdateNavigationState();
         NavImageProcessing.IsSelected = true;
 
-        Title = LocUtils.GetString("Title_Image");
+        Title = LocKey.Title_Image.Text();
     }
 
     private void ShowPacManagement()
@@ -150,7 +150,7 @@ public partial class MainWindow : Window
         UpdateNavigationState();
         NavPacManagement.IsSelected = true;
 
-        Title = LocUtils.GetString("Title_PAC");
+        Title = LocKey.Title_PAC.Text();
     }
 
     private void ShowSettings()
@@ -164,7 +164,7 @@ public partial class MainWindow : Window
         UpdateNavigationState();
         NavSettings.IsSelected = true;
 
-        Title = LocUtils.GetString("Title_Settings");
+        Title = LocKey.Title_Settings.Text();
     }
 
     private void ShowAbout()
@@ -178,7 +178,7 @@ public partial class MainWindow : Window
         UpdateNavigationState();
         NavAbout.IsSelected = true;
 
-        Title = LocUtils.GetString("Title_About");
+        Title = LocKey.Title_About.Text();
     }
 
     private void Window_Closing(object sender, CancelEventArgs e)
