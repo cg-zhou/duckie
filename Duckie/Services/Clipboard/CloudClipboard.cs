@@ -1,5 +1,5 @@
-﻿using Duckie.Utils.Drawing;
-using Duckie.Utils.Ui;
+﻿using Duckie.Shared.Utils.Drawing;
+using Duckie.Shared.Utils.Ui;
 using System.Drawing;
 using System.IO;
 using System.Net.Http;

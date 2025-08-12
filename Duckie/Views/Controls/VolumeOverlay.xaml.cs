@@ -1,5 +1,5 @@
 using Duckie.Services.Volume;
-using Duckie.Views.Common;
+using Duckie.Shared.Views.Common;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;

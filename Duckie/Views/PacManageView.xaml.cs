@@ -1,8 +1,8 @@
 using Duckie.Services.PacManager;
-using Duckie.Services.UserConfigs;
-using Duckie.Utils.Localization;
-using Duckie.Utils.Ui;
-using Duckie.Views.Common;
+using Duckie.Shared.Services.UserConfigs;
+using Duckie.Shared.Utils.Localization;
+using Duckie.Shared.Utils.Ui;
+using Duckie.Shared.Views.Common;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;

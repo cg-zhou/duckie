@@ -1,5 +1,7 @@
-﻿using Duckie.Utils.HotKeys;
-using Duckie.Utils.Ui;
+﻿using Duckie.Shared;
+using Duckie.Shared.Utils.Ui;
+using Duckie.Shared.Views;
+using Duckie.Utils.HotKeys;
 using System.Windows.Forms;
 
 namespace Duckie.Views;
@@ -14,11 +16,11 @@ public class AppHotKeyService : IHotKeyService
 
     public void TogglApp()
     {
-        UiUtils.BeginInvoke(App.MainWindow.Toggle);
+        UiUtils.BeginInvoke((AppEnv.MainWindow as IMainWindow).Toggle);
     }
 
     public void ExitApp()
     {
-        UiUtils.BeginInvoke(App.MainWindow.Close);
+        UiUtils.BeginInvoke(AppEnv.MainWindow.Close);
     }
 }

@@ -1,9 +1,9 @@
 ﻿using Duckie.Services.Clipboard;
 using Duckie.Services.PacManager;
-using Duckie.Services.UserConfigs;
+using Duckie.Shared.Services.UserConfigs;
+using Duckie.Shared.Utils.Localization;
+using Duckie.Shared.Utils.Ui;
 using Duckie.Utils.HotKeys;
-using Duckie.Utils.Localization;
-using Duckie.Utils.Ui;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -11,8 +11,6 @@ namespace Duckie;
 
 public partial class App : Application
 {
-    public static new MainWindow MainWindow => Current.MainWindow as MainWindow;
-
     private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {
         UiUtils.Warning($"Exception: {e.Exception.Message}{e.Exception.InnerException?.Message}", "Warning");

@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:common="clr-namespace:Duckie.Views.Common"
-             xmlns:loc="clr-namespace:Duckie.Utils.Localization"
+             xmlns:loc="clr-namespace:Duckie.Shared.Utils.Localization;assembly=Duckie.Shared"
+             xmlns:common="clr-namespace:Duckie.Shared.Views.Common;assembly=Duckie.Shared"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              Background="White">
@@ -14,7 +14,7 @@
                 <!-- App Title -->
                 <StackPanel HorizontalAlignment="Center" Margin="0,0,0,20">
                     <common:TextEx Text="{loc:Localize AppTitle}" FontSize="32" FontWeight="Bold" Foreground="#333" HorizontalAlignment="Center"/>
-                    <common:TextEx Text="{loc:Localize Version}" FontSize="14" Foreground="#666" Margin="0,4,0,0" HorizontalAlignment="Center"/>
+                    <common:TextEx x:Name="versionText" FontSize="14" Foreground="#666" Margin="0,4,0,0" HorizontalAlignment="Center"/>
                 </StackPanel>
 
                 <!-- App Info Section -->

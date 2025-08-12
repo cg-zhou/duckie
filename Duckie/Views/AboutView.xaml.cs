@@ -1,5 +1,6 @@
+using Duckie.Shared.Utils;
+using Duckie.Shared.Utils.Localization;
 using Duckie.Utils;
-using Duckie.Utils.Localization;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -15,6 +16,8 @@ public partial class AboutView : UserControl
 
     private void AboutView_Loaded(object sender, RoutedEventArgs e)
     {
+        versionText.Text = LocKey.Version.Text(AppUtils.GetAppVersion());
+
         if (MsixPackageUtils.TryGetMsixPackageName(out var packageName))
         {
             ShowMsixInfo(packageName);

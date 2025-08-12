@@ -1,5 +1,5 @@
-using Duckie.Utils.Ui;
-using Duckie.Views.Common;
+using Duckie.Shared.Utils.Ui;
+using Duckie.Shared.Views.Common;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;

@@ -1,4 +1,6 @@
-﻿using Duckie.Utils.Localization;
+﻿using Duckie.Shared;
+using Duckie.Shared.Utils.Localization;
+using Duckie.Shared.Views;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
@@ -6,7 +8,7 @@ using System.Windows.Shapes;
 
 namespace Duckie;
 
-public partial class MainWindow : Window
+public partial class MainWindow : Window, IMainWindow
 {
     private bool _isSidebarCollapsed = false;
     private const double CollapsedWidth = 54;
@@ -15,6 +17,9 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+
+        AppEnv.MainWindow = this;
+
         UpdateNavigationState();
         ShowImageProcessing();
     }

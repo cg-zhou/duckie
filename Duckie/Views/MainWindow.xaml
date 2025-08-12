@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Duckie.Views"
         xmlns:controls="clr-namespace:Duckie.Views.Controls"
-        xmlns:common="clr-namespace:Duckie.Views.Common"
-        xmlns:loc="clr-namespace:Duckie.Utils.Localization"
+        xmlns:common="clr-namespace:Duckie.Shared.Views.Common;assembly=Duckie.Shared"
+        xmlns:loc="clr-namespace:Duckie.Shared.Utils.Localization;assembly=Duckie.Shared"
+        xmlns:imageViews="clr-namespace:Duckie.Views;assembly=Duckie.Image"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Closing="Window_Closing"
@@ -54,7 +55,7 @@
         <!-- Main content area -->
         <Grid Grid.Column="1">
             <!-- Image processing area -->
-            <local:ImageView x:Name="ImageViewControl" Margin="10" Visibility="Visible"/>
+            <imageViews:ImageView x:Name="ImageViewControl" Margin="10" Visibility="Visible"/>
 
             <!-- PAC management area -->
             <local:PacManageView x:Name="PacManageViewControl" Margin="10" Visibility="Collapsed"/>

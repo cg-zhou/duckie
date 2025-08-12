@@ -1,5 +1,5 @@
-﻿using Duckie.Services.UserConfigs;
-using Duckie.Utils.Ui;
+﻿using Duckie.Shared.Services.UserConfigs;
+using Duckie.Shared.Utils.Ui;
 using System.Net;
 using System.Net.Http;
 

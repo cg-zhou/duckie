@@ -1,6 +1,6 @@
-using Duckie.Services.UserConfigs;
+using Duckie.Shared.Services.UserConfigs;
+using Duckie.Shared.Utils.Ui;
 using Duckie.Utils.Registry;
-using Duckie.Utils.Ui;
 using System.Drawing;
 
 namespace Duckie.Services.PacManager;
@@ -55,7 +55,7 @@ public class PacManagerService
         var index = list.IndexOf(item);
         if (index >= 0)
         {
-            var colors = new[] { Color.Green, Color.Orange, Color.Blue };
+            var colors = new[] { Color.Green, Color.OrangeRed, Color.Blue };
             var color = colors[index % colors.Length];
             NotifyIconUtils.SetIcoBage(color);
         }

@@ -1,5 +1,5 @@
+using Duckie.Shared.Utils.Localization;
 using Duckie.Utils.HotKeys;
-using Duckie.Utils.Localization;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
