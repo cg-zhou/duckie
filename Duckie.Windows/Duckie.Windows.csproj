@@ -2,4 +2,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Duckie.Shared\Duckie.Shared.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
 </Project>

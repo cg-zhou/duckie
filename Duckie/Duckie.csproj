@@ -1,11 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net480</TargetFramework>
-    <UseWPF>true</UseWPF>
     <Version>0.4.0</Version>
-    <LangVersion>Latest</LangVersion>
-    <ImplicitUsings>true</ImplicitUsings>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -26,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Duckie.Image\Duckie.Image.csproj" />
     <ProjectReference Include="..\Duckie.Shared\Duckie.Shared.csproj" />
+    <ProjectReference Include="..\Duckie.Windows\Duckie.Windows.csproj" />
   </ItemGroup>
 
   <ItemGroup>

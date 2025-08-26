@@ -1,17 +1,13 @@
-﻿using System.Windows.Forms;
+﻿using Duckie.Shared.Utils;
+using System.Windows.Forms;
 
 namespace Duckie.Utils.HotKeys;
 
-internal static partial class HotKeyManager
+public static partial class HotKeyManager
 {
     public static IHotKeyService[] GetHotKeyServices()
     {
-        return typeof(HotKeyManager).Assembly
-            .GetTypes()
-            .Where(x => x.GetInterfaces().Contains(typeof(IHotKeyService)))
-            .Select(Activator.CreateInstance)
-            .OfType<IHotKeyService>()
-            .ToArray();
+        return ReflectUtils.Get<IHotKeyService>();
     }
 
     public static void RegisterServices()

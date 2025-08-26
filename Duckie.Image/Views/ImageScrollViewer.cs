@@ -2,7 +2,7 @@ using Duckie.Views.Common;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Duckie.Shared.Views.Common;
+namespace Duckie.Image.Views;
 
 /// <summary>
 /// 专门为图像查看设计的滚动控件，支持鼠标拖动滚动

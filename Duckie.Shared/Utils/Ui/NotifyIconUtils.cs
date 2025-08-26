@@ -76,7 +76,7 @@ public class NotifyIconUtils
         {
             if (mouseEventArgs.Button == MouseButtons.Left)
             {
-                (AppEnv.MainWindow as IMainWindow).Toggle();
+                (AppEnv.MainWindow as IMainWindow).ToggleWindow();
             }
         }
     }
@@ -92,7 +92,7 @@ public class NotifyIconUtils
         var items = notifyIcon.ContextMenuStrip.Items;
         items.Clear();
 
-        items.Add(new ToolStripMenuItem("Duckie", null, (s, e) => UiUtils.BeginInvoke(AppEnv.MainWindow.Show)));
+        items.Add(new ToolStripMenuItem("Duckie", null, (s, e) => UiUtils.BeginInvoke(() => (AppEnv.MainWindow as IMainWindow)?.ToggleWindow())));
         items.Add(new ToolStripSeparator());
 
         var pacMenuItem = new ToolStripMenuItem("Set PAC");
@@ -103,12 +103,17 @@ public class NotifyIconUtils
         var isChecked = RegistryUtils.StartUp.Get();
         items.Add(new ToolStripMenuItem("Launch On Startup", null, (s, e) =>
         {
-            var isChecked = RegistryUtils.StartUp.Get();
-            RegistryUtils.StartUp.Set(!isChecked);
+            var currentChecked = RegistryUtils.StartUp.Get();
+            var newChecked = !currentChecked;
+
+            // 直接更新注册表，注册表是唯一数据源
+            RegistryUtils.StartUp.Set(newChecked);
 
             RefreshContextMenu();
         })
-        { Checked = isChecked });
+        {
+            Checked = isChecked
+        });
 
         items.Add(new ToolStripMenuItem("Exit", null, (s, e) => Environment.Exit(0)));
     }

@@ -5,7 +5,7 @@ using System.Net.Http;
 
 namespace Duckie.Services.Clipboard;
 
-internal static class HttpUtils
+public static class HttpUtils
 {
     private static ProxyConfig config = new ProxyConfig();
 

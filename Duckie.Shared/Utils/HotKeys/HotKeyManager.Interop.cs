@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Duckie.Utils.HotKeys;
 
-internal static partial class HotKeyManager
+public static partial class HotKeyManager
 {
     public static class Interop
     {

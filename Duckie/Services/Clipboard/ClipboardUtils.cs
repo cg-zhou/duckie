@@ -1,17 +1,17 @@
-﻿using System.Drawing;
-using System.IO;
+﻿using System.IO;
 using System.Windows.Forms;
 using ClipboardEx = System.Windows.Forms.Clipboard;
+using ImageEx = System.Drawing.Image;
 
 namespace Duckie.Services.Clipboard;
 
 internal static class ClipboardUtils
 {
-    public static Image GetImage()
+    public static ImageEx GetImage()
     {
         return ClipboardEx.GetDataObject()
             ?.GetData(DataFormats.Bitmap)
-            as Image;
+            as ImageEx;
     }
 
     public static string GetText()

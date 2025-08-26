@@ -16,7 +16,7 @@ public class AppHotKeyService : IHotKeyService
 
     public void TogglApp()
     {
-        UiUtils.BeginInvoke((AppEnv.MainWindow as IMainWindow).Toggle);
+        UiUtils.BeginInvoke((AppEnv.MainWindow as IMainWindow).ToggleWindow);
     }
 
     public void ExitApp()

@@ -1,10 +1,12 @@
 ﻿using Duckie.Shared;
+using Duckie.Shared.Services.UserConfigs;
+using Duckie.Shared.Utils;
 using Duckie.Shared.Utils.Localization;
 using Duckie.Shared.Views;
+using Duckie.Views.Controls;
 using System.ComponentModel;
 using System.Windows;
-using System.Windows.Media;
-using System.Windows.Shapes;
+using System.Windows.Controls;
 
 namespace Duckie;
 
@@ -14,32 +16,91 @@ public partial class MainWindow : Window, IMainWindow
     private const double CollapsedWidth = 54;
     private const double ExpandedWidth = 120;
 
-    public MainWindow()
+    private NavModel[] navModels = Array.Empty<NavModel>();
+
+    private class NavModel
     {
-        InitializeComponent();
-
-        AppEnv.MainWindow = this;
-
-        UpdateNavigationState();
-        ShowImageProcessing();
+        public NavigationMenuItem NavMenuItem { get; set; }
+        public INavView NavView { get; set; }
+        public UserControl UserControl { get; set; }
     }
 
-    public void Toggle()
+    public MainWindow()
     {
-        if (Visibility == Visibility.Visible)
+        AppEnv.MainWindow = this;
+
+        InitializeComponent();
+
+        var navViews = ReflectUtils.Get<INavView>();
+        navModels = navViews
+            .OrderBy(x => x.NavMenuPosition)
+            .ThenBy(x => x.NavMenuOrder)
+            .Select(CreateNavModel)
+            .ToArray();
+
+        RefreshNavMenu(navModels.FirstOrDefault()?.NavMenuItem);
+
+        // 添加关闭事件处理
+        this.Closing += MainWindow_Closing;
+    }
+
+    private NavModel CreateNavModel(INavView navView)
+    {
+        var navMenuItem = new NavigationMenuItem();
+        navMenuItem.Click += (_, _) =>
+        {
+            RefreshNavMenu(navMenuItem);
+        };
+
+        var view = navView.CreateView();
+        navViewContainer.Children.Add(view);
+
+        switch (navView.NavMenuPosition)
+        {
+            case NavMenuPosition.Top:
+                topNavMenuContainer.Children.Add(navMenuItem);
+                break;
+            case NavMenuPosition.Bottom:
+                bottomNavMenuContainer.Children.Add(navMenuItem);
+                break;
+        }
+
+        return new NavModel
+        {
+            NavMenuItem = navMenuItem,
+            NavView = navView,
+            UserControl = view
+        };
+    }
+
+    private void RefreshNavMenu(NavigationMenuItem selectedNavMenuItem)
+    {
+        foreach (var navModel in navModels)
+        {
+            var isSelected = selectedNavMenuItem == navModel.NavMenuItem;
+            navModel.NavMenuItem.IsSelected = isSelected;
+            navModel.UserControl.Visibility = isSelected ? Visibility.Visible : Visibility.Collapsed;
+
+            navModel.NavMenuItem.IconType = navModel.NavView.IconType;
+            navModel.NavMenuItem.Text = navModel.NavView.NameLocKey.Text();
+        }
+    }
+
+    public void ToggleWindow()
+    {
+        if (Visibility == Visibility.Visible && WindowState != WindowState.Minimized)
         {
             Hide();
         }
         else
         {
             Show();
+            WindowState = WindowState.Normal;
+            ShowInTaskbar = true;
             Activate();
         }
     }
 
-    /// <summary>
-    /// Toggle sidebar collapse/expand
-    /// </summary>
     private void ToggleButton_Click(object sender, RoutedEventArgs e)
     {
         _isSidebarCollapsed = !_isSidebarCollapsed;
@@ -49,146 +110,21 @@ public partial class MainWindow : Window, IMainWindow
         // Simple width change without complex animation
         SidebarColumn.Width = new GridLength(targetWidth);
 
-        // Handle text visibility
-        NavImageProcessing.IsTextVisible = !_isSidebarCollapsed;
-        NavPacManagement.IsTextVisible = !_isSidebarCollapsed;
-        NavAbout.IsTextVisible = !_isSidebarCollapsed;
-
-        // Update toggle icon
-        UpdateToggleIcon();
-    }
-
-    /// <summary>
-    /// Update toggle button icon based on sidebar state
-    /// </summary>
-    private void UpdateToggleIcon()
-    {
-        try
+        foreach (var navModel in navModels)
         {
-            var toggleIcon = FindName("ToggleIcon") as Path;
-            if (toggleIcon != null)
-            {
-                var iconData = _isSidebarCollapsed
-                    ? "M9,5 L15,12 L9,19" // Right arrow (expand)
-                    : "M15,5 L9,12 L15,19"; // Left arrow (collapse)
-
-                toggleIcon.Data = Geometry.Parse(iconData);
-            }
-        }
-        catch
-        {
-            // Ignore icon update errors
+            navModel.NavMenuItem.IsTextVisible = !_isSidebarCollapsed;
         }
     }
 
-    /// <summary>
-    /// Switch to image processing function
-    /// </summary>
-    private void MenuImageProcessing_Click(object sender, RoutedEventArgs e)
+    private void MainWindow_Closing(object sender, CancelEventArgs e)
     {
-        ShowImageProcessing();
-    }
-
-    /// <summary>
-    /// Switch to PAC management function
-    /// </summary>
-    private void MenuPacManagement_Click(object sender, RoutedEventArgs e)
-    {
-        ShowPacManagement();
-    }
-
-    /// <summary>
-    /// Show about information
-    /// </summary>
-    private void MenuAbout_Click(object sender, RoutedEventArgs e)
-    {
-        ShowAbout();
-    }
-
-    /// <summary>
-    /// Show settings page
-    /// </summary>
-    private void MenuSettings_Click(object sender, RoutedEventArgs e)
-    {
-        ShowSettings();
-    }
-
-    /// <summary>
-    /// Update navigation button states with visual feedback
-    /// </summary>
-    private void UpdateNavigationState()
-    {
-        // Reset all navigation buttons
-        NavImageProcessing.IsSelected = false;
-        NavPacManagement.IsSelected = false;
-        NavSettings.IsSelected = false;
-        NavAbout.IsSelected = false;
-    }
-
-
-
-    /// <summary>
-    /// Show image processing interface
-    /// </summary>
-    private void ShowImageProcessing()
-    {
-        ImageViewControl.Visibility = Visibility.Visible;
-        PacManageViewControl.Visibility = Visibility.Collapsed;
-        SettingsViewControl.Visibility = Visibility.Collapsed;
-        AboutViewControl.Visibility = Visibility.Collapsed;
-
-        // Update navigation state
-        UpdateNavigationState();
-        NavImageProcessing.IsSelected = true;
-
-        Title = LocKey.Title_Image.Text();
-    }
-
-    private void ShowPacManagement()
-    {
-        ImageViewControl.Visibility = Visibility.Collapsed;
-        PacManageViewControl.Visibility = Visibility.Visible;
-        SettingsViewControl.Visibility = Visibility.Collapsed;
-        AboutViewControl.Visibility = Visibility.Collapsed;
-
-        // Update navigation state
-        UpdateNavigationState();
-        NavPacManagement.IsSelected = true;
-
-        Title = LocKey.Title_PAC.Text();
-    }
-
-    private void ShowSettings()
-    {
-        ImageViewControl.Visibility = Visibility.Collapsed;
-        PacManageViewControl.Visibility = Visibility.Collapsed;
-        SettingsViewControl.Visibility = Visibility.Visible;
-        AboutViewControl.Visibility = Visibility.Collapsed;
-
-        // Update navigation state
-        UpdateNavigationState();
-        NavSettings.IsSelected = true;
-
-        Title = LocKey.Title_Settings.Text();
-    }
-
-    private void ShowAbout()
-    {
-        ImageViewControl.Visibility = Visibility.Collapsed;
-        PacManageViewControl.Visibility = Visibility.Collapsed;
-        SettingsViewControl.Visibility = Visibility.Collapsed;
-        AboutViewControl.Visibility = Visibility.Visible;
-
-        // Update navigation state
-        UpdateNavigationState();
-        NavAbout.IsSelected = true;
-
-        Title = LocKey.Title_About.Text();
-    }
-
-    private void Window_Closing(object sender, CancelEventArgs e)
-    {
-        Toggle();
-        e.Cancel = true;
+        var appSettings = UserConfigService.GetAppSettings();
+        
+        if (appSettings.MinimizeToTrayOnClose)
+        {
+            // 最小化到托盘而不是退出
+            e.Cancel = true;
+            Hide();
+        }
     }
 }

@@ -1,5 +1,8 @@
+using Duckie.Services.Clipboard;
+using Duckie.Shared.Services.UserConfigs;
 using Duckie.Shared.Utils.Localization;
 using Duckie.Utils.HotKeys;
+using Duckie.Utils.Registry;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -29,6 +32,12 @@ public partial class SettingsView : UserControl
 
         // 初始化热键设置项
         InitializeHotKeyItems();
+
+        // 初始化应用设置
+        InitializeAppSettings();
+
+        // 初始化代理设置
+        InitializeProxySettings();
     }
 
     private void SettingsView_Loaded(object sender, RoutedEventArgs e)
@@ -250,6 +259,154 @@ public partial class SettingsView : UserControl
         if (item != null)
         {
             ClearHotKey(item);
+        }
+    }
+
+    private void InitializeAppSettings()
+    {
+        var appSettings = UserConfigService.GetAppSettings();
+        
+        // 开机启动直接从注册表读取
+        StartWithWindowsCheckBox.IsChecked = RegistryUtils.StartUp.Get();
+        
+        // 其他设置从用户配置读取
+        StartMinimizedCheckBox.IsChecked = appSettings.StartMinimized;
+        MinimizeToTrayOnCloseCheckBox.IsChecked = appSettings.MinimizeToTrayOnClose;
+    }
+
+    private void StartWithWindowsCheckBox_Changed(object sender, RoutedEventArgs e)
+    {
+        var isChecked = StartWithWindowsCheckBox.IsChecked == true;
+        
+        try
+        {
+            // 直接更新注册表，注册表是唯一数据源
+            RegistryUtils.StartUp.Set(isChecked);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Failed to update startup setting: {ex.Message}");
+            // 如果失败，恢复复选框状态
+            StartWithWindowsCheckBox.IsChecked = !isChecked;
+        }
+    }
+
+    private void StartMinimizedCheckBox_Changed(object sender, RoutedEventArgs e)
+    {
+        var isChecked = StartMinimizedCheckBox.IsChecked == true;
+        
+        var appSettings = UserConfigService.GetAppSettings();
+        appSettings.StartMinimized = isChecked;
+        UserConfigService.SetAppSettings(appSettings);
+    }
+
+    private void MinimizeToTrayOnCloseCheckBox_Changed(object sender, RoutedEventArgs e)
+    {
+        var isChecked = MinimizeToTrayOnCloseCheckBox.IsChecked == true;
+        
+        var appSettings = UserConfigService.GetAppSettings();
+        appSettings.MinimizeToTrayOnClose = isChecked;
+        UserConfigService.SetAppSettings(appSettings);
+    }
+
+    private void InitializeProxySettings()
+    {
+        var userConfig = UserConfigService.Get();
+        var proxyConfig = userConfig.Proxy;
+
+        // 设置控件状态
+        var isProxyEnabled = !string.IsNullOrWhiteSpace(proxyConfig?.ProxyUri);
+        EnableProxyCheckBox.IsChecked = isProxyEnabled;
+        
+        ProxyServerTextBox.Text = proxyConfig?.ProxyUri ?? "";
+        UsernameTextBox.Text = proxyConfig?.Username ?? "";
+        PasswordBox.Password = proxyConfig?.Password ?? "";
+
+        // 根据代理启用状态控制控件可用性
+        UpdateProxyControlsState(isProxyEnabled);
+    }
+
+    private void UpdateProxyControlsState(bool isEnabled)
+    {
+        ProxyServerTextBox.IsEnabled = isEnabled;
+        UsernameTextBox.IsEnabled = isEnabled;
+        PasswordBox.IsEnabled = isEnabled;
+        TestNetworkButton.IsEnabled = isEnabled;
+    }
+
+    private void EnableProxyCheckBox_Changed(object sender, RoutedEventArgs e)
+    {
+        var isChecked = EnableProxyCheckBox.IsChecked == true;
+        UpdateProxyControlsState(isChecked);
+
+        if (!isChecked)
+        {
+            // 禁用代理时清空配置
+            var emptyConfig = new ProxyConfig();
+            UserConfigService.Set(emptyConfig);
+            HttpUtils.SetProxy(emptyConfig);
+        }
+        else
+        {
+            // 启用代理时保存当前配置
+            SaveProxyConfig();
+        }
+    }
+
+    private void ProxyServerTextBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (EnableProxyCheckBox.IsChecked == true)
+        {
+            SaveProxyConfig();
+        }
+    }
+
+    private void UsernameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (EnableProxyCheckBox.IsChecked == true)
+        {
+            SaveProxyConfig();
+        }
+    }
+
+    private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+    {
+        if (EnableProxyCheckBox.IsChecked == true)
+        {
+            SaveProxyConfig();
+        }
+    }
+
+    private void SaveProxyConfig()
+    {
+        var proxyConfig = new ProxyConfig
+        {
+            ProxyUri = ProxyServerTextBox.Text?.Trim(),
+            Username = UsernameTextBox.Text?.Trim(),
+            Password = PasswordBox.Password?.Trim()
+        };
+
+        UserConfigService.Set(proxyConfig);
+        HttpUtils.SetProxy(proxyConfig);
+    }
+
+    private async void TestNetworkButton_Click(object sender, RoutedEventArgs e)
+    {
+        TestNetworkButton.IsEnabled = false;
+        TestNetworkButton.Content = "Testing...";
+
+        try
+        {
+            await HttpUtils.TestNetworkAsync();
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Network test failed: {ex.Message}");
+        }
+        finally
+        {
+            TestNetworkButton.IsEnabled = true;
+            TestNetworkButton.Content = LocKey.Settings_TestNetwork.Text();
         }
     }
 }

@@ -2,5 +2,5 @@
 
 public interface IMainWindow
 {
-    void Toggle();
+    void ToggleWindow();
 }

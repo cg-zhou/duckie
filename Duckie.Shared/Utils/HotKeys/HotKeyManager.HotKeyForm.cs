@@ -2,7 +2,7 @@
 
 namespace Duckie.Utils.HotKeys;
 
-internal static partial class HotKeyManager
+public static partial class HotKeyManager
 {
     public class HotKeyForm : Form
     {

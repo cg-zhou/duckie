@@ -70,4 +70,17 @@ public class UserConfigService
         var config = Get();
         return config.Language ?? "en-US";
     }
+
+    public static void SetAppSettings(AppSettings appSettings)
+    {
+        var config = Get();
+        config.App = appSettings;
+        Set(config);
+    }
+
+    public static AppSettings GetAppSettings()
+    {
+        var config = Get();
+        return config.App ?? new AppSettings();
+    }
 }

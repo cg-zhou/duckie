@@ -101,4 +101,12 @@ public static class VolumeUtils
         _audioEndpointVolume.GetMute(out var isMuted);
         return isMuted;
     }
+
+    /// <summary>
+    /// 显示音量悬浮提示
+    /// </summary>
+    public static void ShowVolumeOverlay()
+    {
+        VolumeOverlayWindow.ShowVolumeOverlay();
+    }
 }

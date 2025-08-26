@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="Duckie.Views.ImageView"
+﻿<UserControl x:Class="Duckie.Image.Views.ImageView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Duckie.Views"
+             xmlns:local="clr-namespace:Duckie.Image.Views"
              xmlns:common="clr-namespace:Duckie.Shared.Views.Common;assembly=Duckie.Shared"
              xmlns:loc="clr-namespace:Duckie.Shared.Utils.Localization;assembly=Duckie.Shared"
              mc:Ignorable="d"
@@ -13,8 +13,6 @@
              DragEnter="ImageView_DragEnter"
              DragLeave="ImageView_DragLeave"
              Focusable="True">
-    <!-- 样式已移动到全局主题文件中，减少内存占用 -->
-
     <DockPanel>
         <!-- Modern Toolbar -->
         <Border DockPanel.Dock="Top" Background="#F8F9FA" BorderBrush="#E9ECEF" BorderThickness="0,0,0,1" Padding="10,6">
@@ -109,9 +107,9 @@
                         </DrawingBrush>
                     </Rectangle.Fill>
                 </Rectangle>
-                <common:ImageScrollViewer>
+                <local:ImageScrollViewer>
                     <Image x:Name="image" />
-                </common:ImageScrollViewer>
+                </local:ImageScrollViewer>
             </Grid>
         </DockPanel>
     </DockPanel>

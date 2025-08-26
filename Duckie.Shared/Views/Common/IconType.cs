@@ -29,5 +29,7 @@ public enum IconType
     SpeakerHigh,
     SpeakerLow,
     SpeakerNone,
-    SpeakerX
+    SpeakerX,
+    ChevronUp,
+    ChevronDown
 }

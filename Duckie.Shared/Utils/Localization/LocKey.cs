@@ -20,7 +20,15 @@ public enum LocKey
     [En("A lightweight open-source utility")]
     AppSubtitle,
 
-    // Navigation
+    // Navigation Items
+    [Cn("音量")]
+    [En("Volume")]
+    Nav_Volume,
+
+    [Cn("快捷键")]
+    [En("Hotkey")]
+    Nav_Hotkey,
+
     [Cn("图像")]
     [En("Image")]
     Nav_Image,
@@ -28,6 +36,10 @@ public enum LocKey
     [Cn("PAC")]
     [En("PAC")]
     Nav_PAC,
+
+    [Cn("音量")]
+    [En("Volume")]
+    Nav_VolumeControl,
 
     [Cn("关于")]
     [En("About")]
@@ -43,12 +55,28 @@ public enum LocKey
 
     // Window Titles
     [Cn("Duckie - 图像处理")]
-    [En("Duckie - Image")]
+    [En("Duckie - Image Processing")]
     Title_Image,
 
-    [Cn("Duckie - PAC")]
-    [En("Duckie - PAC")]
+    [Cn("Duckie - PAC管理")]
+    [En("Duckie - PAC Management")]
     Title_PAC,
+
+    [Cn("Duckie - 音量控制")]
+    [En("Duckie - Volume Control")]
+    Title_VolumeControl,
+
+    [Cn("Duckie - 热键管理")]
+    [En("Duckie - Hotkey Management")]
+    Title_HotkeyManagement,
+
+    [Cn("Duckie - 网络测试")]
+    [En("Duckie - Network Test")]
+    Title_NetworkTest,
+
+    [Cn("Duckie - 代码生成")]
+    [En("Duckie - Code Generation")]
+    Title_CodeGeneration,
 
     [Cn("Duckie - 关于")]
     [En("Duckie - About")]
@@ -294,5 +322,69 @@ public enum LocKey
 
     [Cn("设置 - 快捷键")]
     [En("Settings - HotKeys")]
-    Settings_HotKeys
+    Settings_HotKeys,
+
+    [Cn("设置 - 应用程序")]
+    [En("Settings - Application")]
+    Settings_Application,
+
+    [Cn("开机启动")]
+    [En("Start with Windows")]
+    Settings_StartWithWindows,
+
+    [Cn("启动时最小化")]
+    [En("Start minimized")]
+    Settings_StartMinimized,
+
+    [Cn("关闭时最小化到托盘")]
+    [En("Minimize to tray on close")]
+    Settings_MinimizeToTrayOnClose,
+
+    [Cn("应用程序将在系统启动时自动运行")]
+    [En("Application will automatically run when system starts")]
+    Settings_StartWithWindows_Tooltip,
+
+    [Cn("启动时不显示主窗口，直接最小化到托盘")]
+    [En("Hide main window on startup and minimize to tray")]
+    Settings_StartMinimized_Tooltip,
+
+    [Cn("点击关闭按钮时最小化到托盘而不是退出")]
+    [En("Minimize to tray instead of exit when close button is clicked")]
+    Settings_MinimizeToTrayOnClose_Tooltip,
+
+    [Cn("设置 - 代理")]
+    [En("Settings - Proxy")]
+    Settings_Proxy,
+
+    [Cn("HTTP代理设置")]
+    [En("HTTP Proxy Settings")]
+    Settings_HttpProxy,
+
+    [Cn("代理服务器地址")]
+    [En("Proxy Server")]
+    Settings_ProxyServer,
+
+    [Cn("用户名")]
+    [En("Username")]
+    Settings_Username,
+
+    [Cn("密码")]
+    [En("Password")]
+    Settings_Password,
+
+    [Cn("启用HTTP代理")]
+    [En("Enable HTTP Proxy")]
+    Settings_EnableProxy,
+
+    [Cn("输入代理服务器地址，格式: http://host:port")]
+    [En("Enter proxy server address, format: http://host:port")]
+    Settings_ProxyServer_Tooltip,
+
+    [Cn("代理服务器需要身份验证时填写")]
+    [En("Fill in when proxy server requires authentication")]
+    Settings_ProxyAuth_Tooltip,
+
+    [Cn("测试网络连接")]
+    [En("Test Network")]
+    Settings_TestNetwork
 }

@@ -127,6 +127,177 @@
                     </Border>
                 </StackPanel>
 
+                <!-- Application Settings Section -->
+                <StackPanel Margin="0,0,0,30">
+                    <common:TextEx Text="{loc:Localize Settings_Application}" FontSize="18" FontWeight="SemiBold" Foreground="#333" Margin="0,0,0,16"/>
+                    
+                    <Border Background="#F8F9FA" BorderBrush="#DEE2E6" BorderThickness="1"
+                            CornerRadius="6" Padding="16">
+                        <StackPanel>
+                            <!-- Start with Windows -->
+                            <Border Background="White" BorderBrush="#E9ECEF" BorderThickness="1" 
+                                    CornerRadius="4" Margin="0,0,0,8" Padding="12">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <StackPanel Grid.Column="0">
+                                        <common:TextEx Text="{loc:Localize Settings_StartWithWindows}" 
+                                                       FontSize="14" FontWeight="SemiBold" Foreground="#333"/>
+                                        <common:TextEx Text="{loc:Localize Settings_StartWithWindows_Tooltip}" 
+                                                       FontSize="12" Foreground="#666" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                    
+                                    <CheckBox x:Name="StartWithWindowsCheckBox" Grid.Column="1"
+                                              VerticalAlignment="Center"
+                                              Checked="StartWithWindowsCheckBox_Changed"
+                                              Unchecked="StartWithWindowsCheckBox_Changed"/>
+                                </Grid>
+                            </Border>
+
+                            <!-- Start Minimized -->
+                            <Border Background="White" BorderBrush="#E9ECEF" BorderThickness="1" 
+                                    CornerRadius="4" Margin="0,0,0,8" Padding="12">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <StackPanel Grid.Column="0">
+                                        <common:TextEx Text="{loc:Localize Settings_StartMinimized}" 
+                                                       FontSize="14" FontWeight="SemiBold" Foreground="#333"/>
+                                        <common:TextEx Text="{loc:Localize Settings_StartMinimized_Tooltip}" 
+                                                       FontSize="12" Foreground="#666" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                    
+                                    <CheckBox x:Name="StartMinimizedCheckBox" Grid.Column="1"
+                                              VerticalAlignment="Center"
+                                              Checked="StartMinimizedCheckBox_Changed"
+                                              Unchecked="StartMinimizedCheckBox_Changed"/>
+                                </Grid>
+                            </Border>
+
+                            <!-- Minimize to Tray on Close -->
+                            <Border Background="White" BorderBrush="#E9ECEF" BorderThickness="1" 
+                                    CornerRadius="4" Padding="12">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <StackPanel Grid.Column="0">
+                                        <common:TextEx Text="{loc:Localize Settings_MinimizeToTrayOnClose}" 
+                                                       FontSize="14" FontWeight="SemiBold" Foreground="#333"/>
+                                        <common:TextEx Text="{loc:Localize Settings_MinimizeToTrayOnClose_Tooltip}" 
+                                                       FontSize="12" Foreground="#666" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                    
+                                    <CheckBox x:Name="MinimizeToTrayOnCloseCheckBox" Grid.Column="1"
+                                              VerticalAlignment="Center"
+                                              Checked="MinimizeToTrayOnCloseCheckBox_Changed"
+                                              Unchecked="MinimizeToTrayOnCloseCheckBox_Changed"/>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- Proxy Settings Section -->
+                <StackPanel Margin="0,0,0,30">
+                    <common:TextEx Text="{loc:Localize Settings_Proxy}" FontSize="18" FontWeight="SemiBold" Foreground="#333" Margin="0,0,0,16"/>
+                    
+                    <Border Background="#F8F9FA" BorderBrush="#DEE2E6" BorderThickness="1"
+                            CornerRadius="6" Padding="16">
+                        <StackPanel>
+                            <!-- Enable Proxy -->
+                            <Border Background="White" BorderBrush="#E9ECEF" BorderThickness="1" 
+                                    CornerRadius="4" Margin="0,0,0,12" Padding="12">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <StackPanel Grid.Column="0">
+                                        <common:TextEx Text="{loc:Localize Settings_EnableProxy}" 
+                                                       FontSize="14" FontWeight="SemiBold" Foreground="#333"/>
+                                        <common:TextEx Text="{loc:Localize Settings_HttpProxy}" 
+                                                       FontSize="12" Foreground="#666" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                    
+                                    <CheckBox x:Name="EnableProxyCheckBox" Grid.Column="1"
+                                              VerticalAlignment="Center"
+                                              Checked="EnableProxyCheckBox_Changed"
+                                              Unchecked="EnableProxyCheckBox_Changed"/>
+                                </Grid>
+                            </Border>
+
+                            <!-- Proxy Server -->
+                            <Border Background="White" BorderBrush="#E9ECEF" BorderThickness="1" 
+                                    CornerRadius="4" Margin="0,0,0,12" Padding="12">
+                                <StackPanel>
+                                    <common:TextEx Text="{loc:Localize Settings_ProxyServer}" 
+                                                   FontSize="14" FontWeight="SemiBold" Foreground="#333" 
+                                                   Margin="0,0,0,8"/>
+                                    <TextBox x:Name="ProxyServerTextBox"
+                                             Height="32" Padding="8"
+                                             FontSize="12"
+                                             ToolTip="{loc:Localize Settings_ProxyServer_Tooltip}"
+                                             TextChanged="ProxyServerTextBox_TextChanged"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Username -->
+                            <Border Background="White" BorderBrush="#E9ECEF" BorderThickness="1" 
+                                    CornerRadius="4" Margin="0,0,0,12" Padding="12">
+                                <StackPanel>
+                                    <common:TextEx Text="{loc:Localize Settings_Username}" 
+                                                   FontSize="14" FontWeight="SemiBold" Foreground="#333" 
+                                                   Margin="0,0,0,8"/>
+                                    <TextBox x:Name="UsernameTextBox"
+                                             Height="32" Padding="8"
+                                             FontSize="12"
+                                             ToolTip="{loc:Localize Settings_ProxyAuth_Tooltip}"
+                                             TextChanged="UsernameTextBox_TextChanged"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Password -->
+                            <Border Background="White" BorderBrush="#E9ECEF" BorderThickness="1" 
+                                    CornerRadius="4" Margin="0,0,0,12" Padding="12">
+                                <StackPanel>
+                                    <common:TextEx Text="{loc:Localize Settings_Password}" 
+                                                   FontSize="14" FontWeight="SemiBold" Foreground="#333" 
+                                                   Margin="0,0,0,8"/>
+                                    <PasswordBox x:Name="PasswordBox"
+                                                 Height="32" Padding="8"
+                                                 FontSize="12"
+                                                 ToolTip="{loc:Localize Settings_ProxyAuth_Tooltip}"
+                                                 PasswordChanged="PasswordBox_PasswordChanged"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Test Network Button -->
+                            <Border Background="White" BorderBrush="#E9ECEF" BorderThickness="1" 
+                                    CornerRadius="4" Padding="12">
+                                <Button x:Name="TestNetworkButton"
+                                        Content="{loc:Localize Settings_TestNetwork}"
+                                        Height="36" Width="120"
+                                        HorizontalAlignment="Left"
+                                        Click="TestNetworkButton_Click">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource PrimaryButtonStyle}"/>
+                                    </Button.Style>
+                                </Button>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
                 <!-- Hotkeys Settings Section -->
                 <StackPanel Margin="0,0,0,20">
                     <common:TextEx Text="{loc:Localize Settings_HotKeys}" FontSize="18" FontWeight="SemiBold" Foreground="#333" Margin="0,0,0,16"/>

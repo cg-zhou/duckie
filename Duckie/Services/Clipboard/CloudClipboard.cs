@@ -1,11 +1,11 @@
 ﻿using Duckie.Shared.Utils.Drawing;
 using Duckie.Shared.Utils.Ui;
-using System.Drawing;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.RegularExpressions;
+using ImageEx = System.Drawing.Image;
 
 namespace Duckie.Services.Clipboard;
 
@@ -43,13 +43,13 @@ internal static class CloudClipboard
             }
             catch (Exception e)
             {
-                
+
                 NotifyIconUtils.Notify($"Request failed: {e.Message}{e.InnerException?.Message}", "Cloud Clipboard");
             }
         });
     }
 
-    private static Task<string> UploadImageAsync(Image image)
+    private static Task<string> UploadImageAsync(ImageEx image)
     {
         var fileName = $"{DateTime.Now:yyyy_MM_dd_HH_mm_ss}.png";
         var bytes = image.ToBytes();
