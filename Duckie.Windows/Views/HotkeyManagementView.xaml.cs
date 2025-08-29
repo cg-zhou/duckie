@@ -22,7 +22,7 @@ public partial class HotkeyManagerView : UserControl
         try
         {
             _hotkeys.Clear();
-            
+
             var services = HotKeyManager.GetHotKeyServices();
             foreach (var service in services)
             {
@@ -38,7 +38,7 @@ public partial class HotkeyManagerView : UserControl
                     });
                 }
             }
-            
+
             UpdateHotkeyStatus();
         }
         catch (Exception ex)
@@ -56,6 +56,7 @@ public partial class HotkeyManagerView : UserControl
             "调小音量" => "降低系统音量",
             "调大音量" => "提高系统音量",
             "静音/取消静音" => "切换系统静音状态",
+            "在当前文件夹打开终端" => "在当前活动的文件夹中打开终端窗口",
             _ => "执行相关操作"
         };
     }
@@ -63,18 +64,25 @@ public partial class HotkeyManagerView : UserControl
     private string FormatKeyCombination(KeyModifiers modifiers, System.Windows.Forms.Keys keys)
     {
         var parts = new List<string>();
-        
+
         if (modifiers.HasFlag(KeyModifiers.Alt))
+        {
             parts.Add("Alt");
+        }
         if (modifiers.HasFlag(KeyModifiers.Control))
+        {
             parts.Add("Ctrl");
+        }
         if (modifiers.HasFlag(KeyModifiers.Shift))
+        {
             parts.Add("Shift");
+        }
         if (modifiers.HasFlag(KeyModifiers.Win))
+        {
             parts.Add("Win");
-            
+        }
+
         parts.Add(FormatKey(keys));
-        
         return string.Join(" + ", parts);
     }
 
@@ -92,6 +100,7 @@ public partial class HotkeyManagerView : UserControl
             System.Windows.Forms.Keys.D7 => "7",
             System.Windows.Forms.Keys.D8 => "8",
             System.Windows.Forms.Keys.D9 => "9",
+            System.Windows.Forms.Keys.Oemtilde => "`",
             _ => key.ToString()
         };
     }
@@ -100,7 +109,7 @@ public partial class HotkeyManagerView : UserControl
     {
         var enabledCount = _hotkeys.Count(h => h.IsEnabled);
         var totalCount = _hotkeys.Count;
-        
+
         if (enabledCount == totalCount && totalCount > 0)
         {
             HotkeyStatusText.Text = $"所有热键正常工作 ({totalCount} 个)";

@@ -29,6 +29,10 @@ public enum LocKey
     [En("Hotkey")]
     Nav_Hotkey,
 
+    [Cn("终端")]
+    [En("Terminal")]
+    Nav_Terminal,
+
     [Cn("图像")]
     [En("Image")]
     Nav_Image,

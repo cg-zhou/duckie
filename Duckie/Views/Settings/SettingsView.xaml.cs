@@ -265,10 +265,10 @@ public partial class SettingsView : UserControl
     private void InitializeAppSettings()
     {
         var appSettings = UserConfigService.GetAppSettings();
-        
+
         // 开机启动直接从注册表读取
         StartWithWindowsCheckBox.IsChecked = RegistryUtils.StartUp.Get();
-        
+
         // 其他设置从用户配置读取
         StartMinimizedCheckBox.IsChecked = appSettings.StartMinimized;
         MinimizeToTrayOnCloseCheckBox.IsChecked = appSettings.MinimizeToTrayOnClose;
@@ -277,7 +277,7 @@ public partial class SettingsView : UserControl
     private void StartWithWindowsCheckBox_Changed(object sender, RoutedEventArgs e)
     {
         var isChecked = StartWithWindowsCheckBox.IsChecked == true;
-        
+
         try
         {
             // 直接更新注册表，注册表是唯一数据源
@@ -294,7 +294,7 @@ public partial class SettingsView : UserControl
     private void StartMinimizedCheckBox_Changed(object sender, RoutedEventArgs e)
     {
         var isChecked = StartMinimizedCheckBox.IsChecked == true;
-        
+
         var appSettings = UserConfigService.GetAppSettings();
         appSettings.StartMinimized = isChecked;
         UserConfigService.SetAppSettings(appSettings);
@@ -303,7 +303,7 @@ public partial class SettingsView : UserControl
     private void MinimizeToTrayOnCloseCheckBox_Changed(object sender, RoutedEventArgs e)
     {
         var isChecked = MinimizeToTrayOnCloseCheckBox.IsChecked == true;
-        
+
         var appSettings = UserConfigService.GetAppSettings();
         appSettings.MinimizeToTrayOnClose = isChecked;
         UserConfigService.SetAppSettings(appSettings);
@@ -317,7 +317,7 @@ public partial class SettingsView : UserControl
         // 设置控件状态
         var isProxyEnabled = !string.IsNullOrWhiteSpace(proxyConfig?.ProxyUri);
         EnableProxyCheckBox.IsChecked = isProxyEnabled;
-        
+
         ProxyServerTextBox.Text = proxyConfig?.ProxyUri ?? "";
         UsernameTextBox.Text = proxyConfig?.Username ?? "";
         PasswordBox.Password = proxyConfig?.Password ?? "";
@@ -471,18 +471,22 @@ public class HotKeySettingsItem : INotifyPropertyChanged
                 keyName = match.Groups[1].Value;
             }
 
-            if (keyName.Equals(Key.OemTilde.ToString(), StringComparison.OrdinalIgnoreCase))
+            if (Enum.TryParse<Key>(keyName, true, out var key))
             {
-                keyName = "`";
+                if (key == Key.OemTilde)
+                {
+                    keyName = "`";
+                }
+                else if (key == Key.OemPlus)
+                {
+                    keyName = "+";
+                }
+                else if (key == Key.OemMinus)
+                {
+                    keyName = "-";
+                }
             }
-            else if (keyName.Equals(Key.OemPlus.ToString(), StringComparison.OrdinalIgnoreCase))
-            {
-                keyName = "+";
-            }
-            else if (keyName.Equals(Key.OemMinus.ToString(), StringComparison.OrdinalIgnoreCase))
-            {
-                keyName = "-";
-            }
+
             parts.Add(keyName);
         }
 
