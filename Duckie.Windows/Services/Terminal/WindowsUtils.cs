@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Duckie.Windows.Services.Terminal;
 
+/// <summary>
+/// Windows 系统相关的工具类
+/// </summary>
 public static class WindowsUtils
 {
     #region Win32 API 声明
@@ -24,7 +27,7 @@ public static class WindowsUtils
     /// 获取当前活动的文件资源管理器路径
     /// </summary>
     /// <returns>当前文件夹路径，如果获取失败则返回用户主目录</returns>
-    public static string GetActiveExplorerPath()
+    public static string GetCurrentExplorerPath()
     {
         try
         {
@@ -39,7 +42,7 @@ public static class WindowsUtils
             // 忽略错误，返回默认路径
         }
 
-        return string.Empty;
+        return GetDefaultPath();
     }
 
     /// <summary>
@@ -218,5 +221,33 @@ public static class WindowsUtils
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// 检查给定路径是否有效
+    /// </summary>
+    /// <param name="path">要检查的路径</param>
+    /// <returns>如果路径有效且存在则返回 true</returns>
+    public static bool IsValidPath(string path)
+    {
+        if (string.IsNullOrWhiteSpace(path))
+            return false;
+
+        try
+        {
+            return Directory.Exists(path);
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// 获取默认路径（用户主目录）
+    /// </summary>
+    private static string GetDefaultPath()
+    {
+        return Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
     }
 }

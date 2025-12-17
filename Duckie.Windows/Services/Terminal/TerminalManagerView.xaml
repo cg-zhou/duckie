@@ -1,0 +1,73 @@
+<UserControl x:Class="Duckie.Windows.Services.Terminal.TerminalManagerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="800">
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Margin="20">
+                <!-- 标题 -->
+                <TextBlock Text="终端管理" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
+                
+                <!-- 功能说明 -->
+                <Border Background="#F5F5F5" Padding="15" CornerRadius="5" Margin="0,0,0,20">
+                    <StackPanel>
+                        <TextBlock Text="功能说明" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
+                        <TextBlock TextWrapping="Wrap" LineHeight="20">
+                            <Run Text="• 按下 Ctrl + ` 快捷键可以在当前活动的文件夹中打开终端"/><LineBreak/>
+                            <Run Text="• 优先打开 Windows Terminal，如果不可用则降级到 PowerShell 或 CMD"/><LineBreak/>
+                            <Run Text="• 如果无法检测到当前文件夹，将在用户主目录打开终端"/><LineBreak/>
+                            <Run Text="• 支持从资源管理器窗口中获取当前路径"/>
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+
+                <!-- 测试区域 -->
+                <GroupBox Header="测试功能" Margin="0,0,0,20">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="点击下面的按钮测试终端功能：" Margin="0,0,0,15"/>
+                        
+                        <WrapPanel>
+                            <Button Name="TestTerminal" Content="测试当前路径" 
+                                    Click="TestTerminal_Click" 
+                                    Padding="15,8" Margin="0,0,10,10"
+                                    Background="#007ACC" Foreground="White" BorderThickness="0"/>
+                            
+                            <Button Name="OpenDefaultPath" Content="打开用户主目录" 
+                                    Click="OpenDefaultPath_Click" 
+                                    Padding="15,8" Margin="0,0,10,10"
+                                    Background="#28A745" Foreground="White" BorderThickness="0"/>
+
+                            <Button Name="DebugPath" Content="调试路径检测" 
+                                    Click="DebugPath_Click" 
+                                    Padding="15,8" Margin="0,0,10,10"
+                                    Background="#FFC107" Foreground="Black" BorderThickness="0"/>
+                        </WrapPanel>
+                        
+                        <TextBlock Text="💡 提示：确保先打开一个文件夹窗口，然后点击'测试当前路径'按钮" 
+                                   Foreground="#666" FontStyle="Italic" Margin="0,10,0,0"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- 快捷键信息 -->
+                <GroupBox Header="快捷键设置">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="当前配置的快捷键：" Margin="0,0,0,10"/>
+                        <Border Background="#E3F2FD" Padding="10" CornerRadius="3">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="快捷键：" FontWeight="Bold"/>
+                                <TextBlock Text="Ctrl + `" FontFamily="Consolas" FontSize="14" 
+                                          Background="#FFF" Padding="5,2" Margin="5,0,0,0" 
+                                          />
+                            </StackPanel>
+                        </Border>
+                        <TextBlock Text="您可以在设置页面的热键管理中修改此快捷键组合。" 
+                                   Foreground="#666" FontStyle="Italic" Margin="0,10,0,0"/>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

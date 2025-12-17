@@ -17,6 +17,9 @@ public static class BitmapExtension
         using (var g = Graphics.FromImage(result))
         {
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            g.CompositingQuality = CompositingQuality.HighQuality;
             g.DrawImage(bitmap, new Rectangle(0, 0, width, height));
         }
 

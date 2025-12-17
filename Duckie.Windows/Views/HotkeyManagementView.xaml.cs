@@ -22,7 +22,7 @@ public partial class HotkeyManagerView : UserControl
         try
         {
             _hotkeys.Clear();
-
+            
             var services = HotKeyManager.GetHotKeyServices();
             foreach (var service in services)
             {
@@ -38,7 +38,7 @@ public partial class HotkeyManagerView : UserControl
                     });
                 }
             }
-
+            
             UpdateHotkeyStatus();
         }
         catch (Exception ex)
@@ -64,25 +64,18 @@ public partial class HotkeyManagerView : UserControl
     private string FormatKeyCombination(KeyModifiers modifiers, System.Windows.Forms.Keys keys)
     {
         var parts = new List<string>();
-
+        
         if (modifiers.HasFlag(KeyModifiers.Alt))
-        {
             parts.Add("Alt");
-        }
         if (modifiers.HasFlag(KeyModifiers.Control))
-        {
             parts.Add("Ctrl");
-        }
         if (modifiers.HasFlag(KeyModifiers.Shift))
-        {
             parts.Add("Shift");
-        }
         if (modifiers.HasFlag(KeyModifiers.Win))
-        {
             parts.Add("Win");
-        }
-
+            
         parts.Add(FormatKey(keys));
+        
         return string.Join(" + ", parts);
     }
 
@@ -109,7 +102,7 @@ public partial class HotkeyManagerView : UserControl
     {
         var enabledCount = _hotkeys.Count(h => h.IsEnabled);
         var totalCount = _hotkeys.Count;
-
+        
         if (enabledCount == totalCount && totalCount > 0)
         {
             HotkeyStatusText.Text = $"所有热键正常工作 ({totalCount} 个)";
