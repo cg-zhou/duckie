@@ -7,6 +7,6 @@ public class ClipboardHotKeyService : IHotKeyService
 {
     public IEnumerable<HotKeyAction> Register()
     {
-        yield return new HotKeyAction("ÍøÂç¼ôÌù°å", KeyModifiers.ALtShift, Keys.PageUp, CloudClipboard.UploadClipboardContent);
+        yield return new HotKeyAction("ç½‘ç»œå‰ªè´´æ¿", KeyModifiers.ALtShift, Keys.PageUp, CloudClipboard.UploadClipboardContent);
     }
 }
