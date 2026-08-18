@@ -7,7 +7,6 @@
         xmlns:controls="clr-namespace:Duckie.Views.Controls"
         xmlns:common="clr-namespace:Duckie.Shared.Views.Common;assembly=Duckie.Shared"
         xmlns:loc="clr-namespace:Duckie.Shared.Utils.Localization;assembly=Duckie.Shared"
-        xmlns:imageViews="clr-namespace:Duckie.Views;assembly=Duckie.Image"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="{loc:Localize AppTitle}" Height="420" Width="760">

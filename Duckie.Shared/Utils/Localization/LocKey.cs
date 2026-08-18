@@ -33,10 +33,6 @@ public enum LocKey
     [En("Terminal")]
     Nav_Terminal,
 
-    [Cn("图像")]
-    [En("Image")]
-    Nav_Image,
-
     [Cn("PAC")]
     [En("PAC")]
     Nav_PAC,
@@ -58,10 +54,6 @@ public enum LocKey
     Nav_Language,
 
     // Window Titles
-    [Cn("Duckie - 图像处理")]
-    [En("Duckie - Image Processing")]
-    Title_Image,
-
     [Cn("Duckie - PAC管理")]
     [En("Duckie - PAC Management")]
     Title_PAC,
@@ -89,43 +81,6 @@ public enum LocKey
     [Cn("Duckie - 设置")]
     [En("Duckie - Settings")]
     Title_Settings,
-
-    // Image Processing
-    [Cn("打开")]
-    [En("Open")]
-    Btn_Open,
-
-    [Cn("导出图标")]
-    [En("Export ICO")]
-    Btn_ExportICO,
-
-    [Cn("逆时针旋转90°")]
-    [En("Rotate 90° Counter-clockwise")]
-    Tooltip_RotateLeft,
-
-    [Cn("顺时针旋转90°")]
-    [En("Rotate 90° Clockwise")]
-    Tooltip_RotateRight,
-
-    [Cn("水平翻转")]
-    [En("Flip Horizontal")]
-    Tooltip_FlipHorizontal,
-
-    [Cn("垂直翻转")]
-    [En("Flip Vertical")]
-    Tooltip_FlipVertical,
-
-    [Cn("放大")]
-    [En("Zoom In")]
-    Tooltip_ZoomIn,
-
-    [Cn("缩小")]
-    [En("Zoom Out")]
-    Tooltip_ZoomOut,
-
-    [Cn("适应窗口")]
-    [En("Fit to Window")]
-    Tooltip_FitToWindow,
 
     // PAC Management
     [Cn("添加代理")]
@@ -203,10 +158,6 @@ public enum LocKey
     [En("Ready")]
     Status_Ready,
 
-    [Cn("已加载：{0}")]
-    [En("Loaded: {0}")]
-    Status_Loaded,
-
     [Cn("PAC配置 '{0}' 添加成功")]
     [En("PAC configuration '{0}' added successfully")]
     Status_PACAdded,
@@ -244,18 +195,6 @@ public enum LocKey
     [En("Exception: {0}")]
     Error_Exception,
 
-    [Cn("打开图像失败：{0}")]
-    [En("Failed to open image: {0}")]
-    Error_FailedToOpenImage,
-
-    [Cn("请先打开图像")]
-    [En("Please open an image")]
-    Error_PleaseOpenImage,
-
-    [Cn("保存图像")]
-    [En("Save Image")]
-    Error_SaveImage,
-
     [Cn("添加PAC失败。名称或URL可能已存在。")]
     [En("Failed to add PAC. Name or URL may already exist.")]
     Error_FailedToAddPAC,
@@ -272,19 +211,7 @@ public enum LocKey
     [En("Failed to load PAC configurations")]
     Error_FailedToLoadPAC,
 
-    [Cn("旋转图像失败")]
-    [En("Failed to rotate image")]
-    Error_FailedToRotateImage,
-
-    [Cn("翻转图像失败")]
-    [En("Failed to flip image")]
-    Error_FailedToFlipImage,
-
     // Success Messages
-    [Cn("图标已导出：{0}")]
-    [En("The icon has been exported: {0}")]
-    Success_IconExported,
-
     // Common Buttons
     [Cn("确定")]
     [En("OK")]

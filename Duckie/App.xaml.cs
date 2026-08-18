@@ -1,5 +1,4 @@
-﻿using Duckie.Image;
-using Duckie.Services.Clipboard;
+﻿using Duckie.Services.Clipboard;
 using Duckie.Services.PacManager;
 using Duckie.Shared;
 using Duckie.Shared.Services.UserConfigs;
@@ -26,7 +25,6 @@ public partial class App : Application
 
     private void Application_Startup(object sender, StartupEventArgs e)
     {
-        LoadModule<ImageModule>();
         LoadModule<WindowsModule>();
 
         LocUtils.Initialize();
