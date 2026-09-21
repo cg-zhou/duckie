@@ -178,4 +178,4 @@ jobs:
             throw 'The Store package artifact is missing.'
           }
 
-          msstore publish $env:GITHUB_WORKSPACE --inputFile $package.FullName --appId $env:STORE_PRODUCT_ID
+          msstore publish $env:GITHUB_WORKSPACE --inputDirectory $package.DirectoryName --appId $env:STORE_PRODUCT_ID
