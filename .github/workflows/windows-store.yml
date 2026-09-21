@@ -178,4 +178,5 @@ jobs:
             throw 'The Store package artifact is missing.'
           }
 
-          msstore publish $env:GITHUB_WORKSPACE --inputDirectory $package.DirectoryName --appId $env:STORE_PRODUCT_ID
+          $projectDirectory = Join-Path $env:GITHUB_WORKSPACE 'Duckie.Pack'
+          msstore publish $projectDirectory --inputDirectory $package.DirectoryName --appId $env:STORE_PRODUCT_ID --verbose
