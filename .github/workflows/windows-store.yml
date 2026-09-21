@@ -182,4 +182,9 @@ jobs:
           }
 
           $projectDirectory = Join-Path $env:GITHUB_WORKSPACE 'Duckie.Pack'
-          msstore publish $projectDirectory --inputDirectory $package.DirectoryName --appId $env:STORE_PRODUCT_ID --verbose
+          msstore publish $projectDirectory --inputDirectory $package.DirectoryName --appId $env:STORE_PRODUCT_ID --noCommit --verbose
+          if ($LASTEXITCODE -ne 0) {
+            exit $LASTEXITCODE
+          }
+
+          msstore submission publish $env:STORE_PRODUCT_ID --verbose
