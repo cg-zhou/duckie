@@ -84,4 +84,26 @@
 - **用户友好**：直观的界面设计，清晰的视觉反馈
 - **专业级**：企业就绪，具备强大的错误处理能力
 
+## 🚢 GitHub Actions 自动发布 Microsoft Store
+
+仓库包含 [`windows-store.yml`](./.github/workflows/windows-store.yml) 工作流：
+
+- 推送到 `main`：构建 MSIX 并上传为 GitHub Actions Artifact，不提交商店
+- 推送版本标签（例如 `v0.8.3`）：构建并自动提交到 Microsoft Store
+- 手动运行工作流：可输入版本号，并选择是否提交商店
+
+首次使用前，需要在 GitHub 仓库的 `Settings → Secrets and variables → Actions` 中添加以下 Repository secrets：
+
+| Secret | 来源 |
+|--------|------|
+| `AZURE_AD_TENANT_ID` | Microsoft Entra 租户 ID |
+| `AZURE_AD_APPLICATION_CLIENT_ID` | Entra 应用的 Application (client) ID |
+| `AZURE_AD_APPLICATION_SECRET` | Entra 应用创建的 Client secret 值 |
+| `SELLER_ID` | Partner Center 的 Seller/Publisher ID |
+
+Entra 应用还必须在 Partner Center 的账户设置中添加，并至少授予 `Manager` 角色。默认 Store Product ID 来自 `Package.StoreAssociation.xml`；如果应用变更，可在 GitHub Actions Variables 中设置 `STORE_PRODUCT_ID` 覆盖它。
+
+应用需要先在 Partner Center 完成首次提交并处于可更新状态；如果还没有上架过，首次提交仍需手动完成商店资料和认证。若希望每次标签发布前人工确认，可在 GitHub 创建名为 `microsoft-store` 的 Environment，并添加 Required reviewers。
+
+注意：Microsoft Store 仍会执行认证审核；工作流完成表示已提交，不代表立即对所有用户上架。
 

@@ -7,5 +7,11 @@ bin
 obj
 /Duckie.Pack/AppPackages
 /Duckie.Pack/BundleArtifacts
+*.msix
+*.msixbundle
+*.msixupload
+*.appx
+*.appxbundle
+*.appxupload
 *.user
 *.cache

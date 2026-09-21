@@ -1,0 +1,181 @@
+name: Build and publish Duckie to Microsoft Store
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Package version (MAJOR.MINOR.PATCH); optional for manual runs"
+        required: false
+        type: string
+      publish:
+        description: "Submit the package to Microsoft Store"
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+env:
+  # This is the Product ID already recorded in Duckie.Pack/Package.StoreAssociation.xml.
+  # Set the STORE_PRODUCT_ID repository variable if the Store app is changed.
+  STORE_PRODUCT_ID: ${{ vars.STORE_PRODUCT_ID || '9MSZ8M2WXZC4' }}
+
+jobs:
+  build:
+    name: Build MSIX
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Resolve package version
+        shell: pwsh
+        env:
+          REQUESTED_VERSION: ${{ inputs.version }}
+          PUBLISH_REQUESTED: ${{ inputs.publish }}
+        run: |
+          $version = $env:REQUESTED_VERSION
+
+          if ([string]::IsNullOrWhiteSpace($version) -and $env:GITHUB_REF -match '^refs/tags/v(\d+\.\d+\.\d+)$') {
+            $version = "$($matches[1]).0"
+          }
+
+          if ([string]::IsNullOrWhiteSpace($version) -and $env:GITHUB_REF -like 'refs/tags/v*') {
+            throw 'Release tags must use the format vMAJOR.MINOR.PATCH, for example v0.8.3.'
+          }
+
+          if ($env:PUBLISH_REQUESTED -eq 'true' -and [string]::IsNullOrWhiteSpace($version)) {
+            throw 'Provide a version when manually publishing a package.'
+          }
+
+          if (-not [string]::IsNullOrWhiteSpace($version)) {
+            if ($version -match '^\d+\.\d+\.\d+$') {
+              $version = "$version.0"
+            }
+
+            if ($version -notmatch '^\d+\.\d+\.\d+\.\d+$') {
+              throw "Version must be MAJOR.MINOR.PATCH or MAJOR.MINOR.PATCH.REVISION."
+            }
+
+            "APPX_PACKAGE_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+            Write-Host "Using package version $version"
+
+            $manifestPath = Join-Path $env:GITHUB_WORKSPACE 'Duckie.Pack\Package.appxmanifest'
+            $document = [System.Xml.Linq.XDocument]::Load($manifestPath)
+            $namespace = [System.Xml.Linq.XNamespace]::Get('http://schemas.microsoft.com/appx/manifest/foundation/windows10')
+            $identity = $document.Root.Element($namespace + 'Identity')
+            if ($null -eq $identity) {
+              throw 'Package.appxmanifest does not contain an Identity element.'
+            }
+
+            $identity.SetAttributeValue('Version', $version)
+            $document.Save($manifestPath)
+          }
+          else {
+            Write-Host "Using the version from Package.appxmanifest"
+          }
+
+      - name: Build Store package
+        shell: pwsh
+        run: |
+          $properties = @(
+            '/restore',
+            '/t:Rebuild',
+            '/p:Configuration=Release',
+            '/p:Platform=x64',
+            '/p:AppxBundle=Always',
+            '/p:AppxBundlePlatforms=x64',
+            '/p:UapAppxPackageBuildMode=StoreUpload',
+            '/p:AppxPackageSigningEnabled=false'
+          )
+
+          if (-not [string]::IsNullOrWhiteSpace($env:APPX_PACKAGE_VERSION)) {
+            $properties += "/p:AppxPackageVersion=$env:APPX_PACKAGE_VERSION"
+          }
+
+          & msbuild Duckie.Pack\Duckie.Pack.wapproj @properties
+          if ($LASTEXITCODE -ne 0) {
+            exit $LASTEXITCODE
+          }
+
+      - name: Collect Store package
+        id: package
+        shell: pwsh
+        run: |
+          $candidates = Get-ChildItem -Path $env:GITHUB_WORKSPACE -Recurse -File |
+            Where-Object { $_.Extension -in @('.msixupload', '.appxupload', '.msixbundle', '.appxbundle') } |
+            Sort-Object LastWriteTime -Descending
+
+          if (-not $candidates) {
+            throw 'No Store package was produced by MSBuild.'
+          }
+
+          $package = $candidates | Select-Object -First 1
+          New-Item -ItemType Directory -Path release -Force | Out-Null
+          # The Store CLI expects the modern .msixupload extension. The package
+          # contents are identical when MSBuild emits the legacy .appxupload name.
+          $destination = Join-Path $env:GITHUB_WORKSPACE 'release\Duckie.msixupload'
+          Copy-Item -LiteralPath $package.FullName -Destination $destination -Force
+
+          "package_file=$(Split-Path -Leaf $destination)" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+          Write-Host "Store package: $($package.FullName)"
+
+      - name: Upload Store package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: duckie-store-package-${{ github.run_id }}
+          path: release/*
+          if-no-files-found: error
+
+  publish:
+    name: Submit package to Microsoft Store
+    needs: build
+    if: ${{ startsWith(github.ref, 'refs/tags/v') || inputs.publish == true }}
+    runs-on: windows-latest
+    environment: microsoft-store
+
+    steps:
+      - name: Download Store package
+        uses: actions/download-artifact@v4
+        with:
+          name: duckie-store-package-${{ github.run_id }}
+          path: release
+
+      - name: Set up Microsoft Store Developer CLI
+        uses: microsoft/microsoft-store-apppublisher@v1.4
+
+      - name: Configure Partner Center credentials
+        shell: pwsh
+        env:
+          AZURE_AD_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+          SELLER_ID: ${{ secrets.SELLER_ID }}
+          AZURE_AD_APPLICATION_CLIENT_ID: ${{ secrets.AZURE_AD_APPLICATION_CLIENT_ID }}
+          AZURE_AD_APPLICATION_SECRET: ${{ secrets.AZURE_AD_APPLICATION_SECRET }}
+        run: |
+          msstore reconfigure `
+            --tenantId $env:AZURE_AD_TENANT_ID `
+            --sellerId $env:SELLER_ID `
+            --clientId $env:AZURE_AD_APPLICATION_CLIENT_ID `
+            --clientSecret $env:AZURE_AD_APPLICATION_SECRET
+
+      - name: Publish package
+        shell: pwsh
+        env:
+          STORE_PRODUCT_ID: ${{ env.STORE_PRODUCT_ID }}
+        run: |
+          $package = Get-ChildItem -Path release -File | Select-Object -First 1
+          if (-not $package) {
+            throw 'The Store package artifact is missing.'
+          }
+
+          msstore publish $env:GITHUB_WORKSPACE --inputFile $package.FullName --appId $env:STORE_PRODUCT_ID
