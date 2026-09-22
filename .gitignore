@@ -15,3 +15,6 @@ obj
 *.appxupload
 *.user
 *.cache
+
+# Store 打包：本地关联文件含个人账号信息，不应入库
+/Duckie.Pack/Package.StoreAssociation.xml

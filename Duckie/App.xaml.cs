@@ -1,11 +1,9 @@
 ﻿using Duckie.Services.Clipboard;
 using Duckie.Services.PacManager;
-using Duckie.Shared;
 using Duckie.Shared.Services.UserConfigs;
 using Duckie.Shared.Utils.Localization;
 using Duckie.Shared.Utils.Ui;
 using Duckie.Utils.HotKeys;
-using Duckie.Windows;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -19,14 +17,8 @@ public partial class App : Application
         e.Handled = true;
     }
 
-    private void LoadModule<TModule>() where TModule : IModule
-    {
-    }
-
     private void Application_Startup(object sender, StartupEventArgs e)
     {
-        LoadModule<WindowsModule>();
-
         LocUtils.Initialize();
 
         // 创建主窗口

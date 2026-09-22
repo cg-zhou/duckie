@@ -1,0 +1,29 @@
+# 默认：文本文件自动识别，统一使用 CRLF（Windows 项目）
+* text=auto eol=crlf
+
+# 二进制资源，不做行尾转换
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.bmp  binary
+*.pdf  binary
+*.zip  binary
+*.7z   binary
+*.msix binary
+*.appx binary
+*.pfx  binary
+*.snk  binary
+
+# 源码 / 配置显式声明为文本
+*.cs    text eol=crlf
+*.xaml  text eol=crlf
+*.xml   text eol=crlf
+*.json  text eol=crlf
+*.md    text eol=crlf
+*.props text eol=crlf
+*.targets text eol=crlf
+*.csproj text eol=crlf
+*.sln   text eol=crlf
+*.manifest text eol=crlf
