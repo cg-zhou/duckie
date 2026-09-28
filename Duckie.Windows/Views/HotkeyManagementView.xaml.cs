@@ -52,7 +52,6 @@ public partial class HotkeyManagerView : UserControl
         return name switch
         {
             "Show/Hide Duckie" => "显示或隐藏主窗口",
-            "Exit Duckie" => "退出应用程序",
             "调小音量" => "降低系统音量",
             "调大音量" => "提高系统音量",
             "静音/取消静音" => "切换系统静音状态",

@@ -95,17 +95,6 @@
                                         <TextBlock Text="Alt + Shift + E" FontFamily="Consolas" FontSize="12"/>
                                     </Border>
                                 </Grid>
-                                <Grid Margin="0,5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Text="退出 Duckie" VerticalAlignment="Center"/>
-                                    <Border Grid.Column="1" Background="#F8F9FA" BorderBrush="#DEE2E6" 
-                                            BorderThickness="1" CornerRadius="4" Padding="8,4">
-                                        <TextBlock Text="Alt + Shift + Q" FontFamily="Consolas" FontSize="12"/>
-                                    </Border>
-                                </Grid>
                             </StackPanel>
                         </Expander>
 

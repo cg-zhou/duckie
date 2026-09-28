@@ -1,5 +1,6 @@
 ﻿using Duckie.Shared.Utils.Drawing;
 using Duckie.Shared.Utils.Drawing.Ico;
+using Duckie.Shared.Utils.Localization;
 using Duckie.Shared.Views;
 using Duckie.Utils.Registry;
 using System.Drawing;
@@ -18,6 +19,7 @@ public class NotifyIconUtils
         notifyIcon = new NotifyIcon
         {
             Visible = true,
+            Text = $"{LocKey.AppTitle.Text()} — {LocKey.AppSubtitle.Text()}",
             ContextMenuStrip = new ContextMenuStrip()
         };
 

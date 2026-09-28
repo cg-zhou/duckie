@@ -95,6 +95,7 @@ public partial class NavigationMenuItem : UserControl
     private void UpdateText()
     {
         TextBlock.Text = Text ?? string.Empty;
+        UpdateToolTip();
     }
 
     private void UpdateSelectedState()
@@ -116,6 +117,12 @@ public partial class NavigationMenuItem : UserControl
     private void UpdateTextVisibility()
     {
         TextBlock.Visibility = IsTextVisible ? Visibility.Visible : Visibility.Collapsed;
+        UpdateToolTip();
+    }
+
+    private void UpdateToolTip()
+    {
+        MenuButton.ToolTip = IsTextVisible ? null : Text;
     }
 
     private void MenuButton_Click(object sender, RoutedEventArgs e)
