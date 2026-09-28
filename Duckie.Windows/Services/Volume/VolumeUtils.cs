@@ -1,12 +1,25 @@
-using Duckie.Views;
 using System.Runtime.InteropServices;
 
 namespace Duckie.Services.Volume;
 
 public static class VolumeUtils
 {
+    private const uint WM_APPCOMMAND = 0x0319;
+    private const int APPCOMMAND_VOLUME_MUTE = 8;
+    private const int APPCOMMAND_VOLUME_DOWN = 9;
+    private const int APPCOMMAND_VOLUME_UP = 10;
+
     private static IAudioEndpointVolume _audioEndpointVolume = GetAudioEndpointVolume();
-    private static Guid _eventContext = Guid.Empty; // Use an empty GUID for the event context
+
+    [DllImport("user32.dll")]
+    private static extern IntPtr GetForegroundWindow();
+
+    [DllImport("user32.dll")]
+    private static extern IntPtr SendMessage(
+        IntPtr hWnd,
+        uint message,
+        IntPtr wParam,
+        IntPtr lParam);
 
     private static IAudioEndpointVolume GetAudioEndpointVolume()
     {
@@ -45,33 +58,28 @@ public static class VolumeUtils
 
     public static void VolumeUp()
     {
-        if (_audioEndpointVolume == null)
-        {
-            return;
-        }
-
-        _audioEndpointVolume.GetMasterVolumeLevelScalar(out var currentVolume);
-        var newVolume = Math.Min(1.0f, currentVolume + 0.05f); // Increase by 5%, max 100%
-        _audioEndpointVolume.SetMasterVolumeLevelScalar(newVolume, ref _eventContext);
-
-        VolumeOverlayWindow.ShowVolumeOverlay();
+        SendVolumeCommand(APPCOMMAND_VOLUME_UP);
     }
 
     public static void VolumeDown()
     {
-        _audioEndpointVolume.GetMasterVolumeLevelScalar(out var currentVolume);
-        var newVolume = Math.Max(0.0f, currentVolume - 0.05f); // Decrease by 5%, min 0%
-        _audioEndpointVolume.SetMasterVolumeLevelScalar(newVolume, ref _eventContext);
-
-        VolumeOverlayWindow.ShowVolumeOverlay();
+        SendVolumeCommand(APPCOMMAND_VOLUME_DOWN);
     }
 
     public static void ToggleMute()
     {
-        _audioEndpointVolume.GetMute(out var currentMute);
-        _audioEndpointVolume.SetMute(!currentMute, ref _eventContext);
+        SendVolumeCommand(APPCOMMAND_VOLUME_MUTE);
+    }
 
-        VolumeOverlayWindow.ShowVolumeOverlay();
+    private static void SendVolumeCommand(int command)
+    {
+        var target = GetForegroundWindow();
+        if (target == IntPtr.Zero)
+        {
+            return;
+        }
+
+        SendMessage(target, WM_APPCOMMAND, IntPtr.Zero, (IntPtr)(command << 16));
     }
 
     /// <summary>
@@ -102,11 +110,4 @@ public static class VolumeUtils
         return isMuted;
     }
 
-    /// <summary>
-    /// 显示音量悬浮提示
-    /// </summary>
-    public static void ShowVolumeOverlay()
-    {
-        VolumeOverlayWindow.ShowVolumeOverlay();
-    }
 }

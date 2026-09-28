@@ -121,16 +121,4 @@ public partial class VolumeManagerView : UserControl
         }
     }
 
-    private void TestOverlay_Click(object sender, RoutedEventArgs e)
-    {
-        try
-        {
-            // Test the volume overlay by showing current volume
-            VolumeUtils.ShowVolumeOverlay();
-        }
-        catch (Exception ex)
-        {
-            UiUtils.Warning($"悬浮提示测试失败: {ex.Message}", "音量控制");
-        }
-    }
 }

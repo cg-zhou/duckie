@@ -98,24 +98,6 @@
                     </Grid>
                 </StackPanel>
             </Border>
-            
-            <!-- Volume Overlay Settings -->
-            <Border Background="White" BorderBrush="#E9ECEF" BorderThickness="1" 
-                    CornerRadius="8" Padding="20">
-                <StackPanel>
-                    <TextBlock Text="悬浮提示设置" FontSize="16" FontWeight="SemiBold" 
-                               Foreground="#495057" Margin="0,0,0,15"/>
-                    
-                    <CheckBox x:Name="ShowOverlayCheckBox" Content="显示音量变化悬浮提示" 
-                              IsChecked="True" Margin="0,5"/>
-                    <CheckBox x:Name="AutoHideOverlayCheckBox" Content="自动隐藏悬浮提示" 
-                              IsChecked="True" Margin="0,5"/>
-                    
-                    <Button Content="测试悬浮提示" Style="{StaticResource ModernButtonStyle}" 
-                            HorizontalAlignment="Left" Margin="0,15,0,0" Padding="15,8" 
-                            Click="TestOverlay_Click"/>
-                </StackPanel>
-            </Border>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

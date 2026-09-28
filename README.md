@@ -22,8 +22,7 @@ A professional Windows (WPF) application that integrates image processing, PAC p
 
 ### 🔊 System Volume Control
 - **Global Hotkeys**: Alt+Shift+8/9/0 for volume down/up/mute toggle
-- **Floating Overlay**: Modern volume overlay with auto-fade animation
-- **Smart Icons**: Volume status-based icon switching
+- **Native Overlay**: Uses the built-in Windows volume overlay
 
 ### 🛠️ System Utilities
 - **App Display & Hide**: System tray-based window show/hide
