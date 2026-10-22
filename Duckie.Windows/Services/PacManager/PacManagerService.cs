@@ -199,15 +199,18 @@ public class PacManagerService
 
             if (removed > 0)
             {
-                UserConfigService.Set(allPacs.ToArray());
-
-                // If the deleted PAC is currently active, clear PAC settings
+                // Resolve the active PAC before removing it from the saved configuration.
                 var currentConfig = GetCurrentPacConfig();
-                if (currentConfig?.Uri == pacConfig.Uri)
+                if (currentConfig?.Uri?.Equals(pacConfig.Uri, StringComparison.OrdinalIgnoreCase) == true)
                 {
-                    ApplyPacConfig(null);
+                    if (!ApplyPacConfig(null))
+                    {
+                        return false;
+                    }
                 }
 
+                UserConfigService.Set(allPacs.ToArray());
+                RefreshIconBadge();
                 return true;
             }
 
