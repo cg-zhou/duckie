@@ -1,83 +1,67 @@
-# Duckie - Multi-function System Tool
+# Duckie
 
 [中文](./README.zh-CN.md)
 
-A professional Windows (WPF) application that integrates image processing, PAC proxy management, system volume control, and other system utilities.
+An open-source, lightweight Windows desktop toolbox that keeps everyday actions within reach.
 
----
+Duckie brings small, frequently used utilities together in a tray app. Show it when needed, use a global hotkey, and get back to work. Its focus is practical tools that reduce repetitive steps and fit naturally into a tray menu or keyboard shortcut.
 
-## ✨ Core Features
+## Features
 
-### 🖼️ Image Processing
-- **Basic Editing**: 90° rotation, horizontal/vertical flip with intuitive controls
-- **Zoom & Preview**: 10%-300% zoom control, mouse wheel zoom, and fit-to-window
-- **Drag & Drop**: Smart file loading with support for PNG, JPG, BMP, GIF formats  
-- **Export Functions**: Image export and ICO icon generation
+- **Tray integration**: Click the tray icon to show or hide the main window. Configure startup, start minimized, and minimize to tray on close.
+- **PAC management**: Add, edit, remove, and apply PAC configurations. Cycle through saved configurations with a hotkey and see the active configuration indicated by a tray icon badge.
+- **Volume control**: Adjust system volume and toggle mute with global hotkeys.
+- **Open terminal here**: Open a terminal at the active File Explorer folder, preferring Windows Terminal with PowerShell and CMD fallbacks.
+- **Context menu style**: Switch between classic and Windows 11 context menus. This action restarts File Explorer.
+- **Settings**: Configure hotkeys, switch between Chinese and English, and configure an application HTTP proxy with a connection test.
 
-### 🌐 PAC Proxy Management
-- **Configuration Management**: Add, edit, delete PAC configurations with quick switching
-- **Status Indicators**: Clear visual status with system tray icon badges
-- **Registry Integration**: Automatic Windows system proxy settings management
-- **Direct Connection**: One-click proxy disable with system tray quick access
+PAC management changes the current user's Windows PAC setting; it does not provide a proxy server. The HTTP proxy in Settings applies to Duckie's own HTTP requests.
 
-### 🔊 System Volume Control
-- **Global Hotkeys**: Alt+Shift+8/9/0 for volume down/up/mute toggle
-- **Native Overlay**: Uses the built-in Windows volume overlay
+## Getting started
 
-### 🛠️ System Utilities
-- **App Display & Hide**: System tray-based window show/hide
-- **App Exit**: Clean application termination
-- **Volume Adjustment**: Fine-grained volume control
-- **Volume Mute**: Quick mute/unmute functionality
-- **Quiet Mode**: Background operation mode
-- **Icon Conversion**: Convert images to ICO format
-- **Online Updates**: Automatic update checking (Desktop only)
-- **Code Generation**: Development utility features
+Launch Duckie, then click its tray icon to show or hide the window. Add your PAC URLs in the PAC management page and configure startup and window behavior in Settings. To quit, choose **Exit** from the tray menu.
 
-### ⚙️ System Integration
-- **System Tray**: Background operation with left-click show/hide
-- **Startup Options**: Optional system startup integration
-- **Hotkey Management**: Customizable global hotkey system
-- **Modern Interface**: Clean WPF UI with collapsible sidebar
+Default shortcuts:
 
-## 🚀 Quick Start
+| Shortcut | Action |
+| --- | --- |
+| Alt + Shift + E | Show or hide Duckie |
+| Alt + Shift + 1 | Cycle through saved PAC configurations, then clear the PAC setting |
+| Alt + Shift + 8 | Volume down |
+| Alt + Shift + 9 | Volume up |
+| Alt + Shift + 0 | Mute or unmute |
+| Alt + Shift + ` | Open a terminal at the active File Explorer folder |
+| Alt + Shift + 5 | Toggle context menu style and restart File Explorer |
 
-### Image Processing
-1. Drag images to window or click "Open" to load images
-2. Use toolbar buttons for rotation and flip operations  
-3. Mouse wheel + Ctrl for zoom, or use zoom controls
-4. Click "Save" or "Export ICO" to save results
+Shortcuts may conflict with other applications. Review or change them in Settings.
 
-### PAC Proxy Management  
-1. Click "Add PAC" to add proxy configuration (Name + PAC URL)
-2. Click configuration cards to apply proxy, click "No PAC" to disable
-3. Use "Edit"/"Delete" buttons to manage existing configurations
-4. System tray right-click menu for quick proxy switching
+## Development
 
-### Volume Control
-- **Alt + Shift + 8**: Volume down
-- **Alt + Shift + 9**: Volume up
-- **Alt + Shift + 0**: Mute/unmute toggle
+Duckie uses C#, WPF, and .NET Framework 4.8. It is a Windows application.
 
-## 📋 Platform Compatibility
+| Project | Responsibility |
+| --- | --- |
+| `Duckie` | Application entry point, main window, and settings |
+| `Duckie.Shared` | Shared controls, configuration, localization, tray, and hotkey infrastructure |
+| `Duckie.Windows` | Windows utilities, including PAC, volume, and terminal tools |
+| `Duckie.Pack` | MSIX packaging |
 
-| Feature | UI Available | Right-Click Menu | Quick Keys | State Display | MS Store Available |
-|---------|-------------|-----------------|------------|---------------|-------------------|
-| App Show/Hide | ✗ | ✓ | ✓ | ✗ | ✓ |
-| App Exit | ✗ | ✓ | ✓ | ✗ | ✓ |
-| Volume Down | ✗ | ✓ | ✗ | ✗ | ✓ |
-| Volume Up | ✗ | ✓ | ✗ | ✗ | ✓ |
-| Quiet Mode/Mute | ✗ | ✓ | ✗ | ✗ | ✓ |
-| Icon Conversion | ✓ | ✗ | ✗ | ✗ | ✓ |
-| PAC Switch | ✓ | ✓ | ✓ | ✓ | ✗ |
-| Online Updates | ✗ | ✓ | ✗ | ✗ | ✗ |
-| Code Generation | ✓ | ✗ | ✗ | ✗ | ✗ |
+On Windows, open `Duckie.sln` in Visual Studio with the **.NET desktop development** workload and the .NET Framework 4.8 targeting pack installed. Build and run the `Duckie` project. MSIX packaging additionally requires the Windows SDK and packaging tools referenced by `Duckie.Pack`.
 
-## 💡 Technical Highlights
+With a compatible .NET SDK and targeting pack, the desktop app can also be built from the repository root:
 
-- **Memory Optimization**: Smart resource management with timely memory release after image processing
-- **Asynchronous Operations**: Non-blocking UI with smooth responsiveness  
-- **Error Handling**: Comprehensive exception handling with user-friendly error messages
-- **Modular Architecture**: Clear service layering for easy feature extension
-- **Cross-Platform Ready**: Designed for both desktop and Microsoft Store deployment
+```powershell
+dotnet build Duckie/Duckie.csproj -c Release
+```
 
+Navigation pages and hotkey services are discovered through the `INavView` and `IHotKeyService` interfaces. Contributions are welcome, especially small tools that save repeated steps and work well from the tray or a hotkey.
+
+## Microsoft Store publishing
+
+The [Windows Store workflow](./.github/workflows/windows-store.yml) supports:
+
+- Push to `main`: Build an MSIX artifact without submitting it to the Store.
+- Push a version tag such as `v0.8.3`: Build and submit a Store update.
+- Manual run: Optionally specify a version and request Store submission.
+
+Submission requires repository secrets `AZURE_AD_TENANT_ID`, `AZURE_AD_APPLICATION_CLIENT_ID`, `AZURE_AD_APPLICATION_SECRET`, and `SELLER_ID`, plus the appropriate Partner Center application access. See the [Chinese publishing guide](./README.zh-CN.md#github-actions-自动发布-microsoft-store) for setup details.
