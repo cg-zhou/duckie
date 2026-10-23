@@ -1,4 +1,4 @@
-﻿using Duckie.Services.Clipboard;
+﻿using Duckie.Services.Network;
 using Duckie.Services.PacManager;
 using Duckie.Shared.Services.UserConfigs;
 using Duckie.Shared.Utils.Localization;

@@ -1,4 +1,4 @@
-using Duckie.Services.Clipboard;
+using Duckie.Services.Network;
 using Duckie.Shared.Services.UserConfigs;
 using Duckie.Shared.Utils.Localization;
 using Duckie.Utils.HotKeys;

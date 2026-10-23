@@ -3,7 +3,7 @@ using Duckie.Shared.Utils.Ui;
 using System.Net;
 using System.Net.Http;
 
-namespace Duckie.Services.Clipboard;
+namespace Duckie.Services.Network;
 
 public static class HttpUtils
 {
@@ -38,21 +38,6 @@ public static class HttpUtils
         using (var client = CreateClient())
         {
             var response = await client.GetAsync(url);
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new Exception($"{response.StatusCode}");
-            }
-
-            var text = await response.Content.ReadAsStringAsync();
-            return text;
-        }
-    }
-
-    public static async Task<string> PostAsync(string url, MultipartFormDataContent formData)
-    {
-        using (var client = CreateClient())
-        {
-            var response = await client.PostAsync(url, formData);
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception($"{response.StatusCode}");
