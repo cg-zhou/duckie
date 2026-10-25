@@ -46,7 +46,7 @@ PAC 管理修改当前用户的 Windows PAC 设置，本身不提供代理服务
 | `Duckie.Windows` | PAC、音量、终端等 Windows 工具 |
 | `Duckie.Pack` | MSIX 打包 |
 
-在 Windows 上，使用安装了 **.NET 桌面开发**工作负载和 .NET Framework 4.8 目标包的 Visual Studio 打开 `Duckie.sln`，构建并运行 `Duckie` 项目。MSIX 打包还需安装 `Duckie.Pack` 引用的 Windows SDK 和打包工具。
+在 Windows 上，使用安装了 **.NET 桌面开发**工作负载和 .NET Framework 4.8 目标包的 Visual Studio 打开 `Duckie.slnx`，构建并运行 `Duckie` 项目。MSIX 打包还需安装 `Duckie.Pack` 引用的 Windows SDK 和打包工具。
 
 已安装兼容的 .NET SDK 和目标包时，也可以在仓库根目录构建桌面应用：
 

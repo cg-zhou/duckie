@@ -46,7 +46,7 @@ Duckie uses C#, WPF, and .NET Framework 4.8. It is a Windows application.
 | `Duckie.Windows` | Windows utilities, including PAC, volume, and terminal tools |
 | `Duckie.Pack` | MSIX packaging |
 
-On Windows, open `Duckie.sln` in Visual Studio with the **.NET desktop development** workload and the .NET Framework 4.8 targeting pack installed. Build and run the `Duckie` project. MSIX packaging additionally requires the Windows SDK and packaging tools referenced by `Duckie.Pack`.
+On Windows, open `Duckie.slnx` in Visual Studio with the **.NET desktop development** workload and the .NET Framework 4.8 targeting pack installed. Build and run the `Duckie` project. MSIX packaging additionally requires the Windows SDK and packaging tools referenced by `Duckie.Pack`.
 
 With a compatible .NET SDK and targeting pack, the desktop app can also be built from the repository root:
 
