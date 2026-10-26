@@ -16,13 +16,29 @@
                     <StackPanel>
                         <TextBlock Text="功能说明" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
                         <TextBlock TextWrapping="Wrap" LineHeight="20">
-                            <Run Text="• 按下 Ctrl + ` 快捷键可以在当前活动的文件夹中打开终端"/><LineBreak/>
+                            <Run Text="• 按下 Alt + Shift + ` 快捷键可以在当前活动的文件夹中打开终端"/><LineBreak/>
                             <Run Text="• 优先打开 Windows Terminal，如果不可用则降级到 PowerShell 或 CMD"/><LineBreak/>
                             <Run Text="• 如果无法检测到当前文件夹，将在用户主目录打开终端"/><LineBreak/>
                             <Run Text="• 支持从资源管理器窗口中获取当前路径"/>
                         </TextBlock>
                     </StackPanel>
                 </Border>
+
+                <GroupBox Header="快捷启动" Margin="0,0,0,20">
+                    <StackPanel Margin="10">
+                        <CheckBox x:Name="LauncherEnabled" Content="启用应用启动键 2（Application 2）" Margin="0,0,0,12"/>
+                        <TextBlock Text="目标文件"/>
+                        <DockPanel Margin="0,5,0,10">
+                            <Button DockPanel.Dock="Right" Content="浏览…" Click="BrowseTarget_Click" Padding="10,3" Margin="8,0,0,0"/>
+                            <TextBox x:Name="LaunchTarget"/>
+                        </DockPanel>
+                        <WrapPanel>
+                            <Button Content="保存" Click="SaveLauncher_Click" Padding="15,5" Margin="0,0,10,0"/>
+                            <Button Content="运行已保存的启动项" Click="RunLauncher_Click" Padding="15,5"/>
+                        </WrapPanel>
+                        <TextBlock Text="通过命令行 start 打开所选文件，行为与系统文件关联一致。保存后快捷键立即生效。" TextWrapping="Wrap" Foreground="#666" Margin="0,10,0,0"/>
+                    </StackPanel>
+                </GroupBox>
 
                 <!-- 测试区域 -->
                 <GroupBox Header="测试功能" Margin="0,0,0,20">
@@ -58,12 +74,12 @@
                         <Border Background="#E3F2FD" Padding="10" CornerRadius="3">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="快捷键：" FontWeight="Bold"/>
-                                <TextBlock Text="Ctrl + `" FontFamily="Consolas" FontSize="14" 
+                                <TextBlock Text="Alt + Shift + `" FontFamily="Consolas" FontSize="14"
                                           Background="#FFF" Padding="5,2" Margin="5,0,0,0" 
                                           />
                             </StackPanel>
                         </Border>
-                        <TextBlock Text="您可以在设置页面的热键管理中修改此快捷键组合。" 
+                        <TextBlock Text="您可以在热键管理中查看注册状态并测试快捷键。"
                                    Foreground="#666" FontStyle="Italic" Margin="0,10,0,0"/>
                     </StackPanel>
                 </GroupBox>

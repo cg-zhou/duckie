@@ -7,6 +7,14 @@ public class UserConfig
     public PacConfig[] Pacs { get; set; } = [];
     public string Language { get; set; } = "en-US";
     public AppSettings App { get; set; } = new AppSettings();
+    public LauncherConfig Launcher { get; set; } = new LauncherConfig();
+}
+
+[Serializable]
+public class LauncherConfig
+{
+    public bool Enabled { get; set; }
+    public string Target { get; set; } = "";
 }
 
 [Serializable]

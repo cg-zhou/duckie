@@ -17,7 +17,8 @@ public static partial class HotKeyManager
         {
             foreach (var hotKeyAction in hotKeyService.Register())
             {
-                Register(hotKeyAction, hotKeyAction.Modifiers, hotKeyAction.Keys);
+                try { Register(hotKeyAction, hotKeyAction.Modifiers, hotKeyAction.Keys); }
+                catch (Exception ex) { Duckie.Shared.Utils.Ui.UiUtils.Warning(ex.Message, "快捷键注册失败"); }
             }
         }
     }
@@ -56,9 +57,13 @@ public static partial class HotKeyManager
                 HotKeyAction = hotKeyAction
             };
 
-            items.Add(item);
+            var nativeModifiers = hotKeyAction.NoRepeat ? modifiers | Interop.ModNoRepeat : modifiers;
+            if (!Interop.RegisterHotKey(form.Handle, item.Id, nativeModifiers, keys))
+                throw new System.ComponentModel.Win32Exception(
+                    System.Runtime.InteropServices.Marshal.GetLastWin32Error(),
+                    $"无法注册快捷键：{hotKeyAction.Name}。请检查其他程序是否占用了此按键。");
 
-            Interop.RegisterHotKey(form.Handle, item.Id, modifiers, keys);
+            items.Add(item);
 
             return id;
         }
@@ -80,5 +85,10 @@ public static partial class HotKeyManager
 
             items.RemoveAll(x => removedIds.Contains(x.Id));
         }
+    }
+
+    public static bool IsRegistered(string name)
+    {
+        lock (lockObj) return items.Any(item => item.HotKeyAction.Name == name);
     }
 }

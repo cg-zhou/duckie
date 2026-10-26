@@ -34,7 +34,7 @@ public partial class HotkeyManagerView : UserControl
                         Description = GetHotkeyDescription(hotkey.Name),
                         KeyCombination = FormatKeyCombination(hotkey.Modifiers, hotkey.Keys),
                         Action = hotkey.Action,
-                        IsEnabled = true
+                        IsEnabled = HotKeyManager.IsRegistered(hotkey.Name)
                     });
                 }
             }
@@ -56,6 +56,7 @@ public partial class HotkeyManagerView : UserControl
             "调大音量" => "提高系统音量",
             "静音/取消静音" => "切换系统静音状态",
             "在当前文件夹打开终端" => "在当前活动的文件夹中打开终端窗口",
+            "启动配置的目标" => "通过命令行 start 打开配置的文件",
             _ => "执行相关操作"
         };
     }
@@ -93,6 +94,7 @@ public partial class HotkeyManagerView : UserControl
             System.Windows.Forms.Keys.D8 => "8",
             System.Windows.Forms.Keys.D9 => "9",
             System.Windows.Forms.Keys.Oemtilde => "`",
+            System.Windows.Forms.Keys.LaunchApplication2 => "应用启动键 2（Application 2）",
             _ => key.ToString()
         };
     }

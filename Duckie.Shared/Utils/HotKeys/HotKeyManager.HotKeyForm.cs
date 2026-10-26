@@ -8,7 +8,8 @@ public static partial class HotKeyManager
     {
         protected override void WndProc(ref Message m)
         {
-            KeyPressed.Invoke(this, (int)m.WParam);
+            if (m.Msg == Interop.WmHotKey)
+                KeyPressed?.Invoke(this, (int)m.WParam);
             base.WndProc(ref m);
         }
 
