@@ -1,4 +1,4 @@
-﻿namespace Duckie.Shared.Utils.Localization;
+namespace Duckie.Shared.Utils.Localization;
 
 public enum LocKey
 {
@@ -29,9 +29,9 @@ public enum LocKey
     [En("Hotkey")]
     Nav_Hotkey,
 
-    [Cn("终端")]
-    [En("Terminal")]
-    Nav_Terminal,
+    [Cn("快捷启动")]
+    [En("Quick Launch")]
+    Nav_Launcher,
 
     [Cn("PAC")]
     [En("PAC")]

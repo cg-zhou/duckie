@@ -3,16 +3,16 @@ using Duckie.Shared.Utils.Localization;
 using Duckie.Shared.Views.Common;
 using System.Windows.Controls;
 
-namespace Duckie.Windows.Services.Terminal;
+namespace Duckie.Windows.Services.Launcher;
 
 /// <summary>
-/// 终端管理导航视图
+/// 快捷启动导航视图
 /// </summary>
-public class TerminalManagerNavView : INavView
+public class LauncherNavView : INavView
 {
     public IconType IconType => IconType.SettingLine;
 
-    public LocKey NameLocKey => LocKey.Nav_Terminal;
+    public LocKey NameLocKey => LocKey.Nav_Launcher;
 
     public NavMenuPosition NavMenuPosition => NavMenuPosition.Top;
 
@@ -20,6 +20,6 @@ public class TerminalManagerNavView : INavView
 
     public UserControl CreateView()
     {
-        return new TerminalManagerView();
+        return new LauncherView();
     }
 }

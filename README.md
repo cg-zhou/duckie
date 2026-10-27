@@ -11,7 +11,6 @@ Duckie brings small, frequently used utilities together in a tray app. Show it w
 - **Tray integration**: Click the tray icon to show or hide the main window. Configure startup, start minimized, and minimize to tray on close.
 - **PAC management**: Add, edit, remove, and apply PAC configurations. Cycle through saved configurations with a hotkey and see the active configuration indicated by a tray icon badge.
 - **Volume control**: Adjust system volume and toggle mute with global hotkeys.
-- **Open terminal here**: Open a terminal at the active File Explorer folder, preferring Windows Terminal with PowerShell and CMD fallbacks.
 - **Quick launch**: Bind Application 2 to a selected file and open it using the command-line `start` command.
 - **Context menu style**: Switch between classic and Windows 11 context menus. This action restarts File Explorer.
 - **Settings**: Configure hotkeys, switch between Chinese and English, and configure an application HTTP proxy with a connection test.
@@ -31,12 +30,11 @@ Default shortcuts:
 | Alt + Shift + 8 | Volume down |
 | Alt + Shift + 9 | Volume up |
 | Alt + Shift + 0 | Mute or unmute |
-| Alt + Shift + ` | Open a terminal at the active File Explorer folder |
 | Alt + Shift + 5 | Toggle context menu style and restart File Explorer |
 
 Shortcuts may conflict with other applications. Review or change them in Settings.
 
-In Terminal Management → Quick Launch, select a file, enable the binding, and save. Duckie runs `cmd /d /v:off /c start "" "file path"`; the system file association determines how it opens. No shortcut file is created. Disable the binding or exit Duckie to release the key.
+In Quick Launch, select a file, enable the binding, and save. Duckie runs `cmd /d /v:off /c start "" "file path"`; the system file association determines how it opens. No shortcut file is created. Disable the binding or exit Duckie to release the key.
 
 ## Development
 
@@ -46,7 +44,7 @@ Duckie uses C#, WPF, and .NET Framework 4.8. It is a Windows application.
 | --- | --- |
 | `Duckie` | Application entry point, main window, and settings |
 | `Duckie.Shared` | Shared controls, configuration, localization, tray, and hotkey infrastructure |
-| `Duckie.Windows` | Windows utilities, including PAC, volume, and terminal tools |
+| `Duckie.Windows` | Windows utilities, including PAC, volume, and quick launch tools |
 | `Duckie.Pack` | MSIX packaging |
 
 On Windows, open `Duckie.slnx` in Visual Studio with the **.NET desktop development** workload and the .NET Framework 4.8 targeting pack installed. Build and run the `Duckie` project. MSIX packaging additionally requires the Windows SDK and packaging tools referenced by `Duckie.Pack`.

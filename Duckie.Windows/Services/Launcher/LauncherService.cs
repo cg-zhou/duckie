@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
-namespace Duckie.Windows.Services.Terminal;
+namespace Duckie.Windows.Services.Launcher;
 
 public class LauncherService : IHotKeyService
 {
@@ -57,7 +57,7 @@ public class LauncherService : IHotKeyService
     public static void Launch()
     {
         var config = UserConfigService.Get().Launcher ?? new LauncherConfig();
-        if (!config.Enabled) throw new InvalidOperationException("请先在终端管理中启用并保存启动项配置。");
+        if (!config.Enabled) throw new InvalidOperationException("请先在快捷启动中启用并保存启动项配置。");
         Validate(config);
         using (var process = Process.Start(CreateStartInfo(config))) { }
     }
