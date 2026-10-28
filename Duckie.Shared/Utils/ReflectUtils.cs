@@ -2,10 +2,16 @@
 
 public static class ReflectUtils
 {
-    public static IInterface[] Get<IInterface>()
+    public static IInterface[] Get<IInterface>(params System.Reflection.Assembly[] assemblies)
     {
-        return AppDomain.CurrentDomain.GetAssemblies()
-            .Where(x => x.GetName().Name is "Duckie" or "Duckie.Shared" or "Duckie.Windows")
+        if (assemblies.Length == 0)
+        {
+            assemblies = AppDomain.CurrentDomain.GetAssemblies()
+                .Where(x => x.GetName().Name is "Duckie" or "Duckie.Shared" or "Duckie.Windows")
+                .ToArray();
+        }
+
+        return assemblies.Distinct()
             .SelectMany(x => x.GetTypes())
             .Where(x => x.IsClass && !x.IsAbstract && !x.ContainsGenericParameters
                 && typeof(IInterface).IsAssignableFrom(x)

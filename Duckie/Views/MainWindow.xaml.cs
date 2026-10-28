@@ -3,6 +3,7 @@ using Duckie.Shared.Services.UserConfigs;
 using Duckie.Shared.Utils;
 using Duckie.Shared.Utils.Localization;
 using Duckie.Shared.Views;
+using Duckie.Windows;
 using Duckie.Views.Controls;
 using System.ComponentModel;
 using System.Windows;
@@ -31,7 +32,7 @@ public partial class MainWindow : Window, IMainWindow
 
         InitializeComponent();
 
-        var navViews = ReflectUtils.Get<INavView>();
+        var navViews = ReflectUtils.Get<INavView>(typeof(MainWindow).Assembly, typeof(PacManageNavView).Assembly);
         navModels = navViews
             .OrderBy(x => x.NavMenuPosition)
             .ThenBy(x => x.NavMenuOrder)
