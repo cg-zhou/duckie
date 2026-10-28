@@ -29,6 +29,10 @@ public enum LocKey
     [En("None")]
     Tray_None,
 
+    [Cn("应用 PAC 配置失败")]
+    [En("Failed to apply PAC configuration")]
+    Tray_FailedToApplyPac,
+
     [Cn("开机启动")]
     [En("Launch On Startup")]
     Tray_LaunchOnStartup,

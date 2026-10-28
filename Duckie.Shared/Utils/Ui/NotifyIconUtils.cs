@@ -1,5 +1,6 @@
 ﻿using Duckie.Shared.Utils.Drawing;
 using Duckie.Shared.Utils.Drawing.Ico;
+using Duckie.Services.PacManager;
 using Duckie.Shared.Utils.Localization;
 using Duckie.Shared.Views;
 using Duckie.Utils.Registry;
@@ -24,6 +25,7 @@ public class NotifyIconUtils
         };
 
         notifyIcon.Click += NotifyIcon_Click;
+        notifyIcon.ContextMenuStrip.Opening += (sender, args) => RefreshContextMenu();
         EmbeddedLocalizationManager.Instance.LanguageChanged += OnLanguageChanged;
 
         ResetIco();
@@ -112,8 +114,19 @@ public class NotifyIconUtils
         items.Add(new ToolStripSeparator());
 
         var pacMenuItem = new ToolStripMenuItem(LocKey.Tray_SetPac.Text());
-        pacMenuItem.DropDownItems.Add(new ToolStripMenuItem(LocKey.Tray_None.Text(), null, (s, e) => { }));
-        pacMenuItem.DropDownItems.Add(new ToolStripMenuItem("Test2", null, (s, e) => { }) { Checked = true });
+        var currentPacUri = RegistryUtils.Pac.Get();
+        pacMenuItem.DropDownItems.Add(new ToolStripMenuItem(LocKey.Tray_None.Text(), null, (s, e) => ApplyPac(null))
+        {
+            Checked = string.IsNullOrWhiteSpace(currentPacUri)
+        });
+        foreach (var pac in PacManagerService.GetAllPacConfigs())
+        {
+            var selectedPac = pac;
+            pacMenuItem.DropDownItems.Add(new ToolStripMenuItem(selectedPac.Name, null, (s, e) => ApplyPac(selectedPac))
+            {
+                Checked = string.Equals(currentPacUri, selectedPac.Uri, StringComparison.OrdinalIgnoreCase)
+            });
+        }
         items.Add(pacMenuItem);
 
         var isChecked = RegistryUtils.StartUp.Get();
@@ -146,5 +159,14 @@ public class NotifyIconUtils
         items.Add(languageMenuItem);
 
         items.Add(new ToolStripMenuItem(LocKey.Tray_Exit.Text(), null, (s, e) => Environment.Exit(0)));
+    }
+
+    private static void ApplyPac(Duckie.Shared.Services.UserConfigs.PacConfig pac)
+    {
+        if (!PacManagerService.ApplyPacConfig(pac))
+        {
+            UiUtils.Error(LocKey.Tray_FailedToApplyPac.Text());
+        }
+        RefreshContextMenu();
     }
 }
