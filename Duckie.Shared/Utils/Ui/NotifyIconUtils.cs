@@ -131,6 +131,20 @@ public class NotifyIconUtils
             Checked = isChecked
         });
 
+        var languageMenuItem = new ToolStripMenuItem(LocKey.Tray_Language.Text());
+        var currentLanguage = LocUtils.CurrentCulture.Name;
+        languageMenuItem.DropDownItems.Add(new ToolStripMenuItem("简体中文", null, (s, e) =>
+            UiUtils.BeginInvoke(() => EmbeddedLocalizationManager.Instance.SwitchLanguage("zh-CN")))
+        {
+            Checked = currentLanguage == "zh-CN"
+        });
+        languageMenuItem.DropDownItems.Add(new ToolStripMenuItem("English", null, (s, e) =>
+            UiUtils.BeginInvoke(() => EmbeddedLocalizationManager.Instance.SwitchLanguage("en-US")))
+        {
+            Checked = currentLanguage == "en-US"
+        });
+        items.Add(languageMenuItem);
+
         items.Add(new ToolStripMenuItem(LocKey.Tray_Exit.Text(), null, (s, e) => Environment.Exit(0)));
     }
 }

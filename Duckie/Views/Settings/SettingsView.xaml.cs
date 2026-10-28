@@ -89,12 +89,16 @@ public partial class SettingsView : UserControl
         {
             var cultureName = selectedItem.Tag.ToString();
             // 切换语言（会自动保存到用户配置）
-            EmbeddedLocalizationManager.Instance.SwitchLanguage(cultureName);
+            if (LocUtils.CurrentCulture.Name != cultureName)
+            {
+                EmbeddedLocalizationManager.Instance.SwitchLanguage(cultureName);
+            }
         }
     }
 
     private void OnLanguageChanged(object sender, EventArgs e)
     {
+        InitializeLanguageComboBox();
         // 语言变化时更新下拉框显示的文本
         UpdateLanguageDisplay();
     }

@@ -33,6 +33,10 @@ public enum LocKey
     [En("Launch On Startup")]
     Tray_LaunchOnStartup,
 
+    [Cn("语言")]
+    [En("Language")]
+    Tray_Language,
+
     [Cn("退出")]
     [En("Exit")]
     Tray_Exit,
