@@ -20,6 +20,23 @@ public enum LocKey
     [En("A lightweight open-source utility")]
     AppSubtitle,
 
+    // Tray menu
+    [Cn("设置 PAC")]
+    [En("Set PAC")]
+    Tray_SetPac,
+
+    [Cn("无")]
+    [En("None")]
+    Tray_None,
+
+    [Cn("开机启动")]
+    [En("Launch On Startup")]
+    Tray_LaunchOnStartup,
+
+    [Cn("退出")]
+    [En("Exit")]
+    Tray_Exit,
+
     // Navigation Items
     [Cn("音量")]
     [En("Volume")]

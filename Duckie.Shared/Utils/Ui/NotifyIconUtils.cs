@@ -24,13 +24,27 @@ public class NotifyIconUtils
         };
 
         notifyIcon.Click += NotifyIcon_Click;
+        EmbeddedLocalizationManager.Instance.LanguageChanged += OnLanguageChanged;
 
         ResetIco();
     }
 
     public static void Release()
     {
+        EmbeddedLocalizationManager.Instance.LanguageChanged -= OnLanguageChanged;
         SetIcon(null);
+        notifyIcon?.Dispose();
+        notifyIcon = null;
+    }
+
+    private static void OnLanguageChanged(object sender, EventArgs e)
+    {
+        UiUtils.BeginInvoke(() =>
+        {
+            if (notifyIcon == null) return;
+            notifyIcon.Text = $"{LocKey.AppTitle.Text()} — {LocKey.AppSubtitle.Text()}";
+            RefreshContextMenu();
+        });
     }
 
     public static void SetIcoBage(Color color)
@@ -94,16 +108,16 @@ public class NotifyIconUtils
         var items = notifyIcon.ContextMenuStrip.Items;
         items.Clear();
 
-        items.Add(new ToolStripMenuItem("Duckie", null, (s, e) => UiUtils.BeginInvoke(() => (AppEnv.MainWindow as IMainWindow)?.ToggleWindow())));
+        items.Add(new ToolStripMenuItem(LocKey.AppTitle.Text(), null, (s, e) => UiUtils.BeginInvoke(() => (AppEnv.MainWindow as IMainWindow)?.ToggleWindow())));
         items.Add(new ToolStripSeparator());
 
-        var pacMenuItem = new ToolStripMenuItem("Set PAC");
-        pacMenuItem.DropDownItems.Add(new ToolStripMenuItem("None", null, (s, e) => { }));
+        var pacMenuItem = new ToolStripMenuItem(LocKey.Tray_SetPac.Text());
+        pacMenuItem.DropDownItems.Add(new ToolStripMenuItem(LocKey.Tray_None.Text(), null, (s, e) => { }));
         pacMenuItem.DropDownItems.Add(new ToolStripMenuItem("Test2", null, (s, e) => { }) { Checked = true });
         items.Add(pacMenuItem);
 
         var isChecked = RegistryUtils.StartUp.Get();
-        items.Add(new ToolStripMenuItem("Launch On Startup", null, (s, e) =>
+        items.Add(new ToolStripMenuItem(LocKey.Tray_LaunchOnStartup.Text(), null, (s, e) =>
         {
             var currentChecked = RegistryUtils.StartUp.Get();
             var newChecked = !currentChecked;
@@ -117,6 +131,6 @@ public class NotifyIconUtils
             Checked = isChecked
         });
 
-        items.Add(new ToolStripMenuItem("Exit", null, (s, e) => Environment.Exit(0)));
+        items.Add(new ToolStripMenuItem(LocKey.Tray_Exit.Text(), null, (s, e) => Environment.Exit(0)));
     }
 }
