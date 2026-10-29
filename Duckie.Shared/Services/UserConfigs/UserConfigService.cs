@@ -1,4 +1,4 @@
-﻿using Duckie.Shared.Utils;
+using Duckie.Shared.Utils;
 using System.IO;
 using System.Text;
 using System.Xml;
@@ -10,37 +10,80 @@ public class UserConfigService
 {
     private static string Path => System.IO.Path.Combine(AppUtils.AppDataFolder, "user_config.xml");
 
+    private static readonly object Sync = new();
+
+    private static UserConfig TryRead(string path)
+    {
+        try
+        {
+            using var reader = new StreamReader(path);
+            return (UserConfig)new XmlSerializer(typeof(UserConfig)).Deserialize(reader);
+        }
+        catch (FileNotFoundException)
+        {
+            return null;
+        }
+        catch (DirectoryNotFoundException)
+        {
+            return null;
+        }
+        catch (InvalidOperationException ex)
+        {
+            System.Diagnostics.Trace.TraceWarning($"Invalid configuration {path}: {ex}");
+            return null;
+        }
+    }
+
     public static UserConfig Get()
     {
-        if (!File.Exists(Path))
+        lock (Sync)
         {
-            return new UserConfig();
-        }
-
-        var serializer = new XmlSerializer(typeof(UserConfig));
-        using (var reader = new StreamReader(Path))
-        {
-            return (UserConfig)serializer.Deserialize(reader);
+            return TryRead(Path) ?? TryRead(Path + ".bak") ?? new UserConfig();
         }
     }
 
     public static void Set(UserConfig userConfig)
     {
-        var serializer = new XmlSerializer(typeof(UserConfig));
-
-        var settings = new XmlWriterSettings
+        lock (Sync)
         {
-            Encoding = new UTF8Encoding(false),
-            Indent = true
-        };
+            Directory.CreateDirectory(System.IO.Path.GetDirectoryName(Path));
+            var temporaryPath = Path + "." + Guid.NewGuid().ToString("N") + ".tmp";
+            try
+            {
+                var settings = new XmlWriterSettings
+                {
+                    Encoding = new UTF8Encoding(false),
+                    Indent = true,
+                    CloseOutput = false
+                };
+                using (var stream = new FileStream(temporaryPath, FileMode.CreateNew, FileAccess.Write))
+                {
+                    using (var writer = XmlWriter.Create(stream, settings))
+                    {
+                        var namespaces = new XmlSerializerNamespaces();
+                        namespaces.Add(string.Empty, string.Empty);
+                        new XmlSerializer(typeof(UserConfig)).Serialize(writer, userConfig, namespaces);
+                    }
+                    stream.Flush(true);
+                }
 
-        Directory.CreateDirectory(Directory.GetParent(Path).FullName);
-
-        using (var xmlWriter = XmlWriter.Create(Path, settings))
-        {
-            var namespaces = new XmlSerializerNamespaces();
-            namespaces.Add(string.Empty, string.Empty);
-            serializer.Serialize(xmlWriter, userConfig, namespaces);
+                if (File.Exists(Path))
+                {
+                    // Do not overwrite a valid backup with a damaged configuration.
+                    File.Replace(temporaryPath, Path, TryRead(Path) != null ? Path + ".bak" : null);
+                }
+                else
+                {
+                    File.Move(temporaryPath, Path);
+                }
+            }
+            finally
+            {
+                if (File.Exists(temporaryPath))
+                {
+                    File.Delete(temporaryPath);
+                }
+            }
         }
     }
 
