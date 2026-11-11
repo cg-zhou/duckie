@@ -9,7 +9,7 @@
         xmlns:loc="clr-namespace:Duckie.Shared.Utils.Localization;assembly=Duckie.Shared"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="{loc:Localize AppTitle}" Height="540" Width="800">
+        Title="{loc:Localize AppTitle}" Height="580" Width="820">
     <!-- 主内容区域 -->
     <Grid>
         <Grid.ColumnDefinitions>

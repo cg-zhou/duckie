@@ -95,11 +95,16 @@ public partial class MainWindow : Window, IMainWindow
         }
         else
         {
-            Show();
-            WindowState = WindowState.Normal;
-            ShowInTaskbar = true;
-            Activate();
+            ShowWindow();
         }
+    }
+
+    public void ShowWindow()
+    {
+        Show();
+        if (WindowState == WindowState.Minimized) WindowState = WindowState.Normal;
+        ShowInTaskbar = true;
+        Activate();
     }
 
     private void ToggleButton_Click(object sender, RoutedEventArgs e)

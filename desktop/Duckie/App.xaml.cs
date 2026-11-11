@@ -1,5 +1,6 @@
 ﻿using Duckie.Services.Network;
 using Duckie.Services.PacManager;
+using Duckie.Services;
 using Duckie.Shared.Services.UserConfigs;
 using Duckie.Shared.Utils.Localization;
 using Duckie.Shared.Utils.Ui;
@@ -11,6 +12,8 @@ namespace Duckie;
 
 public partial class App : Application
 {
+    private SingleInstanceService singleInstance;
+
     private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {
         UiUtils.Warning($"Exception: {e.Exception.Message}{e.Exception.InnerException?.Message}", "Warning");
@@ -19,10 +22,22 @@ public partial class App : Application
 
     private void Application_Startup(object sender, StartupEventArgs e)
     {
+        singleInstance = new SingleInstanceService(() =>
+        {
+            if (!Dispatcher.HasShutdownStarted)
+                Dispatcher.BeginInvoke(new Action(() => (MainWindow as Duckie.MainWindow)?.ShowWindow()));
+        });
+        if (!singleInstance.IsPrimary)
+        {
+            Shutdown();
+            return;
+        }
+
         LocUtils.Initialize();
 
         // 创建主窗口
         var mainWindow = new MainWindow();
+        MainWindow = mainWindow;
         
         NotifyIconUtils.Initialize();
         NotifyIconUtils.RefreshContextMenu();
@@ -54,6 +69,7 @@ public partial class App : Application
 
     private void Application_Exit(object sender, ExitEventArgs e)
     {
-        NotifyIconUtils.Release();
+        if (singleInstance?.IsPrimary == true) NotifyIconUtils.Release();
+        singleInstance?.Dispose();
     }
 }
