@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#faf9f6">
+  <title>Duckie — Windows 右键菜单，随你习惯</title>
+  <meta name="description" content="用 Duckie 切换 Windows 11 右键菜单。一眼对比经典与新版菜单，无需手动修改注册表，下载打开即可使用，用完退出。">
+  <link rel="canonical" href="https://duckie.cg-zhou.top/">
+  <link rel="icon" type="image/svg+xml" href="/assets/duck.svg">
+  <meta property="og:title" content="Duckie — Windows 右键菜单，随你习惯">
+  <meta property="og:description" content="经典，还是新版？选你顺手的。一个轻巧的 Windows 右键菜单切换工具。">
+  <meta property="og:url" content="https://duckie.cg-zhou.top/">
+  <meta property="og:type" content="website">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  <header class="header wrap">
+    <a class="brand" href="/" aria-label="Duckie 首页"><img src="/assets/duck.svg" width="32" height="32" alt=""><span>Duckie<span class="brand-dot">.</span></span></a>
+    <nav aria-label="主导航"><a href="#how">怎么用</a><a href="#questions">常见问题</a><a href="https://github.com/cg-zhou/duckie">GitHub <span aria-hidden="true">↗</span></a></nav>
+  </header>
+  <main id="main">
+    <section class="hero wrap">
+      <div class="hero-copy">
+        <p class="eyebrow"><span></span>一个顺手的 Windows 小工具</p>
+        <h1>右键菜单，<br>随你<span class="highlight">习惯</span>。</h1>
+        <p class="intro">喜欢经典菜单的直接，也喜欢新版的简洁？<br class="desktop-break">打开 Duckie，选你顺手的那一个。</p>
+        <div class="hero-actions"><wb-button id="download" variant="primary" size="lg" href="https://github.com/cg-zhou/duckie/releases">前往发布页 <span aria-hidden="true">↓</span></wb-button><a class="source-link" href="https://github.com/cg-zhou/duckie">查看源码 <span aria-hidden="true">↗</span></a></div>
+        <p class="release-note" id="release-note">Windows 11 · .NET Framework 4.8 · 无需安装</p>
+        <a class="history-link" href="https://github.com/cg-zhou/duckie/releases">历史版本与更新记录 <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="comparison" aria-label="两种右键菜单外观对比">
+        <div class="comparison-heading"><span>两种样式，一样顺手</span><span class="preview-label">菜单预览</span></div>
+        <div class="menu-pair">
+          <figure><figcaption><span>经典菜单</span><span class="menu-dot classic-dot" aria-hidden="true"></span></figcaption><img src="/assets/classic.png" width="258" height="354" alt="经典右键菜单，直接显示常用操作" fetchpriority="high"></figure>
+          <figure><figcaption><span>Windows 11</span><span class="menu-dot" aria-hidden="true"></span></figcaption><img src="/assets/windows-11.png" width="258" height="354" alt="Windows 11 新版右键菜单，底部提供显示更多选项" fetchpriority="high"></figure>
+        </div>
+        <p class="comparison-caption">这是菜单样式预览。切换需要在 Windows 应用中完成。</p>
+      </div>
+    </section>
+    <div class="traits wrap" aria-label="工具特点"><span><b>01</b> 无需安装</span><span><b>02</b> 用完退出</span><span><b>03</b> 随时恢复默认</span><span><b>04</b> 源码公开</span></div>
+    <section class="how wrap" id="how">
+      <div class="section-heading"><p class="eyebrow">简单三步</p><h2>换个菜单，不用折腾。</h2><p>不用找教程，不用自己修改注册表。</p></div>
+      <ol class="steps"><li><span class="step-number">1</span><h3>下载，打开</h3><p>一个 EXE 文件。打开就是菜单选择页，没有安装向导。</p></li><li><span class="step-number">2</span><h3>选你习惯的样式</h3><p>点击菜单图片，确认后切换。当前配置会用边框标记。</p></li><li><span class="step-number">3</span><h3>继续手头的事</h3><p>资源管理器重启后查看效果。关闭 Duckie 即退出，不在托盘常驻。</p></li></ol>
+      <p class="switch-note"><span aria-hidden="true">ⓘ</span> 切换会重启资源管理器，任务栏和桌面会短暂消失。建议先结束正在进行的文件操作。</p>
+    </section>
+    <section class="questions wrap" id="questions">
+      <div class="section-heading"><p class="eyebrow">打开之前</p><h2>你可能想知道。</h2></div>
+      <div class="faq-list">
+        <details><summary>支持哪些系统？</summary><p>面向 Windows 11，需要 .NET Framework 4.8。具体菜单效果取决于 Windows 版本，程序中的选中状态表示当前配置。</p></details>
+        <details><summary>能改回 Windows 11 默认菜单吗？</summary><p>可以。重新打开 Duckie，选择 Windows 11 菜单并确认，即可移除经典菜单配置、恢复系统默认。</p></details>
+        <details><summary>关闭后还会在后台运行吗？</summary><p>首发模式关闭窗口即退出，不注册全局快捷键，不创建托盘图标。</p></details>
+        <details><summary>为什么 Windows 提示未知发布者？</summary><p>当前便携版未进行代码签名。请从本站或 GitHub Releases 下载；可以通过下面的 SHA-256 校验值核对文件。</p></details>
+      </div>
+      <div class="integrity" id="integrity" hidden><div><span class="integrity-title">核对下载文件</span><a id="checksum-link" href="https://github.com/cg-zhou/duckie/releases">SHA-256 校验文件 ↗</a></div><code id="checksum"></code><wb-button id="copy-checksum" size="sm">复制校验值</wb-button><span id="copy-status" role="status" class="sr-only"></span></div>
+    </section>
+    <section class="closing wrap"><img src="/assets/duck.svg" width="48" height="48" alt=""><div><h2>小工具，少一点折腾。</h2><p>遇到问题，或有想法？去 GitHub 一起聊聊。</p></div><wb-button href="https://github.com/cg-zhou/duckie/issues" size="md">反馈问题 ↗</wb-button></section>
+  </main>
+  <footer class="footer wrap"><a class="brand" href="/">Duckie<span class="brand-dot">.</span></a><span>由 <a href="https://cg-zhou.top">cg-zhou</a> 制作</span><div><a href="https://github.com/cg-zhou/duckie">源码</a><a href="https://github.com/cg-zhou/duckie/releases">历史版本</a></div></footer>
+  <noscript><p class="wrap">页面下载入口可前往 <a href="https://github.com/cg-zhou/duckie/releases">GitHub Releases</a>。启用 JavaScript 后可显示本站下载及文件校验信息。</p></noscript>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

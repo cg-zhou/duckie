@@ -21,3 +21,8 @@ obj
 
 # 本地构建验证输出
 /artifacts/
+
+# Generated website dependencies and deployment output
+/website/node_modules/
+/website/public/
+/website/dist/

@@ -5,6 +5,7 @@ using Duckie.Shared.Utils.Localization;
 using Duckie.Shared.Views;
 using Duckie.Windows;
 using Duckie.Views.Controls;
+using Duckie.Views;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -32,7 +33,9 @@ public partial class MainWindow : Window, IMainWindow
 
         InitializeComponent();
 
-        var navViews = ReflectUtils.Get<INavView>(typeof(MainWindow).Assembly, typeof(PacManageNavView).Assembly);
+        var navViews = App.IsToolboxMode
+            ? ReflectUtils.Get<INavView>(typeof(MainWindow).Assembly, typeof(PacManageNavView).Assembly)
+            : new INavView[] { new ContextMenuNavView() };
         navModels = navViews
             .OrderBy(x => x.NavMenuPosition)
             .ThenBy(x => x.NavMenuOrder)
@@ -124,6 +127,8 @@ public partial class MainWindow : Window, IMainWindow
 
     private void MainWindow_Closing(object sender, CancelEventArgs e)
     {
+        if (!App.IsToolboxMode) return;
+
         var appSettings = UserConfigService.GetAppSettings();
         
         if (appSettings.MinimizeToTrayOnClose)

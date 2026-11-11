@@ -2,65 +2,44 @@
 
 [中文](./README.zh-CN.md) · [Roadmap](./ROADMAP.md)
 
-Small Windows utilities for everyday tasks.
+A small Windows utility. The public release focuses on switching between classic and Windows 11 context menus.
 
-This repository contains the Duckie desktop application and a directory reserved for its public website. The current application is a tray toolbox built with C#, WPF, and .NET Framework 4.8. Standalone utilities that run only when needed are a planned direction; they are not shipped separately yet.
+- Compare menu previews and click to select a style.
+- Confirm before restarting File Explorer; restore system defaults at any time.
+- Portable EXE: no installation, tray icon, or global hotkeys in the default mode. Closing the window exits.
+- Single instance: opening again activates the existing window.
 
-## Current features
+Requires Windows 11 and .NET Framework 4.8. Actual menu behavior depends on the Windows version. The portable binary is unsigned.
 
-- **PAC management**: Save and apply PAC URLs, cycle through them with a hotkey, and select configurations from the tray menu.
-- **Volume shortcuts**: Adjust system volume and toggle mute.
-- **Quick launch**: Bind Application 2 to a selected file.
-- **Context menu switching**: Switch between classic and Windows 11 context menu styles. This restarts File Explorer.
-- **Preferences**: Configure hotkeys, startup and tray behavior, language, and an HTTP proxy for Duckie's own requests.
+## Downloads
 
-PAC management changes the current user's Windows PAC setting; it does not provide a proxy server.
+The website is prepared for `https://duckie.cg-zhou.top`. Versioned binaries, checksums and history live in [GitHub Releases](https://github.com/cg-zhou/duckie/releases).
 
-## Using the desktop app
-
-Launch Duckie and click the tray icon to show or hide its window. Configure tools and shortcuts in the application. Choose **Exit** in the tray menu to quit; closing the window may hide it to the tray according to your settings.
-
-| Default shortcut | Action |
-| --- | --- |
-| Alt + Shift + E | Show or hide Duckie |
-| Alt + Shift + 1 | Cycle through saved PAC URLs, then clear the PAC setting |
-| Alt + Shift + 8 / 9 / 0 | Volume down / up / mute |
-| Alt + Shift + 5 | Toggle context menu style and restart File Explorer |
-
-Shortcuts can be changed in Settings. Quick Launch uses the Windows file association to open the selected file.
-
-## Repository layout
-
-```text
-desktop/
-  Duckie.slnx          Visual Studio solution
-  Directory.Build.props
-  Duckie/             Application entry point, window, and settings
-  Duckie.Shared/      Configuration, localization, controls, tray, and hotkeys
-  Duckie.Windows/     Windows-specific tools
-  Duckie.Pack/        Microsoft Store / MSIX packaging
-website/              Public website placeholder
-.github/workflows/    Build and publishing workflows
-```
+All original toolbox code is retained. Exit the current instance and run `Duckie.exe --toolbox` to restore the original navigation, tray, hotkeys and close behavior. See [toolbox mode](./docs/toolbox.md).
 
 ## Development
 
-On Windows, open [`desktop/Duckie.slnx`](./desktop/Duckie.slnx) in Visual Studio with the **.NET desktop development** workload and .NET Framework 4.8 targeting pack installed. Build and run `Duckie`. Use a Visual Studio version that supports `.slnx` solutions.
-
-With a compatible .NET SDK and targeting pack, build from the repository root:
+On Windows, install the .NET Framework 4.8 targeting pack. Open `desktop/Duckie.slnx` in Visual Studio with the .NET desktop workload, or build:
 
 ```powershell
 dotnet build desktop/Duckie/Duckie.csproj -c Release
+./scripts/package-release.ps1
 ```
 
-MSIX packaging also requires the Windows SDK and Desktop Bridge packaging tools referenced by `desktop/Duckie.Pack`. Navigation pages and hotkey services are discovered through `INavView` and `IHotKeyService`.
+`VERSION` supplies the desktop version. Packaging produces the standalone EXE, `SHA256SUMS.txt`, and `release.json` in `artifacts/release/<version>/`.
 
-## Website
+| Directory | Contents |
+| --- | --- |
+| `desktop/` | WPF application, shared components, original toolbox, MSIX packaging |
+| `website/` | web-booster product website and ESA Pages configuration |
+| `assets/` | Shared screenshots |
+| `scripts/` | Portable packaging |
+| `docs/` | Usage and release notes |
 
-The product website is planned at `duckie.cg-zhou.top`, with static hosting on Alibaba Cloud ESA Pages. It will provide tool descriptions, guides, and download links. The [`website/`](./website/) directory is a placeholder; no website deployment is included yet.
+## Publishing
 
-## Microsoft Store publishing
+Push a `vMAJOR.MINOR.PATCH` tag matching `VERSION`, with notes at `docs/releases/<tag>.md`. GitHub Actions publishes the portable release using its built-in token. Manual workflow runs only build an artifact.
 
-The [Store workflow](./.github/workflows/windows-store.yml) builds an MSIX artifact on pushes to `main`. Version tags such as `v0.8.4` build and submit an update to Microsoft Store. Manual runs can optionally submit a specified version.
+After release files exist, update `website/release.json` and deploy the site. The build verifies the exact release binary before hosting it. See the [ESA deployment guide](./website/README.md).
 
-Submission requires GitHub repository secrets and Partner Center access. See the [Chinese setup guide](./README.zh-CN.md#发布到-microsoft-store). This workflow does not publish a portable EXE to GitHub Releases.
+The Microsoft Store workflow is retained; Store submission is manual so portable tags do not also publish Store updates.

@@ -1,0 +1,36 @@
+name: Check Duckie website
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'website/**'
+      - 'assets/screenshots/**'
+      - 'desktop/Duckie/EmbeddedResources/duck.svg'
+      - '.github/workflows/website.yml'
+  pull_request:
+    paths:
+      - 'website/**'
+      - 'assets/screenshots/**'
+      - 'desktop/Duckie/EmbeddedResources/duck.svg'
+      - '.github/workflows/website.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: website
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+      - run: npm ci
+      - name: Build preview without publishing downloads
+        run: node scripts/prepare.mjs --preview && npx vite build

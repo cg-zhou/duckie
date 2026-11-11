@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:Duckie"
              DispatcherUnhandledException="Application_DispatcherUnhandledException"
              Startup="Application_Startup"
-             Exit="Application_Exit">
+             Exit="Application_Exit" ShutdownMode="OnMainWindowClose">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

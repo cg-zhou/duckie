@@ -13,6 +13,7 @@ namespace Duckie;
 public partial class App : Application
 {
     private SingleInstanceService singleInstance;
+    internal static bool IsToolboxMode { get; private set; }
 
     private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {
@@ -22,6 +23,7 @@ public partial class App : Application
 
     private void Application_Startup(object sender, StartupEventArgs e)
     {
+        IsToolboxMode = e.Args.Any(arg => string.Equals(arg, "--toolbox", StringComparison.OrdinalIgnoreCase));
         singleInstance = new SingleInstanceService(() =>
         {
             if (!Dispatcher.HasShutdownStarted)
@@ -38,6 +40,12 @@ public partial class App : Application
         // 创建主窗口
         var mainWindow = new MainWindow();
         MainWindow = mainWindow;
+
+        if (!IsToolboxMode)
+        {
+            mainWindow.Show();
+            return;
+        }
         
         NotifyIconUtils.Initialize();
         NotifyIconUtils.RefreshContextMenu();
@@ -69,7 +77,7 @@ public partial class App : Application
 
     private void Application_Exit(object sender, ExitEventArgs e)
     {
-        if (singleInstance?.IsPrimary == true) NotifyIconUtils.Release();
+        if (singleInstance?.IsPrimary == true && IsToolboxMode) NotifyIconUtils.Release();
         singleInstance?.Dispose();
     }
 }
