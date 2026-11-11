@@ -3,7 +3,7 @@ using Duckie.Shared.Utils.Localization;
 using Duckie.Shared.Utils.Ui;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
+using System.Windows.Controls.Primitives;
 
 namespace Duckie.Views;
 
@@ -36,6 +36,8 @@ public partial class ContextMenuView : UserControl
 
     private void RefreshState()
     {
+        ClassicCard.ToolTip = LocKey.ContextMenu_Note.Text(LocKey.ContextMenu_ClassicState.Text());
+        DefaultCard.ToolTip = LocKey.ContextMenu_Note.Text(LocKey.ContextMenu_DefaultPreview.Text());
         try
         {
             var supported = ContextMenuUtils.IsContextMenuCustomizationSupported();
@@ -58,7 +60,7 @@ public partial class ContextMenuView : UserControl
 
     private static void HighlightCard(Button card, bool selected)
     {
-        card.BorderBrush = selected ? new SolidColorBrush(Color.FromRgb(0, 105, 186)) : Brushes.Transparent;
+        Selector.SetIsSelected(card, selected);
     }
 
     private async void Classic_Click(object sender, RoutedEventArgs e) => await ApplyAsync(true);
@@ -68,18 +70,19 @@ public partial class ContextMenuView : UserControl
     {
         if (busy) return;
         busy = true;
+        var targetMenu = classic ? LocKey.ContextMenu_ClassicState : LocKey.ContextMenu_DefaultPreview;
         try
         {
             if (!ContextMenuUtils.IsContextMenuCustomizationSupported()) return;
             if (ContextMenuUtils.IsWindows10ContextMenuEnabled() == classic) return;
-            if (!UiUtils.Confirm(LocKey.ContextMenu_Confirm.Text(), LocKey.Nav_ContextMenu.Text())) return;
+            if (!UiUtils.Confirm(LocKey.ContextMenu_Confirm.Text(targetMenu.Text()), LocKey.Nav_ContextMenu.Text())) return;
             RefreshState();
             await Task.Run(() =>
             {
                 if (classic) ContextMenuUtils.SetWindows10ContextMenu();
                 else ContextMenuUtils.SetWindows11ContextMenu();
             });
-            UiUtils.ShowToast(LocKey.ContextMenu_Applied.Text());
+            UiUtils.ShowToast(LocKey.ContextMenu_Applied.Text(targetMenu.Text()));
         }
         catch (Exception ex)
         {

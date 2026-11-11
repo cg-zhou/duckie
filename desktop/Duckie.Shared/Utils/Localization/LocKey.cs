@@ -30,12 +30,12 @@ public enum LocKey
     [En("Restore system default")]
     ContextMenu_DefaultAction,
 
-    [Cn("切换会重启资源管理器。")]
-    [En("Switching restarts File Explorer.")]
+    [Cn("切换到{0}")]
+    [En("Switch to {0}")]
     ContextMenu_Note,
 
-    [Cn("切换会重启资源管理器，是否继续？")]
-    [En("Switching will restart File Explorer. Continue?")]
+    [Cn("切换到{0}会重启资源管理器，是否继续？")]
+    [En("Switching to {0} will restart File Explorer. Continue?")]
     ContextMenu_Confirm,
 
     [Cn("需要 Windows 11")]
@@ -46,8 +46,8 @@ public enum LocKey
     [En("Switching…")]
     ContextMenu_Applying,
 
-    [Cn("已更新配置")]
-    [En("Configuration updated")]
+    [Cn("已切换到{0}")]
+    [En("Switched to {0}")]
     ContextMenu_Applied,
 
     [Cn("操作失败：{0}")]
