@@ -1,28 +1,34 @@
 import 'web-booster/styles.css';
 import { showMessage } from 'web-booster';
 import './style.css';
+import selected from '../release.json';
+
+const download = document.querySelector('#download');
+const backupUrl = `/downloads/v${selected.version}/Duckie-v${selected.version}.zip`;
+download.setAttribute('href', `https://github.com/${selected.repository}/releases/download/v${selected.version}/Duckie-v${selected.version}.zip`);
+document.querySelector('#backup-download').href = backupUrl;
+document.querySelector('#backup-download-help').href = backupUrl;
+download.addEventListener('click', () => {
+  document.querySelector('#download-help').hidden = false;
+});
 
 let release;
 try {
   const response = await fetch('/release.json', { cache: 'no-cache' });
   if (!response.ok) throw new Error('Release unavailable');
   const data = await response.json();
-  if (data.available && /^\d+\.\d+\.\d+$/.test(data.version)
+  if (data.available && data.version === selected.version
       && /^[a-f0-9]{64}$/.test(data.sha256)
       && data.downloadUrl === `/downloads/v${data.version}/Duckie-v${data.version}.zip`
       && data.checksumUrl === `/downloads/v${data.version}/SHA256SUMS.txt`) {
     release = data;
-    const download = document.querySelector('#download');
-    download.setAttribute('href', data.downloadUrl);
-    download.textContent = '下载 Windows 版 ZIP ↓';
     document.querySelector('#release-note').textContent = `v${data.version} · ZIP ${(data.size / 1024).toFixed(0)} KB · Windows 11 · 解压即用`;
     document.querySelector('#checksum').textContent = data.sha256;
     document.querySelector('#checksum-link').href = data.checksumUrl;
     document.querySelector('#integrity').hidden = false;
   }
 } catch {
-  // The fallback is an actual releases page, never a broken or placeholder download.
-  document.querySelector('#release-note').textContent = '本站下载暂不可用，可前往 GitHub 发布页 · Windows 11';
+  // Version details are optional; both links still use the build's selected release.
 }
 
 document.querySelector('#copy-checksum').addEventListener('click', async () => {

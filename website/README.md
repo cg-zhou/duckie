@@ -30,7 +30,7 @@ npm run preview
 5. 绑定 `duckie.cg-zhou.top`，根据控制台提示配置 DNS 和 HTTPS。
 6. 检查首页、ZIP 下载、校验文件和 404 页面；文件校验值应与 GitHub Release 一致。
 
-无需 KV 或额外下载密钥。当前版随 Pages 分发，历史版本链接到 GitHub Releases。单文件不能超过 25 MB，构建脚本会检查。
+无需 KV 或额外下载密钥。主下载指向 GitHub，备用下载由 Pages 分发；点击主下载后显示备用下载提示。历史版本链接到 GitHub Releases。单文件不能超过 25 MB，构建脚本会检查。
 
 参考：[ESA Pages 构建配置](https://help.aliyun.com/zh/edge-security-acceleration/esa/user-guide/build-pages)。
 
