@@ -2,20 +2,20 @@
 
 [中文](./README.zh-CN.md) · [Roadmap](./ROADMAP.md)
 
-A small Windows utility. The public release focuses on switching between classic and Windows 11 context menus.
+A small Windows toolbox for context menu switching, PAC management and quick launch.
 
 - Compare menu previews and click to select a style.
 - Confirm before restarting File Explorer; restore system defaults at any time.
-- Portable EXE: no installation, tray icon, or global hotkeys in the default mode. Closing the window exits.
+- Portable EXE with a tray icon, global hotkeys and configurable startup and close behavior.
 - Single instance: opening again activates the existing window.
 
 Requires Windows 11 and .NET Framework 4.8. Actual menu behavior depends on the Windows version. The portable binary is unsigned.
 
 ## Downloads
 
-The website is prepared for `https://duckie.cg-zhou.top`. Versioned binaries, checksums and history live in [GitHub Releases](https://github.com/cg-zhou/duckie/releases).
+Download the ZIP from the [Duckie website](https://duckie.cg-zhou.top), extract it and run `Duckie.exe`. Checksums and historical versions are available in [GitHub Releases](https://github.com/cg-zhou/duckie/releases).
 
-All original toolbox code is retained. Exit the current instance and run `Duckie.exe --toolbox` to restore the original navigation, tray, hotkeys and close behavior. See [toolbox mode](./docs/toolbox.md).
+The current download, v0.9.2, provides context menu switching. The main branch is being organized into a full toolbox. See the [roadmap](./ROADMAP.md).
 
 ## Development
 
@@ -30,11 +30,10 @@ dotnet build desktop/Duckie/Duckie.csproj -c Release
 
 | Directory | Contents |
 | --- | --- |
-| `desktop/` | WPF application, shared components, original toolbox, MSIX packaging |
+| `desktop/` | WPF application, shared components, MSIX packaging |
 | `website/` | web-booster product website and ESA Pages configuration |
 | `assets/` | Shared screenshots |
 | `scripts/` | Portable packaging |
-| `docs/` | Usage and release notes |
 
 ## Publishing
 

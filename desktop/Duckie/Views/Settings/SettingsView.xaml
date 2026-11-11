@@ -318,9 +318,11 @@
                                                 </Grid.ColumnDefinitions>
                                                 
                                                 <!-- Service Name -->
-                                                <common:TextEx Grid.Column="0" Text="{Binding Name}" 
-                                                               FontSize="14" Foreground="#333" 
-                                                               VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                                <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,12,0">
+                                                    <common:TextEx Text="{Binding Name}" FontSize="14" Foreground="#333"/>
+                                                    <TextBlock Text="{Binding RegistrationStatus}" Foreground="{Binding RegistrationStatusBrush}"
+                                                               FontSize="12" Margin="0,4,0,0"/>
+                                                </StackPanel>
                                                 
                                                 <!-- Hotkey Input -->
                                                 <TextBox Grid.Column="1" x:Name="HotKeyTextBox"

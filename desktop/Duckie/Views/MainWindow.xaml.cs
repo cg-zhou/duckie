@@ -33,9 +33,7 @@ public partial class MainWindow : Window, IMainWindow
 
         InitializeComponent();
 
-        var navViews = App.IsToolboxMode
-            ? ReflectUtils.Get<INavView>(typeof(MainWindow).Assembly, typeof(PacManageNavView).Assembly)
-            : new INavView[] { new ContextMenuNavView() };
+        var navViews = ReflectUtils.Get<INavView>(typeof(MainWindow).Assembly, typeof(PacManageNavView).Assembly);
         navModels = navViews
             .OrderBy(x => x.NavMenuPosition)
             .ThenBy(x => x.NavMenuOrder)
@@ -127,8 +125,6 @@ public partial class MainWindow : Window, IMainWindow
 
     private void MainWindow_Closing(object sender, CancelEventArgs e)
     {
-        if (!App.IsToolboxMode) return;
-
         var appSettings = UserConfigService.GetAppSettings();
         
         if (appSettings.MinimizeToTrayOnClose)

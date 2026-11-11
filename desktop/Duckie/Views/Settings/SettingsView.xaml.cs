@@ -23,6 +23,7 @@ public partial class SettingsView : UserControl
     {
         InitializeComponent();
         Loaded += SettingsView_Loaded;
+        IsVisibleChanged += (_, _) => RefreshHotKeyStatuses();
 
         // 初始化语言下拉框
         InitializeLanguageComboBox();
@@ -43,6 +44,13 @@ public partial class SettingsView : UserControl
     private void SettingsView_Loaded(object sender, RoutedEventArgs e)
     {
         HotKeysItemsControl.ItemsSource = HotKeyItems;
+        RefreshHotKeyStatuses();
+    }
+
+    private void RefreshHotKeyStatuses()
+    {
+        if (HotKeyItems == null) return;
+        foreach (var item in HotKeyItems) item.UpdateRegistrationStatus();
     }
 
     private void InitializeLanguageComboBox()
@@ -101,6 +109,7 @@ public partial class SettingsView : UserControl
         InitializeLanguageComboBox();
         // 语言变化时更新下拉框显示的文本
         UpdateLanguageDisplay();
+        RefreshHotKeyStatuses();
     }
 
     private void UpdateLanguageDisplay()
@@ -218,6 +227,10 @@ public partial class SettingsView : UserControl
         {
             MessageBox.Show($"设置快捷键失败：{ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
+        finally
+        {
+            RefreshHotKeyStatuses();
+        }
     }
 
     private void ClearHotKey(HotKeySettingsItem item)
@@ -235,6 +248,10 @@ public partial class SettingsView : UserControl
         catch (Exception ex)
         {
             MessageBox.Show($"清除快捷键失败：{ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+        finally
+        {
+            RefreshHotKeyStatuses();
         }
     }
 
@@ -435,6 +452,24 @@ public class HotKeySettingsItem : INotifyPropertyChanged
     }
 
     public bool HasHotKey => !string.IsNullOrEmpty(_hotKeyDisplay) && _hotKeyDisplay != "无";
+
+    public string RegistrationStatus => !HasHotKey
+        ? LocKey.Settings_HotKey_Unassigned.Text()
+        : HotKeyManager.IsRegistered(Name)
+            ? LocKey.Settings_HotKey_Registered.Text()
+            : LocKey.Settings_HotKey_Unregistered.Text();
+
+    public System.Windows.Media.Brush RegistrationStatusBrush => !HasHotKey
+        ? System.Windows.Media.Brushes.Gray
+        : HotKeyManager.IsRegistered(Name)
+            ? System.Windows.Media.Brushes.SeaGreen
+            : System.Windows.Media.Brushes.DarkOrange;
+
+    public void UpdateRegistrationStatus()
+    {
+        OnPropertyChanged(nameof(RegistrationStatus));
+        OnPropertyChanged(nameof(RegistrationStatusBrush));
+    }
 
     public void UpdateHotKeyDisplay()
     {

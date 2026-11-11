@@ -394,5 +394,17 @@ public enum LocKey
 
     [Cn("测试网络连接")]
     [En("Test Network")]
-    Settings_TestNetwork
+    Settings_TestNetwork,
+
+    [Cn("未设置")]
+    [En("Not assigned")]
+    Settings_HotKey_Unassigned,
+
+    [Cn("已注册")]
+    [En("Registered")]
+    Settings_HotKey_Registered,
+
+    [Cn("未注册，可能存在按键冲突")]
+    [En("Not registered; the key combination may be in use")]
+    Settings_HotKey_Unregistered
 }

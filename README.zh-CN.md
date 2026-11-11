@@ -2,20 +2,20 @@
 
 [English](./README.md) · [路线图](./ROADMAP.md)
 
-一个轻巧的 Windows 小工具。当前公开版本聚焦 **Windows 11 右键菜单切换**。
+一个轻巧的 Windows 工具箱，提供右键菜单切换、PAC 管理和快捷启动。
 
 - 对比经典与 Windows 11 菜单，点击图片选择。
 - 切换前确认，操作会重启资源管理器；可恢复系统默认。
-- 无需安装，关闭窗口即退出，不注册全局快捷键、不创建托盘图标。
+- 无需安装，支持托盘、全局快捷键及启动与关闭行为设置。
 - 单实例运行，重复打开唤起已有窗口。
 
 面向 Windows 11，需要 .NET Framework 4.8。菜单效果取决于系统版本；便携版未进行代码签名。
 
 ## 下载
 
-网站准备部署到 `https://duckie.cg-zhou.top`。正式文件、校验值和历史版本见 [GitHub Releases](https://github.com/cg-zhou/duckie/releases)。
+从 [Duckie 网站](https://duckie.cg-zhou.top) 下载 ZIP，解压后运行 `Duckie.exe`。校验值和历史版本见 [GitHub Releases](https://github.com/cg-zhou/duckie/releases)。
 
-旧工具箱代码全部保留。退出当前实例后，以 `Duckie.exe --toolbox` 启动可恢复原有导航、托盘、快捷键和关闭行为，见[工具箱模式](./docs/toolbox.md)。
+当前下载版本为 v0.9.2，提供右键菜单切换。主分支正在整理完整工具箱，见[路线图](./ROADMAP.md)。
 
 ## 开发
 
@@ -30,11 +30,10 @@ dotnet build desktop/Duckie/Duckie.csproj -c Release
 
 | 目录 | 内容 |
 | --- | --- |
-| `desktop/` | WPF 程序、公共组件、旧工具箱和 MSIX 打包 |
+| `desktop/` | WPF 程序、公共组件和 MSIX 打包 |
 | `website/` | web-booster 产品网站与 ESA 配置 |
 | `assets/` | 共享截图 |
 | `scripts/` | 便携发布脚本 |
-| `docs/` | 使用说明和版本记录 |
 
 ## 发布
 
