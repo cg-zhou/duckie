@@ -39,7 +39,7 @@ dotnet build desktop/Duckie/Duckie.csproj -c Release
 ## 发布
 
 1. 更新 `VERSION`，补充 `docs/releases/v<版本>.md`；需要维护商店包时同步更新 manifest 版本。
-2. 提交代码，推送与版本一致的标签，如 `v0.9.0`。
+2. 提交代码，推送与版本一致的标签，如 `v0.9.1`。
 3. `portable-release.yml` 构建文件并创建 GitHub Release，使用内置 `GITHUB_TOKEN`，无需额外密钥。手动执行仅生成 Artifact。
 4. Release 文件就绪后更新网站 `release.json` 并部署，见 [ESA 部署说明](./website/README.md)。
 

@@ -14,7 +14,7 @@ Release 尚未发布时，在仓库根目录运行 `./scripts/package-release.ps
 
 ```powershell
 cd website
-$env:DUCKIE_RELEASE_DIR = (Resolve-Path ../artifacts/release/0.9.0).Path
+$env:DUCKIE_RELEASE_DIR = (Resolve-Path ../artifacts/release/0.9.1).Path
 npm run build
 npm run preview
 ```
