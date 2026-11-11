@@ -34,11 +34,11 @@ async function load(name) {
   return Buffer.from(await response.arrayBuffer());
 }
 const release = JSON.parse((await load('release.json')).toString('utf8'));
-const fileName = `Duckie-${tag}.exe`;
+const fileName = `Duckie-${tag}.zip`;
 if (release.version !== selected.version || release.tag !== tag || release.fileName !== fileName || !/^[a-f0-9]{64}$/.test(release.sha256)) throw new Error('Release metadata does not match selected version');
 const binary = await load(fileName);
-if (binary.length > 25 * 1024 * 1024) throw new Error('Binary exceeds ESA Pages single-file limit');
-if (binary.length !== release.size || createHash('sha256').update(binary).digest('hex') !== release.sha256) throw new Error('Release binary checksum or size mismatch');
+if (binary.length > 25 * 1024 * 1024) throw new Error('ZIP exceeds ESA Pages single-file limit');
+if (binary.length !== release.size || createHash('sha256').update(binary).digest('hex') !== release.sha256) throw new Error('Release ZIP checksum or size mismatch');
 const downloads = path.join(output, 'downloads', tag);
 await mkdir(downloads, { recursive: true });
 await writeFile(path.join(downloads, fileName), binary);

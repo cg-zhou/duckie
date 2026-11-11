@@ -26,7 +26,7 @@ dotnet build desktop/Duckie/Duckie.csproj -c Release
 ./scripts/package-release.ps1
 ```
 
-`VERSION` supplies the desktop version. Packaging produces the standalone EXE, `SHA256SUMS.txt`, and `release.json` in `artifacts/release/<version>/`.
+`VERSION` supplies the desktop version. Packaging produces a ZIP containing only `Duckie.exe`, plus separate `SHA256SUMS.txt` and `release.json` files in `artifacts/release/<version>/`.
 
 | Directory | Contents |
 | --- | --- |
@@ -38,7 +38,7 @@ dotnet build desktop/Duckie/Duckie.csproj -c Release
 
 ## Publishing
 
-Push a `vMAJOR.MINOR.PATCH` tag matching `VERSION`, with notes at `docs/releases/<tag>.md`. GitHub Actions publishes the portable release using its built-in token. Manual workflow runs only build an artifact.
+Push a `vMAJOR.MINOR.PATCH` tag matching `VERSION`, with a matching entry in [`CHANGELOG.md`](./CHANGELOG.md). GitHub Actions publishes the portable release using its built-in token. Manual workflow runs only build an artifact.
 
 After release files exist, update `website/release.json` and deploy the site. The build verifies the exact release binary before hosting it. See the [ESA deployment guide](./website/README.md).
 

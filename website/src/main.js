@@ -9,13 +9,13 @@ try {
   const data = await response.json();
   if (data.available && /^\d+\.\d+\.\d+$/.test(data.version)
       && /^[a-f0-9]{64}$/.test(data.sha256)
-      && data.downloadUrl === `/downloads/v${data.version}/Duckie-v${data.version}.exe`
+      && data.downloadUrl === `/downloads/v${data.version}/Duckie-v${data.version}.zip`
       && data.checksumUrl === `/downloads/v${data.version}/SHA256SUMS.txt`) {
     release = data;
     const download = document.querySelector('#download');
     download.setAttribute('href', data.downloadUrl);
-    download.textContent = '下载 Windows 版 ↓';
-    document.querySelector('#release-note').textContent = `v${data.version} · ${(data.size / 1024).toFixed(0)} KB · Windows 11 · 无需安装`;
+    download.textContent = '下载 Windows 版 ZIP ↓';
+    document.querySelector('#release-note').textContent = `v${data.version} · ZIP ${(data.size / 1024).toFixed(0)} KB · Windows 11 · 解压即用`;
     document.querySelector('#checksum').textContent = data.sha256;
     document.querySelector('#checksum-link').href = data.checksumUrl;
     document.querySelector('#integrity').hidden = false;

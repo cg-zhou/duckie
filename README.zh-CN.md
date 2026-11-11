@@ -26,7 +26,7 @@ dotnet build desktop/Duckie/Duckie.csproj -c Release
 ./scripts/package-release.ps1
 ```
 
-`VERSION` 是桌面版本来源。便携包输出到 `artifacts/release/<版本>/`，包含 EXE、`SHA256SUMS.txt` 和 `release.json`。
+`VERSION` 是桌面版本来源。便携包输出到 `artifacts/release/<版本>/`，包含 ZIP（包内仅 Duckie.exe）、`SHA256SUMS.txt` 和 `release.json`。
 
 | 目录 | 内容 |
 | --- | --- |
@@ -38,8 +38,8 @@ dotnet build desktop/Duckie/Duckie.csproj -c Release
 
 ## 发布
 
-1. 更新 `VERSION`，补充 `docs/releases/v<版本>.md`；需要维护商店包时同步更新 manifest 版本。
-2. 提交代码，推送与版本一致的标签，如 `v0.9.1`。
+1. 更新 `VERSION`，在 [`CHANGELOG.md`](./CHANGELOG.md) 顶部补充简短更新记录；需要维护商店包时同步更新 manifest 版本。
+2. 提交代码，推送与版本一致的标签，如 `v0.9.2`。
 3. `portable-release.yml` 构建文件并创建 GitHub Release，使用内置 `GITHUB_TOKEN`，无需额外密钥。手动执行仅生成 Artifact。
 4. Release 文件就绪后更新网站 `release.json` 并部署，见 [ESA 部署说明](./website/README.md)。
 

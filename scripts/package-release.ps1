@@ -21,9 +21,17 @@ $sourceExe = Join-Path $repoRoot 'desktop\Duckie\bin\Release\net480\Duckie.exe'
 $binaryVersion = [Diagnostics.FileVersionInfo]::GetVersionInfo($sourceExe).FileVersion
 if ($binaryVersion -ne "$version.0") { throw "Unexpected binary version: $binaryVersion" }
 New-Item -ItemType Directory -Path $OutputDirectory -Force | Out-Null
-$fileName = "Duckie-v$version.exe"
+$fileName = "Duckie-v$version.zip"
 $destination = Join-Path $OutputDirectory $fileName
-Copy-Item -LiteralPath $sourceExe -Destination $destination -Force
+Add-Type -AssemblyName System.IO.Compression, System.IO.Compression.FileSystem
+$zipStream = [IO.File]::Open($destination, [IO.FileMode]::Create)
+try {
+    $archive = [IO.Compression.ZipArchive]::new($zipStream, [IO.Compression.ZipArchiveMode]::Create, $true)
+    try {
+        [IO.Compression.ZipFileExtensions]::CreateEntryFromFile(
+            $archive, $sourceExe, 'Duckie.exe', [IO.Compression.CompressionLevel]::Optimal) | Out-Null
+    } finally { $archive.Dispose() }
+} finally { $zipStream.Dispose() }
 $hash = (Get-FileHash -LiteralPath $destination -Algorithm SHA256).Hash.ToLowerInvariant()
 [IO.File]::WriteAllText((Join-Path $OutputDirectory 'SHA256SUMS.txt'), "$hash  $fileName`n")
 $metadata = [ordered]@{
