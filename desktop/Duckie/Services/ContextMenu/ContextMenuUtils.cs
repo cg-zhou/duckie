@@ -5,6 +5,7 @@ namespace Duckie.Services.ContextMenu;
 
 public static class ContextMenuUtils
 {
+    public static event EventHandler SettingsChanged;
     private const string CLSID_KEY = @"SOFTWARE\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32";
 
     /// <summary>
@@ -15,7 +16,8 @@ public static class ContextMenuUtils
         using var key = Registry.CurrentUser.CreateSubKey(CLSID_KEY);
         key?.SetValue("", "", RegistryValueKind.String);
 
-        RestartExplorer();
+        try { RestartExplorer(); }
+        finally { SettingsChanged?.Invoke(null, EventArgs.Empty); }
     }
 
     /// <summary>
@@ -25,7 +27,8 @@ public static class ContextMenuUtils
     {
         Registry.CurrentUser.DeleteSubKeyTree(CLSID_KEY, false);
 
-        RestartExplorer();
+        try { RestartExplorer(); }
+        finally { SettingsChanged?.Invoke(null, EventArgs.Empty); }
     }
 
     /// <summary>

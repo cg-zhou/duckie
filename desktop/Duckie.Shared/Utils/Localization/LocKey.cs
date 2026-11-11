@@ -2,6 +2,58 @@ namespace Duckie.Shared.Utils.Localization;
 
 public enum LocKey
 {
+    [Cn("右键菜单")]
+    [En("Context Menu")]
+    Nav_ContextMenu,
+
+    [Cn("当前配置")]
+    [En("Current configuration")]
+    ContextMenu_Current,
+
+    [Cn("经典菜单")]
+    [En("Classic menu")]
+    ContextMenu_ClassicState,
+
+    [Cn("系统默认")]
+    [En("System default")]
+    ContextMenu_DefaultState,
+
+    [Cn("Windows 11 菜单")]
+    [En("Windows 11 menu")]
+    ContextMenu_DefaultPreview,
+
+    [Cn("使用经典菜单")]
+    [En("Use classic menu")]
+    ContextMenu_ClassicAction,
+
+    [Cn("恢复系统默认")]
+    [En("Restore system default")]
+    ContextMenu_DefaultAction,
+
+    [Cn("切换会重启资源管理器。")]
+    [En("Switching restarts File Explorer.")]
+    ContextMenu_Note,
+
+    [Cn("切换会重启资源管理器，是否继续？")]
+    [En("Switching will restart File Explorer. Continue?")]
+    ContextMenu_Confirm,
+
+    [Cn("需要 Windows 11")]
+    [En("Requires Windows 11")]
+    ContextMenu_Unsupported,
+
+    [Cn("正在切换…")]
+    [En("Switching…")]
+    ContextMenu_Applying,
+
+    [Cn("已更新配置")]
+    [En("Configuration updated")]
+    ContextMenu_Applied,
+
+    [Cn("操作失败：{0}")]
+    [En("Operation failed: {0}")]
+    ContextMenu_Failed,
+
     // Unknown
     [Cn("Unknown {0}")]
     [En("Unknown {0}")]

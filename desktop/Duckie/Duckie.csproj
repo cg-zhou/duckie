@@ -11,6 +11,9 @@
 
   <ItemGroup>
     <EmbeddedResource Include="EmbeddedResources\duck.ico" />
+    <Resource Include="..\..\assets\screenshots\context-menu\*.png">
+      <Link>Assets\ContextMenu\%(Filename)%(Extension)</Link>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

@@ -5,6 +5,11 @@ namespace Duckie.Shared.Utils.Ui;
 
 public static class UiUtils
 {
+    public static void ShowToast(string text, bool isError = false)
+    {
+        Duckie.Shared.Views.Common.ToastHost.Show(AppEnv.MainWindow, text, isError);
+    }
+
     public static bool Confirm(string text, string caption)
     {
         var result = MessageBox.Show(text, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);

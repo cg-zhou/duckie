@@ -1,6 +1,6 @@
 # Duckie
 
-[中文](./README.zh-CN.md)
+[中文](./README.zh-CN.md) · [Roadmap](./ROADMAP.md)
 
 Small Windows utilities for everyday tasks.
 

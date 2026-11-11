@@ -23,5 +23,6 @@ public enum IconType
     SpeakerNone,
     SpeakerX,
     ChevronUp,
-    ChevronDown
+    ChevronDown,
+    ContextMenu
 }

@@ -38,5 +38,6 @@
 
         <!-- Main content area -->
         <Grid Grid.Column="1" x:Name="navViewContainer" Margin="10" />
+        <common:ToastHost Grid.ColumnSpan="2"/>
     </Grid>
 </Window>
