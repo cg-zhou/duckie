@@ -22,7 +22,7 @@ permissions:
   contents: read
 
 env:
-  # This is the Product ID already recorded in Duckie.Pack/Package.StoreAssociation.xml.
+  # This is the Product ID already recorded in desktop/Duckie.Pack/Package.StoreAssociation.xml.
   # Set the STORE_PRODUCT_ID repository variable if the Store app is changed.
   STORE_PRODUCT_ID: ${{ vars.STORE_PRODUCT_ID || '9MSZ8M2WXZC4' }}
 
@@ -70,7 +70,7 @@ jobs:
             "APPX_PACKAGE_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
             Write-Host "Using package version $version"
 
-            $manifestPath = Join-Path $env:GITHUB_WORKSPACE 'Duckie.Pack\Package.appxmanifest'
+            $manifestPath = Join-Path $env:GITHUB_WORKSPACE 'desktop\Duckie.Pack\Package.appxmanifest'
             $document = [System.Xml.Linq.XDocument]::Load($manifestPath)
             $namespace = [System.Xml.Linq.XNamespace]::Get('http://schemas.microsoft.com/appx/manifest/foundation/windows10')
             $identity = $document.Root.Element($namespace + 'Identity')
@@ -103,7 +103,7 @@ jobs:
             $properties += "/p:AppxPackageVersion=$env:APPX_PACKAGE_VERSION"
           }
 
-          & msbuild Duckie.Pack\Duckie.Pack.wapproj @properties
+          & msbuild desktop\Duckie.Pack\Duckie.Pack.wapproj @properties
           if ($LASTEXITCODE -ne 0) {
             exit $LASTEXITCODE
           }
@@ -181,7 +181,7 @@ jobs:
             throw 'The Store package artifact is missing.'
           }
 
-          $projectDirectory = Join-Path $env:GITHUB_WORKSPACE 'Duckie.Pack'
+          $projectDirectory = Join-Path $env:GITHUB_WORKSPACE 'desktop\Duckie.Pack'
           msstore publish $projectDirectory --inputDirectory $package.DirectoryName --appId $env:STORE_PRODUCT_ID --noCommit --verbose
           if ($LASTEXITCODE -ne 0) {
             exit $LASTEXITCODE

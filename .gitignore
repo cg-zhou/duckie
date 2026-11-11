@@ -1,12 +1,12 @@
-﻿################################################################################
+################################################################################
 # 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
 ################################################################################
 
-/.vs
+.vs
 bin
 obj
-/Duckie.Pack/AppPackages
-/Duckie.Pack/BundleArtifacts
+/desktop/Duckie.Pack/AppPackages
+/desktop/Duckie.Pack/BundleArtifacts
 *.msix
 *.msixbundle
 *.msixupload
@@ -17,7 +17,7 @@ obj
 *.cache
 
 # Store 打包：本地关联文件含个人账号信息，不应入库
-/Duckie.Pack/Package.StoreAssociation.xml
+/desktop/Duckie.Pack/Package.StoreAssociation.xml
 
 # 本地构建验证输出
 /artifacts/

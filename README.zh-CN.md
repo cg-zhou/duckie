@@ -2,81 +2,82 @@
 
 [English](./README.md)
 
-一个开源的 Windows 轻量桌面工具箱，让常用操作触手可及。
+让日常操作更方便的 Windows 小工具。
 
-Duckie 把日常高频的小工具集中到系统托盘中：需要时打开窗口，或用一个全局快捷键完成操作，然后继续手头的工作。功能围绕一个简单的标准取舍：减少重复操作，适合通过托盘或热键随手调用。
+本仓库包含 Duckie 桌面程序，以及为公开产品网站预留的目录。当前程序是基于 C#、WPF 和 .NET Framework 4.8 的托盘工具箱。后续计划提供按需运行、用完退出的独立小工具，目前尚未单独发布。
 
-## 功能
+## 当前功能
 
-- **托盘常驻**：点击托盘图标显示或隐藏主窗口，可配置开机启动、启动时最小化和关闭时收起到托盘。
-- **PAC 管理**：添加、编辑、删除和应用 PAC 配置，支持热键轮换，托盘图标徽章提示当前配置。
-- **音量控制**：使用全局快捷键调节系统音量、静音或取消静音。
-- **快捷启动**：将应用启动键 2（Application 2）绑定到一个文件，通过命令行 `start` 打开。
-- **右键菜单样式切换**：切换经典和 Windows 11 右键菜单样式；操作会重启资源管理器。
-- **偏好设置**：配置热键、切换中英文、设置应用 HTTP 代理并测试连接。
+- **PAC 管理**：保存和应用 PAC 地址，通过快捷键循环切换，也可以在托盘菜单直接选择。
+- **音量快捷键**：调节系统音量、静音或取消静音。
+- **快捷启动**：将应用启动键 2（Application 2）绑定到选定文件。
+- **右键菜单切换**：切换经典和 Windows 11 右键菜单样式；操作会重启资源管理器。
+- **偏好设置**：配置快捷键、开机启动、托盘行为、语言，以及 Duckie 自身请求使用的 HTTP 代理。
 
-PAC 管理修改当前用户的 Windows PAC 设置，本身不提供代理服务器。设置页中的 HTTP 代理用于 Duckie 自身的 HTTP 请求。
+PAC 管理修改当前用户的 Windows PAC 设置，本身不提供代理服务器。
 
-## 开始使用
+## 使用桌面程序
 
-启动 Duckie 后，点击托盘图标显示或隐藏窗口。在 PAC 管理页面添加自己的 PAC 地址，在设置中调整启动和窗口行为。需要退出时，选择托盘菜单中的 **Exit**。
+启动后，点击托盘图标显示或隐藏窗口，在程序内配置工具和快捷键。退出时选择托盘菜单的“退出”；根据设置，关闭窗口可能只是收起到托盘。
 
-默认快捷键：
-
-| 快捷键 | 操作 |
+| 默认快捷键 | 操作 |
 | --- | --- |
 | Alt + Shift + E | 显示或隐藏 Duckie |
-| Alt + Shift + 1 | 依次切换已保存的 PAC 配置，最后清除 PAC 设置 |
-| Alt + Shift + 8 | 调小音量 |
-| Alt + Shift + 9 | 调大音量 |
-| Alt + Shift + 0 | 静音或取消静音 |
+| Alt + Shift + 1 | 依次切换已保存的 PAC，最后清除 PAC 设置 |
+| Alt + Shift + 8 / 9 / 0 | 调小音量 / 调大音量 / 静音 |
 | Alt + Shift + 5 | 切换右键菜单样式并重启资源管理器 |
 
-快捷键可能与其他应用冲突，可在设置中查看或调整。
+快捷键可在设置中修改。“快捷启动”按 Windows 文件关联打开所选文件。
 
-在“快捷启动”中选择一个文件，启用并保存后立即生效。Duckie 调用 `cmd /d /v:off /c start "" "文件路径"`，具体打开方式由系统文件关联决定，不创建快捷方式文件。禁用功能或退出 Duckie 后释放按键。
+## 仓库结构
+
+```text
+desktop/
+  Duckie.slnx          Visual Studio 解决方案
+  Directory.Build.props
+  Duckie/             应用入口、主窗口和设置
+  Duckie.Shared/      配置、本地化、控件、托盘和快捷键基础设施
+  Duckie.Windows/     Windows 工具
+  Duckie.Pack/        Microsoft Store / MSIX 打包
+website/              公开产品网站预留目录
+.github/workflows/    构建和发布工作流
+```
 
 ## 开发
 
-项目使用 C#、WPF 和 .NET Framework 4.8，仅面向 Windows。
+在 Windows 上，使用安装了“.NET 桌面开发”工作负载和 .NET Framework 4.8 目标包的 Visual Studio 打开 [`desktop/Duckie.slnx`](./desktop/Duckie.slnx)，构建并运行 `Duckie` 项目。Visual Studio 需支持 `.slnx` 格式。
 
-| 项目 | 职责 |
-| --- | --- |
-| `Duckie` | 应用入口、主窗口和设置 |
-| `Duckie.Shared` | 公共控件、配置、本地化、托盘和热键基础设施 |
-| `Duckie.Windows` | PAC、音量、快捷启动等 Windows 工具 |
-| `Duckie.Pack` | MSIX 打包 |
-
-在 Windows 上，使用安装了 **.NET 桌面开发**工作负载和 .NET Framework 4.8 目标包的 Visual Studio 打开 `Duckie.slnx`，构建并运行 `Duckie` 项目。MSIX 打包还需安装 `Duckie.Pack` 引用的 Windows SDK 和打包工具。
-
-已安装兼容的 .NET SDK 和目标包时，也可以在仓库根目录构建桌面应用：
+已安装兼容的 .NET SDK 和目标包时，也可以在仓库根目录构建：
 
 ```powershell
-dotnet build Duckie/Duckie.csproj -c Release
+dotnet build desktop/Duckie/Duckie.csproj -c Release
 ```
 
-导航页面与热键服务分别通过 `INavView`、`IHotKeyService` 接口自动发现。欢迎贡献能减少重复操作、适合托盘或快捷键调用的小工具。
+MSIX 打包另外需要 `desktop/Duckie.Pack` 引用的 Windows SDK 和 Desktop Bridge 打包工具。导航页面与快捷键服务通过 `INavView`、`IHotKeyService` 接口发现。
 
-## GitHub Actions 自动发布 Microsoft Store
+## 产品网站
 
-仓库包含 [`windows-store.yml`](./.github/workflows/windows-store.yml) 工作流：
+网站计划使用 `duckie.cg-zhou.top`，通过阿里云 ESA Pages 静态托管，提供工具介绍、使用说明和下载入口。[`website/`](./website/) 目前只是预留目录，尚未实现页面或部署流程。
 
-- 推送到 `main`：构建 MSIX 并上传为 GitHub Actions Artifact，不提交商店
-- 推送版本标签（例如 `v0.8.3`）：构建并自动提交到 Microsoft Store
-- 手动运行工作流：可输入版本号，并选择是否提交商店
+## 发布到 Microsoft Store
 
-首次使用前，需要在 GitHub 仓库的 `Settings → Secrets and variables → Actions` 中添加以下 Repository secrets：
+[`windows-store.yml`](./.github/workflows/windows-store.yml) 支持：
 
-| Secret | 来源 |
-|--------|------|
+- 推送到 `main`：构建 MSIX 并保存为 Actions Artifact，不提交商店。
+- 推送版本标签（如 `v0.8.4`）：构建并提交商店更新。
+- 手动运行：可指定版本，并选择是否提交商店。
+
+在 GitHub Repository secrets 中配置：
+
+| Secret | 内容 |
+| --- | --- |
 | `AZURE_AD_TENANT_ID` | Microsoft Entra 租户 ID |
-| `AZURE_AD_APPLICATION_CLIENT_ID` | Entra 应用的 Application (client) ID |
-| `AZURE_AD_APPLICATION_SECRET` | Entra 应用创建的 Client secret 值 |
-| `SELLER_ID` | Partner Center 的 Seller/Publisher ID |
+| `AZURE_AD_APPLICATION_CLIENT_ID` | Entra 应用的客户端 ID |
+| `AZURE_AD_APPLICATION_SECRET` | Entra 应用的客户端密钥 |
+| `SELLER_ID` | Partner Center Seller/Publisher ID |
 
-Entra 应用还必须在 Partner Center 的账户设置中添加，并至少授予 `Manager` 角色。默认 Store Product ID 来自 `Package.StoreAssociation.xml`；如果应用变更，可在 GitHub Actions Variables 中设置 `STORE_PRODUCT_ID` 覆盖它。
+Entra 应用还需要在 Partner Center 账户设置中获得相应访问权限。工作流默认使用现有 Store Product ID，也可通过 Repository variable `STORE_PRODUCT_ID` 覆盖。
 
-应用需要先在 Partner Center 完成首次提交并处于可更新状态；如果还没有上架过，首次提交仍需手动完成商店资料和认证。若希望每次标签发布前人工确认，可在 GitHub 创建名为 `microsoft-store` 的 Environment，并添加 Required reviewers。
+应用首次商店资料和提交需在 Partner Center 完成。提交后仍需通过商店认证；工作流成功不表示立即上架。需要人工确认时，可为 `microsoft-store` Environment 配置 Required reviewers。
 
-注意：Microsoft Store 仍会执行认证审核；工作流完成表示已提交，不代表立即对所有用户上架。
-
+当前工作流不向 GitHub Releases 发布便携 EXE；独立工具的下载发布流程后续补充。
