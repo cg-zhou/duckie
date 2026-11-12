@@ -1,3 +1,4 @@
+using Duckie.Shared.Utils.Localization;
 using Duckie.Utils.HotKeys;
 using System.Windows.Forms;
 
@@ -7,6 +8,6 @@ public class ContextMenuHotKeyService : IHotKeyService
 {
     public IEnumerable<HotKeyAction> Register()
     {
-        yield return new HotKeyAction("ÇÐ»»²Ëµ¥·ç¸ñ", KeyModifiers.ALtShift, Keys.D5, ContextMenuUtils.ToggleContextMenuStyle);
+        yield return new HotKeyAction("context-menu.toggle", LocKey.HotKey_ToggleContextMenu, KeyModifiers.ALtShift, Keys.D5, ContextMenuUtils.ToggleContextMenuStyle);
     }
 }

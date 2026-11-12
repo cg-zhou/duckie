@@ -406,5 +406,41 @@ public enum LocKey
 
     [Cn("未注册，可能存在按键冲突")]
     [En("Not registered; the key combination may be in use")]
-    Settings_HotKey_Unregistered
+    Settings_HotKey_Unregistered,
+
+    [Cn("循环切换快捷键")]
+    [En("Cycle PAC hotkey")]
+    PAC_CycleHotKey,
+
+    [Cn("显示／隐藏 Duckie")]
+    [En("Show/hide Duckie")]
+    HotKey_ToggleWindow,
+
+    [Cn("切换菜单风格")]
+    [En("Toggle context menu style")]
+    HotKey_ToggleContextMenu,
+
+    [Cn("循环切换 PAC")]
+    [En("Cycle PAC")]
+    HotKey_CyclePac,
+
+    [Cn("调小音量")]
+    [En("Volume down")]
+    HotKey_VolumeDown,
+
+    [Cn("调大音量")]
+    [En("Volume up")]
+    HotKey_VolumeUp,
+
+    [Cn("静音／取消静音")]
+    [En("Mute/unmute")]
+    HotKey_ToggleMute,
+
+    [Cn("启动配置的目标")]
+    [En("Launch configured target")]
+    HotKey_LaunchTarget,
+
+    [Cn("请按快捷键")]
+    [En("Press a shortcut")]
+    Settings_HotKey_Record
 }

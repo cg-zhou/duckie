@@ -1,94 +1,91 @@
-﻿using Duckie.Shared.Utils;
-using System.Windows.Forms;
+using Duckie.Shared.Utils;
 
 namespace Duckie.Utils.HotKeys;
 
 public static partial class HotKeyManager
 {
-    public static IHotKeyService[] GetHotKeyServices()
-    {
-        return ReflectUtils.Get<IHotKeyService>();
-    }
-
-    public static void RegisterServices()
-    {
-        var hotKeyServices = GetHotKeyServices();
-        foreach (var hotKeyService in hotKeyServices)
-        {
-            foreach (var hotKeyAction in hotKeyService.Register())
-            {
-                try { Register(hotKeyAction, hotKeyAction.Modifiers, hotKeyAction.Keys); }
-                catch (Exception ex) { Duckie.Shared.Utils.Ui.UiUtils.Warning(ex.Message, "快捷键注册失败"); }
-            }
-        }
-    }
+    private static readonly List<HotKeyRegistration> registrations = new();
+    private static readonly object sync = new();
+    private static readonly HotKeyForm form;
+    private static int nextId;
 
     static HotKeyManager()
     {
         form = new HotKeyForm();
-        form.KeyPressed += Form_KeyPressed;
+        form.KeyPressed += (_, id) =>
+        {
+            HotKeyAction action;
+            lock (sync) action = registrations.FirstOrDefault(x => x.Id == id)?.Action;
+            action?.Action();
+        };
     }
 
-    private static void Form_KeyPressed(object sender, int id)
+    public static IHotKeyService[] GetHotKeyServices() => ReflectUtils.Get<IHotKeyService>();
+
+    public static void RegisterServices()
     {
-        foreach (var item in items.Where(x => x.Id == id))
+        foreach (var action in GetHotKeyServices().SelectMany(x => x.Register()))
         {
-            item.HotKeyAction.Action();
+            try { Register(action, HotKeyBindings.Get(action)); }
+            catch (Exception ex) { Duckie.Shared.Utils.Ui.UiUtils.Warning(ex.Message, "快捷键注册失败"); }
         }
+        HotKeyBindings.NotifyChanged();
     }
 
-    private static int id = 9527;
-
-    private static List<HotKeyItem> items { get; set; } = new List<HotKeyItem>();
-    private static HotKeyForm form = new HotKeyForm();
-    private static object lockObj = new object();
-
-    public static int Register(HotKeyAction hotKeyAction, KeyModifiers modifiers, Keys keys)
+    public static int Register(HotKeyAction action, HotKeyBinding binding)
     {
-        Unregister(hotKeyAction);
-
-        lock (lockObj)
+        lock (sync)
         {
-            ++id;
-
-            var item = new HotKeyItem
+            var current = registrations.FirstOrDefault(x => x.Action.Id == action.Id);
+            if (current != null && current.Binding.Equals(binding)) return current.Id;
+            if (binding.IsEmpty)
             {
-                Id = id,
-                HotKeyAction = hotKeyAction
-            };
+                Unregister(action);
+                return 0;
+            }
+            var conflict = registrations.FirstOrDefault(x => x.Action.Id != action.Id && x.Binding.Equals(binding));
+            if (conflict != null) throw new InvalidOperationException($"{binding} 已用于“{conflict.Action.Name}”。");
 
-            var nativeModifiers = hotKeyAction.NoRepeat ? modifiers | Interop.ModNoRepeat : modifiers;
-            if (!Interop.RegisterHotKey(form.Handle, item.Id, nativeModifiers, keys))
+            // Reserve the new combination before releasing the current registration.
+            // Application hotkey IDs must stay in 0x0000–0xBFFF.
+            int id;
+            do { nextId = nextId % 0xBFFF + 1; id = nextId; }
+            while (registrations.Any(x => x.Id == id));
+            var modifiers = action.NoRepeat ? binding.Modifiers | Interop.ModNoRepeat : binding.Modifiers;
+            if (!Interop.RegisterHotKey(form.Handle, id, modifiers, binding.Key))
                 throw new System.ComponentModel.Win32Exception(
                     System.Runtime.InteropServices.Marshal.GetLastWin32Error(),
-                    $"无法注册快捷键：{hotKeyAction.Name}。请检查其他程序是否占用了此按键。");
+                    $"无法注册 {binding}，可能已被其他程序占用。");
 
-            items.Add(item);
-
+            Unregister(action);
+            registrations.Add(new HotKeyRegistration
+            {
+                Id = id, Action = action, Binding = new HotKeyBinding(binding.Modifiers, binding.Key)
+            });
             return id;
         }
     }
 
-    public static void Unregister(HotKeyAction hotKeyAction)
+    public static void Unregister(HotKeyAction action)
     {
-        lock (lockObj)
+        lock (sync)
         {
-            var removedIds = new List<int>();
-            foreach (var item in items)
+            foreach (var item in registrations.Where(x => x.Action.Id == action.Id).ToArray())
             {
-                if (item.HotKeyAction.Name == hotKeyAction.Name)
-                {
-                    removedIds.Add(item.Id);
-                    Interop.UnregisterHotKey(form.Handle, item.Id);
-                }
+                Interop.UnregisterHotKey(form.Handle, item.Id);
+                registrations.Remove(item);
             }
-
-            items.RemoveAll(x => removedIds.Contains(x.Id));
         }
     }
 
-    public static bool IsRegistered(string name)
+    public static HotKeyBinding GetRegisteredBinding(string actionId)
     {
-        lock (lockObj) return items.Any(item => item.HotKeyAction.Name == name);
+        lock (sync)
+        {
+            var binding = registrations.FirstOrDefault(x => x.Action.Id == actionId)?.Binding;
+            return binding == null ? null : new HotKeyBinding(binding.Modifiers, binding.Key);
+        }
     }
+
+    public static bool IsRegistered(string actionId) => GetRegisteredBinding(actionId) != null;
 }

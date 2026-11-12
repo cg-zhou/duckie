@@ -1,4 +1,4 @@
-﻿namespace Duckie.Shared.Services.UserConfigs;
+namespace Duckie.Shared.Services.UserConfigs;
 
 [Serializable]
 public class UserConfig
@@ -8,6 +8,13 @@ public class UserConfig
     public string Language { get; set; } = "en-US";
     public AppSettings App { get; set; } = new AppSettings();
     public LauncherConfig Launcher { get; set; } = new LauncherConfig();
+    public HotKeyConfig[] HotKeys { get; set; } = [];
+}
+
+public class HotKeyConfig
+{
+    public string ActionId { get; set; }
+    public Duckie.Utils.HotKeys.HotKeyBinding Binding { get; set; } = new();
 }
 
 [Serializable]

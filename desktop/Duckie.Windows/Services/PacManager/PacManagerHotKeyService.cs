@@ -1,3 +1,4 @@
+using Duckie.Shared.Utils.Localization;
 using Duckie.Utils.HotKeys;
 using System.Windows.Forms;
 
@@ -5,12 +6,14 @@ namespace Duckie.Services.PacManager;
 
 public class PacManagerHotKeyService : IHotKeyService
 {
+    public static HotKeyAction CycleAction { get; } = new("pac.cycle", LocKey.HotKey_CyclePac, KeyModifiers.ALtShift, Keys.D1, Run);
+
     public IEnumerable<HotKeyAction> Register()
     {
-        yield return new HotKeyAction("ÇÐ»» PAC", KeyModifiers.ALtShift, Keys.D1, Run);
+        yield return CycleAction;
     }
 
-    private void Run()
+    private static void Run()
     {
         var pacConfigs = PacManagerService.GetAllPacConfigs();
 

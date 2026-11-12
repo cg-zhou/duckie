@@ -1,4 +1,5 @@
-﻿using Duckie.Shared;
+using Duckie.Shared.Utils.Localization;
+using Duckie.Shared;
 using Duckie.Shared.Utils.Ui;
 using Duckie.Shared.Views;
 using Duckie.Utils.HotKeys;
@@ -10,7 +11,7 @@ public class AppHotKeyService : IHotKeyService
 {
     public IEnumerable<HotKeyAction> Register()
     {
-        yield return new HotKeyAction("Show/Hide Duckie", KeyModifiers.ALtShift, Keys.E, TogglApp);
+        yield return new HotKeyAction("app.toggle-window", LocKey.HotKey_ToggleWindow, KeyModifiers.ALtShift, Keys.E, TogglApp);
     }
 
     public void TogglApp()

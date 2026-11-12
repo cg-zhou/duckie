@@ -3,27 +3,20 @@ using Duckie.Shared.Services.UserConfigs;
 using Duckie.Shared.Utils.Localization;
 using Duckie.Utils.HotKeys;
 using Duckie.Utils.Registry;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Input;
 
 namespace Duckie.Views;
 
 public partial class SettingsView : UserControl
 {
-    public ObservableCollection<HotKeySettingsItem> HotKeyItems { get; set; }
-
     public SettingsView()
     {
         InitializeComponent();
-        Loaded += SettingsView_Loaded;
-        IsVisibleChanged += (_, _) => RefreshHotKeyStatuses();
+        Loaded += (_, _) => InitializeHotKeyItems();
+        IsVisibleChanged += (_, _) => { if (IsVisible) InitializeHotKeyItems(); };
 
         // 初始化语言下拉框
         InitializeLanguageComboBox();
@@ -39,18 +32,6 @@ public partial class SettingsView : UserControl
 
         // 初始化代理设置
         InitializeProxySettings();
-    }
-
-    private void SettingsView_Loaded(object sender, RoutedEventArgs e)
-    {
-        HotKeysItemsControl.ItemsSource = HotKeyItems;
-        RefreshHotKeyStatuses();
-    }
-
-    private void RefreshHotKeyStatuses()
-    {
-        if (HotKeyItems == null) return;
-        foreach (var item in HotKeyItems) item.UpdateRegistrationStatus();
     }
 
     private void InitializeLanguageComboBox()
@@ -71,24 +52,8 @@ public partial class SettingsView : UserControl
 
     private void InitializeHotKeyItems()
     {
-        HotKeyItems = new ObservableCollection<HotKeySettingsItem>();
-
-        var hotKeyServices = HotKeyManager.GetHotKeyServices();
-        foreach (var service in hotKeyServices)
-        {
-            foreach (var hotKeyAction in service.Register())
-            {
-                var item = new HotKeySettingsItem
-                {
-                    HotKeyAction = hotKeyAction,
-                    Name = hotKeyAction.Name,
-                    Modifiers = hotKeyAction.Modifiers,
-                    Keys = hotKeyAction.Keys
-                };
-                item.UpdateHotKeyDisplay();
-                HotKeyItems.Add(item);
-            }
-        }
+        HotKeysItemsControl.ItemsSource = HotKeyManager.GetHotKeyServices()
+            .SelectMany(service => service.Register()).ToArray();
     }
 
     private void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -109,7 +74,7 @@ public partial class SettingsView : UserControl
         InitializeLanguageComboBox();
         // 语言变化时更新下拉框显示的文本
         UpdateLanguageDisplay();
-        RefreshHotKeyStatuses();
+        InitializeHotKeyItems();
     }
 
     private void UpdateLanguageDisplay()
@@ -122,164 +87,6 @@ public partial class SettingsView : UserControl
                 var currentCulture = LocUtils.CurrentCulture;
                 languageText.Text = currentCulture.Name == "zh-CN" ? "简体中文" : "English";
             }
-        }
-    }
-
-    private void HotKeyTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
-    {
-        e.Handled = true;
-
-        var textBox = sender as TextBox;
-        var item = textBox?.Tag as HotKeySettingsItem;
-        if (item == null)
-        {
-            return;
-        }
-
-        // 处理退格键，等同于清除快捷键
-        if (e.Key == Key.Back || e.Key == Key.Delete)
-        {
-            ClearHotKey(item);
-            return;
-        }
-
-        var key = e.Key;
-        if (e.Key == Key.System)
-        {
-            key = e.SystemKey;
-        }
-        else if (e.Key == Key.ImeProcessed)
-        {
-            key = e.ImeProcessedKey;
-        }
-
-        // 忽略修饰键单独按下
-        if (key == Key.LeftCtrl || key == Key.RightCtrl ||
-            key == Key.LeftAlt || key == Key.RightAlt ||
-            key == Key.LeftShift || key == Key.RightShift ||
-            key == Key.LWin || key == Key.RWin)
-        {
-            return;
-        }
-
-        Debug.WriteLine($"{key} {e.Key} {e.SystemKey} {e.ImeProcessedKey} {Keyboard.IsKeyDown(Key.LeftShift)} {Keyboard.IsKeyDown(Key.LeftAlt)}");
-
-        // 获取修饰键
-        var modifiers = KeyModifiers.None;
-        if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
-        {
-            modifiers |= KeyModifiers.Control;
-        }
-
-        if (Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt))
-        {
-            modifiers |= KeyModifiers.Alt;
-        }
-        if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
-        {
-            modifiers |= KeyModifiers.Shift;
-        }
-
-        if (Keyboard.IsKeyDown(Key.LWin) || Keyboard.IsKeyDown(Key.RWin))
-        {
-            modifiers |= KeyModifiers.Win;
-        }
-
-        // 转换为Windows Forms的Keys
-        var keys = ConvertToWindowsFormsKeys(key);
-        if (keys == System.Windows.Forms.Keys.None)
-        {
-            return;
-        }
-
-        // 更新热键设置
-        UpdateHotKey(item, modifiers, keys);
-    }
-
-    private System.Windows.Forms.Keys ConvertToWindowsFormsKeys(Key wpfKey)
-    {
-        try
-        {
-            return (System.Windows.Forms.Keys)KeyInterop.VirtualKeyFromKey(wpfKey);
-        }
-        catch
-        {
-            return System.Windows.Forms.Keys.None;
-        }
-    }
-
-    private void UpdateHotKey(HotKeySettingsItem item, KeyModifiers modifiers, System.Windows.Forms.Keys keys)
-    {
-        try
-        {
-            // 先取消之前的注册
-            HotKeyManager.Unregister(item.HotKeyAction);
-
-            // 更新设置项
-            item.Modifiers = modifiers;
-            item.Keys = keys;
-            item.UpdateHotKeyDisplay();
-
-            // 注册新的快捷键
-            HotKeyManager.Register(item.HotKeyAction, modifiers, keys);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"设置快捷键失败：{ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Warning);
-        }
-        finally
-        {
-            RefreshHotKeyStatuses();
-        }
-    }
-
-    private void ClearHotKey(HotKeySettingsItem item)
-    {
-        try
-        {
-            // 取消注册
-            HotKeyManager.Unregister(item.HotKeyAction);
-
-            // 清除设置
-            item.Modifiers = KeyModifiers.None;
-            item.Keys = System.Windows.Forms.Keys.None;
-            item.UpdateHotKeyDisplay();
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"清除快捷键失败：{ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Warning);
-        }
-        finally
-        {
-            RefreshHotKeyStatuses();
-        }
-    }
-
-    private void HotKeyTextBox_GotFocus(object sender, RoutedEventArgs e)
-    {
-        var textBox = sender as TextBox;
-        if (textBox != null)
-        {
-            textBox.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 200));
-        }
-    }
-
-    private void HotKeyTextBox_LostFocus(object sender, RoutedEventArgs e)
-    {
-        var textBox = sender as TextBox;
-        if (textBox != null)
-        {
-            textBox.Background = System.Windows.Media.Brushes.White;
-        }
-    }
-
-    private void ClearButton_Click(object sender, RoutedEventArgs e)
-    {
-        var button = sender as Button;
-        var item = button?.Tag as HotKeySettingsItem;
-        if (item != null)
-        {
-            ClearHotKey(item);
         }
     }
 
@@ -429,110 +236,5 @@ public partial class SettingsView : UserControl
             TestNetworkButton.IsEnabled = true;
             TestNetworkButton.Content = LocKey.Settings_TestNetwork.Text();
         }
-    }
-}
-
-public class HotKeySettingsItem : INotifyPropertyChanged
-{
-    public HotKeyAction HotKeyAction { get; set; }
-    public string Name { get; set; }
-    public KeyModifiers Modifiers { get; set; }
-    public System.Windows.Forms.Keys Keys { get; set; }
-
-    private string _hotKeyDisplay = "";
-    public string HotKeyDisplay
-    {
-        get => _hotKeyDisplay;
-        set
-        {
-            _hotKeyDisplay = value;
-            OnPropertyChanged();
-            OnPropertyChanged(nameof(HasHotKey));
-        }
-    }
-
-    public bool HasHotKey => !string.IsNullOrEmpty(_hotKeyDisplay) && _hotKeyDisplay != "无";
-
-    public string RegistrationStatus => !HasHotKey
-        ? LocKey.Settings_HotKey_Unassigned.Text()
-        : HotKeyManager.IsRegistered(Name)
-            ? LocKey.Settings_HotKey_Registered.Text()
-            : LocKey.Settings_HotKey_Unregistered.Text();
-
-    public System.Windows.Media.Brush RegistrationStatusBrush => !HasHotKey
-        ? System.Windows.Media.Brushes.Gray
-        : HotKeyManager.IsRegistered(Name)
-            ? System.Windows.Media.Brushes.SeaGreen
-            : System.Windows.Media.Brushes.DarkOrange;
-
-    public void UpdateRegistrationStatus()
-    {
-        OnPropertyChanged(nameof(RegistrationStatus));
-        OnPropertyChanged(nameof(RegistrationStatusBrush));
-    }
-
-    public void UpdateHotKeyDisplay()
-    {
-        if (Modifiers == KeyModifiers.None && Keys == System.Windows.Forms.Keys.None)
-        {
-            HotKeyDisplay = "无";
-            return;
-        }
-
-        var parts = new List<string>();
-
-        if (Modifiers.HasFlag(KeyModifiers.Control))
-        {
-            parts.Add("Ctrl");
-        }
-
-        if (Modifiers.HasFlag(KeyModifiers.Alt))
-        {
-            parts.Add("Alt");
-        }
-
-        if (Modifiers.HasFlag(KeyModifiers.Shift))
-        {
-            parts.Add("Shift");
-        }
-
-        if (Modifiers.HasFlag(KeyModifiers.Win))
-        {
-            parts.Add("Windows");
-        }
-
-        if (Keys != System.Windows.Forms.Keys.None)
-        {
-            var keyName = Keys.ToString();
-            var match = Regex.Match(keyName, @"D(\d)");
-            if (match.Success)
-            {
-                keyName = match.Groups[1].Value;
-            }
-
-            if (keyName.Equals("Oemtilde", StringComparison.OrdinalIgnoreCase) || 
-                keyName.Equals(Key.OemTilde.ToString(), StringComparison.OrdinalIgnoreCase))
-            {
-                keyName = "`";
-            }
-            else if (keyName.Equals(Key.OemPlus.ToString(), StringComparison.OrdinalIgnoreCase))
-            {
-                keyName = "+";
-            }
-            else if (keyName.Equals(Key.OemMinus.ToString(), StringComparison.OrdinalIgnoreCase))
-            {
-                keyName = "-";
-            }
-            parts.Add(keyName);
-        }
-
-        HotKeyDisplay = string.Join(" + ", parts);
-    }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

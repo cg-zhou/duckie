@@ -302,55 +302,23 @@
                 <StackPanel Margin="0,0,0,20">
                     <common:TextEx Text="{loc:Localize Settings_HotKeys}" FontSize="18" FontWeight="SemiBold" Foreground="#333" Margin="0,0,0,16"/>
                     
-                    <Border Background="#F8F9FA" BorderBrush="#DEE2E6" BorderThickness="1"
-                            CornerRadius="6" Padding="16">
-                        <ScrollViewer VerticalScrollBarVisibility="Auto">
-                            <ItemsControl x:Name="HotKeysItemsControl">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border Background="White" BorderBrush="#E9ECEF" BorderThickness="1" 
-                                                CornerRadius="4" Margin="0,0,0,8" Padding="12">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="200"/>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                </Grid.ColumnDefinitions>
-                                                
-                                                <!-- Service Name -->
-                                                <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,12,0">
-                                                    <common:TextEx Text="{Binding Name}" FontSize="14" Foreground="#333"/>
-                                                    <TextBlock Text="{Binding RegistrationStatus}" Foreground="{Binding RegistrationStatusBrush}"
-                                                               FontSize="12" Margin="0,4,0,0"/>
-                                                </StackPanel>
-                                                
-                                                <!-- Hotkey Input -->
-                                                <TextBox Grid.Column="1" x:Name="HotKeyTextBox"
-                                                         Text="{Binding HotKeyDisplay, Mode=TwoWay}"
-                                                         IsReadOnly="True" 
-                                                         Background="White" BorderBrush="#CCC" BorderThickness="1"
-                                                         Padding="8,6" VerticalContentAlignment="Center"
-                                                         FontSize="12" Foreground="#333"
-                                                         PreviewKeyDown="HotKeyTextBox_PreviewKeyDown"
-                                                         GotFocus="HotKeyTextBox_GotFocus"
-                                                         LostFocus="HotKeyTextBox_LostFocus"
-                                                         Tag="{Binding}"
-                                                         ToolTip="{loc:Localize Key=Settings_HotKey_Tooltip}"/>
-                                                
-                                                <!-- Clear Button -->
-                                                <common:IconButton Grid.Column="2" Click="ClearButton_Click"
-                                                                   Tag="{Binding}"
-                                                                   IconType="Delete"
-                                                                   Margin="8 0 0 0"
-                                                                   ToolTip="{loc:Localize Key=Settings_HotKey_Clear}"
-                                                                   IsEnabled="{Binding HasHotKey}" />
-                                            </Grid>
-                                        </Border>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </ScrollViewer>
-                    </Border>
+                    <ItemsControl x:Name="HotKeysItemsControl">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="#EDF0F3" BorderThickness="0,0,0,1" Padding="0,12">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="220"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding Name, Mode=OneWay}" FontSize="14" FontFamily="Segoe UI"
+                                                   Foreground="#344054" VerticalAlignment="Center" Margin="0,0,16,0" TextWrapping="Wrap"/>
+                                        <common:HotKeyEditor Grid.Column="1" Operation="{Binding}"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </StackPanel>
             </StackPanel>
         </DockPanel>

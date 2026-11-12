@@ -15,6 +15,7 @@ public partial class PacManageView : UserControl
     public PacManageView()
     {
         InitializeComponent();
+        CycleHotKeyEditor.Operation = PacManagerHotKeyService.CycleAction;
         InitializePacManagement();
     }
 

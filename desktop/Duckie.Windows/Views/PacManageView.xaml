@@ -4,11 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Duckie.Views"
+             xmlns:common="clr-namespace:Duckie.Shared.Views.Common;assembly=Duckie.Shared"
              xmlns:loc="clr-namespace:Duckie.Shared.Utils.Localization;assembly=Duckie.Shared"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-
-
 
     <DockPanel>
         <!-- 顶部工具栏 - 与ImageView风格一致 -->
@@ -39,8 +38,20 @@
                 <Grid>
                     <!-- PAC配置列表区域 -->
                     <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10">
-                        <StackPanel x:Name="PacListPanel">
-                            <!-- PAC配置项将动态添加到这里 -->
+                        <StackPanel>
+                            <StackPanel x:Name="PacListPanel"/>
+                            <Border Margin="4,16,4,0" Padding="0,16,0,8" BorderBrush="#EDF0F3" BorderThickness="0,1,0,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="220"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{loc:Localize PAC_CycleHotKey}" FontFamily="Segoe UI" FontSize="14"
+                                               Foreground="#667085" VerticalAlignment="Center" Margin="0,0,24,0"/>
+                                    <common:HotKeyEditor x:Name="CycleHotKeyEditor" Grid.Column="1"/>
+                                </Grid>
+                            </Border>
                         </StackPanel>
                     </ScrollViewer>
                 </Grid>

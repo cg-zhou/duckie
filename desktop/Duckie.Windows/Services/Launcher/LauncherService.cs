@@ -1,3 +1,4 @@
+using Duckie.Shared.Utils.Localization;
 using Duckie.Shared.Services.UserConfigs;
 using Duckie.Shared.Utils.Ui;
 using Duckie.Utils.HotKeys;
@@ -9,8 +10,7 @@ namespace Duckie.Windows.Services.Launcher;
 
 public class LauncherService : IHotKeyService
 {
-    private static readonly HotKeyAction Shortcut = new("启动配置的目标", KeyModifiers.None,
-        Keys.LaunchApplication2, () =>
+    private static readonly HotKeyAction Shortcut = new("launcher.open-target", LocKey.HotKey_LaunchTarget, KeyModifiers.None, Keys.LaunchApplication2, () =>
         {
             try { Launch(); }
             catch (Exception ex) { UiUtils.Warning(ex.Message, "启动失败"); }
@@ -34,24 +34,25 @@ public class LauncherService : IHotKeyService
     {
         Validate(config);
         var userConfig = UserConfigService.Get();
-        var previous = userConfig.Launcher;
-        HotKeyManager.Unregister(Shortcut);
+        var previousBinding = HotKeyManager.GetRegisteredBinding(Shortcut.Id);
         try
         {
-            if (config.Enabled) HotKeyManager.Register(Shortcut, Shortcut.Modifiers, Shortcut.Keys);
+            if (config.Enabled) HotKeyManager.Register(Shortcut, HotKeyBindings.Get(Shortcut));
+            else HotKeyManager.Unregister(Shortcut);
             userConfig.Launcher = config;
             UserConfigService.Set(userConfig);
         }
         catch
         {
-            HotKeyManager.Unregister(Shortcut);
-            if (previous?.Enabled == true)
+            if (previousBinding != null)
             {
-                try { HotKeyManager.Register(Shortcut, Shortcut.Modifiers, Shortcut.Keys); }
+                try { HotKeyManager.Register(Shortcut, previousBinding); }
                 catch (Exception ex) { UiUtils.Warning(ex.Message, "快捷键恢复失败"); }
             }
+            else HotKeyManager.Unregister(Shortcut);
             throw;
         }
+        HotKeyBindings.NotifyChanged();
     }
 
     public static void Launch()
