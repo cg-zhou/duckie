@@ -1,0 +1,93 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="ToolTextBrush" Color="#253044"/>
+    <SolidColorBrush x:Key="ToolMutedBrush" Color="#778191"/>
+    <SolidColorBrush x:Key="ToolLineBrush" Color="#EDF0F4"/>
+    <SolidColorBrush x:Key="ToolAccentBrush" Color="#006FC5"/>
+
+    <Style x:Key="ToolTitle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{StaticResource ToolTextBrush}"/>
+    </Style>
+    <Style x:Key="ToolButton" TargetType="Button">
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="Foreground" Value="{StaticResource ToolTextBrush}"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="BorderBrush" Value="#DDE3EB"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="14,0"/>
+        <Setter Property="Height" Value="34"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True"><Setter Property="Opacity" Value="0.75"/></Trigger>
+                        <Trigger Property="IsPressed" Value="True"><Setter Property="Opacity" Value="0.55"/></Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True"><Setter Property="BorderBrush" Value="{StaticResource ToolAccentBrush}"/></Trigger>
+                        <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.4"/></Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ToolPrimaryButton" TargetType="Button" BasedOn="{StaticResource ToolButton}">
+        <Setter Property="Background" Value="{StaticResource ToolAccentBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ToolAccentBrush}"/>
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+    <Style x:Key="ToolQuietButton" TargetType="Button" BasedOn="{StaticResource ToolButton}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ToolMutedBrush}"/>
+        <Setter Property="Padding" Value="10,0"/>
+    </Style>
+
+    <Style x:Key="ToolChoiceRow" TargetType="RadioButton">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="14,15"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="7" Padding="{TemplateBinding Padding}">
+                        <Grid>
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="26"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                            <Rectangle x:Name="FocusRing" Grid.ColumnSpan="2" Margin="-7,-8"
+                                       Stroke="#64748B" StrokeThickness="1" StrokeDashArray="2,2"
+                                       RadiusX="3" RadiusY="3" IsHitTestVisible="False" Visibility="Collapsed"/>
+                            <Grid Width="14" Height="14" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Ellipse x:Name="Ring" Stroke="#C4CDD8" StrokeThickness="1.4"/>
+                                <Ellipse x:Name="Dot" Width="6" Height="6" Fill="{StaticResource ToolAccentBrush}" Visibility="Collapsed"/>
+                            </Grid>
+                            <ContentPresenter Grid.Column="1" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True"><Setter Property="Background" Value="#F7F9FC"/></Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="BorderBrush" Value="{StaticResource ToolAccentBrush}"/>
+                            <Setter Property="Background" Value="#EFF6FD"/>
+                            <Setter TargetName="Ring" Property="Stroke" Value="{StaticResource ToolAccentBrush}"/>
+                            <Setter TargetName="Dot" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="FocusRing" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

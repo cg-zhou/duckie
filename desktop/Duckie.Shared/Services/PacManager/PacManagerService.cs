@@ -31,7 +31,7 @@ public class PacManagerService
     /// <returns>Current PAC configuration, null if none</returns>
     public static PacConfig GetCurrentPacConfig()
     {
-        var currentPacUrl = RegistryUtils.Pac.Get();
+        var currentPacUrl = GetCurrentPacUri();
         if (string.IsNullOrWhiteSpace(currentPacUrl))
         {
             return null;
@@ -40,6 +40,8 @@ public class PacManagerService
         var allPacs = GetAllPacConfigs();
         return allPacs.FirstOrDefault(p => p.Uri?.Equals(currentPacUrl, StringComparison.OrdinalIgnoreCase) == true);
     }
+
+    public static string GetCurrentPacUri() => RegistryUtils.Pac.Get();
 
     public static void RefreshIconBadge()
     {

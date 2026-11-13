@@ -442,5 +442,33 @@ public enum LocKey
 
     [Cn("请按快捷键")]
     [En("Press a shortcut")]
-    Settings_HotKey_Record
+    Settings_HotKey_Record,
+
+    [Cn("添加")]
+    [En("Add")]
+    Tool_Add,
+
+    [Cn("当前使用")]
+    [En("Active")]
+    PAC_Active,
+
+    [Cn("系统中的其他配置")]
+    [En("Other system configuration")]
+    PAC_External,
+
+    [Cn("不使用 PAC 自动配置")]
+    [En("No automatic PAC configuration")]
+    PAC_DirectDescription,
+
+    [Cn("更多操作")]
+    [En("More actions")]
+    Tool_More,
+
+    [Cn("复制地址")]
+    [En("Copy address")]
+    PAC_CopyAddress,
+
+    [Cn("已复制地址")]
+    [En("Address copied")]
+    PAC_AddressCopied
 }
