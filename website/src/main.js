@@ -1,4 +1,4 @@
-import 'web-booster/styles.css';
+import './home.js';
 import { showMessage } from 'web-booster';
 import './style.css';
 
@@ -14,15 +14,20 @@ try {
     release = data;
     const download = document.querySelector('#download');
     download.setAttribute('href', data.downloadUrl);
-    download.textContent = '下载 Windows 版 ZIP ↓';
-    document.querySelector('#release-note').textContent = `v${data.version} · ZIP ${(data.size / 1024).toFixed(0)} KB · Windows 11 · 解压即用`;
+    download.textContent = '下载 Windows 版 ZIP';
+    document.querySelector('#release-history').hidden = false;
+    const releaseNote = document.querySelector('#release-note');
+    releaseNote.hidden = false;
+    releaseNote.textContent = `v${data.version} · ZIP ${(data.size / 1024).toFixed(0)} KB`;
     document.querySelector('#checksum').textContent = data.sha256;
     document.querySelector('#checksum-link').href = data.checksumUrl;
     document.querySelector('#integrity').hidden = false;
   }
 } catch {
   // The fallback is an actual releases page, never a broken or placeholder download.
-  document.querySelector('#release-note').textContent = '本站下载暂不可用，可前往 GitHub 发布页 · Windows 11';
+  const releaseNote = document.querySelector('#release-note');
+  releaseNote.hidden = false;
+  releaseNote.textContent = '本站下载暂不可用';
 }
 
 document.querySelector('#copy-checksum').addEventListener('click', async () => {

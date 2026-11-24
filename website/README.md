@@ -1,6 +1,6 @@
 # Duckie 网站
 
-`duckie.cg-zhou.top` 的静态产品与下载页。首版仅介绍右键菜单切换，使用 web-booster；没有 API 或用户系统。
+`duckie.cg-zhou.top` 的静态工具入口与 Windows 下载站，使用 web-booster。首页链接到现有在线工具，桌面功能与下载位于 `/desktop/`。
 
 ## 本地开发
 
