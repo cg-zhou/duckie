@@ -26,3 +26,7 @@ obj
 /website/node_modules/
 /website/public/
 /website/dist/
+
+# Legacy local packaging output
+/Duckie.Pack/AppPackages/
+/Duckie.Pack/BundleArtifacts/
