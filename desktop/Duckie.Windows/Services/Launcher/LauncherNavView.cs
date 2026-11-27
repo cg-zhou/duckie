@@ -10,7 +10,7 @@ namespace Duckie.Windows.Services.Launcher;
 /// </summary>
 public class LauncherNavView : INavView
 {
-    public IconType IconType => IconType.SettingLine;
+    public IconType IconType => IconType.Launcher;
 
     public LocKey NameLocKey => LocKey.Nav_Launcher;
 

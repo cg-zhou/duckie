@@ -7,7 +7,7 @@ public class UserConfig
     public PacConfig[] Pacs { get; set; } = [];
     public string Language { get; set; } = "en-US";
     public AppSettings App { get; set; } = new AppSettings();
-    public LauncherConfig Launcher { get; set; } = new LauncherConfig();
+    public LauncherConfig[] Launchers { get; set; } = [];
     public HotKeyConfig[] HotKeys { get; set; } = [];
 }
 
@@ -20,7 +20,8 @@ public class HotKeyConfig
 [Serializable]
 public class LauncherConfig
 {
-    public bool Enabled { get; set; }
+    public string Id { get; set; } = Guid.NewGuid().ToString("N");
+    public string Name { get; set; } = "";
     public string Target { get; set; } = "";
 }
 

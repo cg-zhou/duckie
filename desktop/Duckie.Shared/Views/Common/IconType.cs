@@ -24,5 +24,6 @@ public enum IconType
     SpeakerX,
     ChevronUp,
     ChevronDown,
-    ContextMenu
+    ContextMenu,
+    Launcher
 }

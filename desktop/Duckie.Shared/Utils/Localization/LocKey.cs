@@ -2,6 +2,62 @@ namespace Duckie.Shared.Utils.Localization;
 
 public enum LocKey
 {
+    [Cn("运行")]
+    [En("Run")]
+    Launcher_Run,
+
+    [Cn("目标文件")]
+    [En("Target file")]
+    Launcher_Target,
+
+    [Cn("浏览…")]
+    [En("Browse…")]
+    Launcher_Browse,
+
+    [Cn("所有文件 (*.*)|*.*")]
+    [En("All files (*.*)|*.*")]
+    Launcher_FileFilter,
+
+    [Cn("请输入名称并选择存在的目标文件。")]
+    [En("Enter a name and select an existing target file.")]
+    Launcher_InvalidInput,
+
+    [Cn("启动失败")]
+    [En("Launch failed")]
+    Launcher_LaunchFailed,
+
+    [Cn("启动项不存在。")]
+    [En("The launch item does not exist.")]
+    Launcher_NotFound,
+
+    [Cn("目标文件不存在，请重新选择。")]
+    [En("The target file does not exist. Please select it again.")]
+    Launcher_TargetMissing,
+
+    [Cn("确定删除“{0}”吗？")]
+    [En("Delete ‘{0}’?")]
+    Launcher_ConfirmDelete,
+
+    [Cn("删除启动项")]
+    [En("Delete launch item")]
+    Launcher_DeleteTitle,
+
+    [Cn("删除失败")]
+    [En("Delete failed")]
+    Launcher_DeleteFailed,
+
+    [Cn("添加启动项")]
+    [En("Add launch item")]
+    Launcher_AddTitle,
+
+    [Cn("编辑启动项")]
+    [En("Edit launch item")]
+    Launcher_EditTitle,
+
+    [Cn("保存失败")]
+    [En("Save failed")]
+    Launcher_SaveFailed,
+
     [Cn("右键菜单")]
     [En("Context Menu")]
     Nav_ContextMenu,
