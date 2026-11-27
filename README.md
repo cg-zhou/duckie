@@ -15,7 +15,7 @@ Requires Windows 11 and .NET Framework 4.8. Actual menu behavior depends on the 
 
 Download the ZIP from the [Duckie website](https://duckie.cg-zhou.top), extract it and run `Duckie.exe`. Checksums and historical versions are available in [GitHub Releases](https://github.com/cg-zhou/duckie/releases).
 
-The current download, v0.9.2, provides context menu switching. The main branch is being organized into a full toolbox. See the [roadmap](./ROADMAP.md).
+The current download, v0.10.0, includes context menu switching, PAC management, volume controls and quick launch. See the [roadmap](./ROADMAP.md).
 
 ## Development
 
