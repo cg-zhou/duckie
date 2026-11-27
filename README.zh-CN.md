@@ -15,7 +15,7 @@
 
 从 [Duckie 网站](https://duckie.cg-zhou.top) 下载 ZIP，解压后运行 `Duckie.exe`。校验值和历史版本见 [GitHub Releases](https://github.com/cg-zhou/duckie/releases)。
 
-当前下载版本为 v0.9.2，提供右键菜单切换。主分支正在整理完整工具箱，见[路线图](./ROADMAP.md)。
+当前下载版本为 v0.10.0，提供右键菜单切换、PAC 管理、音量控制和快捷启动，见[路线图](./ROADMAP.md)。
 
 ## 开发
 
