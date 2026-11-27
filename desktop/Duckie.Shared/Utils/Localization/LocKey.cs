@@ -199,10 +199,6 @@ public enum LocKey
     [En("Duckie - Hotkey Management")]
     Title_HotkeyManagement,
 
-    [Cn("Duckie - 网络测试")]
-    [En("Duckie - Network Test")]
-    Title_NetworkTest,
-
     [Cn("Duckie - 代码生成")]
     [En("Duckie - Code Generation")]
     Title_CodeGeneration,
@@ -415,42 +411,6 @@ public enum LocKey
     [Cn("点击关闭按钮时最小化到托盘而不是退出")]
     [En("Minimize to tray instead of exit when close button is clicked")]
     Settings_MinimizeToTrayOnClose_Tooltip,
-
-    [Cn("设置 - 代理")]
-    [En("Settings - Proxy")]
-    Settings_Proxy,
-
-    [Cn("HTTP代理设置")]
-    [En("HTTP Proxy Settings")]
-    Settings_HttpProxy,
-
-    [Cn("代理服务器地址")]
-    [En("Proxy Server")]
-    Settings_ProxyServer,
-
-    [Cn("用户名")]
-    [En("Username")]
-    Settings_Username,
-
-    [Cn("密码")]
-    [En("Password")]
-    Settings_Password,
-
-    [Cn("启用HTTP代理")]
-    [En("Enable HTTP Proxy")]
-    Settings_EnableProxy,
-
-    [Cn("输入代理服务器地址，格式: http://host:port")]
-    [En("Enter proxy server address, format: http://host:port")]
-    Settings_ProxyServer_Tooltip,
-
-    [Cn("代理服务器需要身份验证时填写")]
-    [En("Fill in when proxy server requires authentication")]
-    Settings_ProxyAuth_Tooltip,
-
-    [Cn("测试网络连接")]
-    [En("Test Network")]
-    Settings_TestNetwork,
 
     [Cn("未设置")]
     [En("Not assigned")]

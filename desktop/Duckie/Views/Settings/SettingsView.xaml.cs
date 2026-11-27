@@ -1,4 +1,3 @@
-using Duckie.Services.Network;
 using Duckie.Shared.Services.UserConfigs;
 using Duckie.Shared.Utils.Localization;
 using Duckie.Utils.HotKeys;
@@ -30,8 +29,6 @@ public partial class SettingsView : UserControl
         // 初始化应用设置
         InitializeAppSettings();
 
-        // 初始化代理设置
-        InitializeProxySettings();
     }
 
     private void InitializeLanguageComboBox()
@@ -137,104 +134,4 @@ public partial class SettingsView : UserControl
         UserConfigService.SetAppSettings(appSettings);
     }
 
-    private void InitializeProxySettings()
-    {
-        var userConfig = UserConfigService.Get();
-        var proxyConfig = userConfig.Proxy;
-
-        // 设置控件状态
-        var isProxyEnabled = !string.IsNullOrWhiteSpace(proxyConfig?.ProxyUri);
-        EnableProxyCheckBox.IsChecked = isProxyEnabled;
-        
-        ProxyServerTextBox.Text = proxyConfig?.ProxyUri ?? "";
-        UsernameTextBox.Text = proxyConfig?.Username ?? "";
-        PasswordBox.Password = proxyConfig?.Password ?? "";
-
-        // 根据代理启用状态控制控件可用性
-        UpdateProxyControlsState(isProxyEnabled);
-    }
-
-    private void UpdateProxyControlsState(bool isEnabled)
-    {
-        ProxyServerTextBox.IsEnabled = isEnabled;
-        UsernameTextBox.IsEnabled = isEnabled;
-        PasswordBox.IsEnabled = isEnabled;
-        TestNetworkButton.IsEnabled = isEnabled;
-    }
-
-    private void EnableProxyCheckBox_Changed(object sender, RoutedEventArgs e)
-    {
-        var isChecked = EnableProxyCheckBox.IsChecked == true;
-        UpdateProxyControlsState(isChecked);
-
-        if (!isChecked)
-        {
-            // 禁用代理时清空配置
-            var emptyConfig = new ProxyConfig();
-            UserConfigService.Set(emptyConfig);
-            HttpUtils.SetProxy(emptyConfig);
-        }
-        else
-        {
-            // 启用代理时保存当前配置
-            SaveProxyConfig();
-        }
-    }
-
-    private void ProxyServerTextBox_TextChanged(object sender, TextChangedEventArgs e)
-    {
-        if (EnableProxyCheckBox.IsChecked == true)
-        {
-            SaveProxyConfig();
-        }
-    }
-
-    private void UsernameTextBox_TextChanged(object sender, TextChangedEventArgs e)
-    {
-        if (EnableProxyCheckBox.IsChecked == true)
-        {
-            SaveProxyConfig();
-        }
-    }
-
-    private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-    {
-        if (EnableProxyCheckBox.IsChecked == true)
-        {
-            SaveProxyConfig();
-        }
-    }
-
-    private void SaveProxyConfig()
-    {
-        var proxyConfig = new ProxyConfig
-        {
-            ProxyUri = ProxyServerTextBox.Text?.Trim(),
-            Username = UsernameTextBox.Text?.Trim(),
-            Password = PasswordBox.Password?.Trim()
-        };
-
-        UserConfigService.Set(proxyConfig);
-        HttpUtils.SetProxy(proxyConfig);
-    }
-
-    private async void TestNetworkButton_Click(object sender, RoutedEventArgs e)
-    {
-        TestNetworkButton.IsEnabled = false;
-        TestNetworkButton.Content = "Testing...";
-
-        try
-        {
-            await HttpUtils.TestNetworkAsync();
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"Network test failed: {ex.Message}");
-        }
-        finally
-        {
-            TestNetworkButton.IsEnabled = true;
-            TestNetworkButton.Content = LocKey.Settings_TestNetwork.Text();
-        }
-    }
 }

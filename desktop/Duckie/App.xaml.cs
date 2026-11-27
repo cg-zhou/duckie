@@ -1,4 +1,3 @@
-﻿using Duckie.Services.Network;
 using Duckie.Services.PacManager;
 using Duckie.Services;
 using Duckie.Shared.Services.UserConfigs;
@@ -45,12 +44,6 @@ public partial class App : Application
         HotKeyManager.RegisterServices();
 
         PacManagerService.RefreshIconBadge();
-
-        var proxyConfig = UserConfigService.Get().Proxy;
-        if (!string.IsNullOrWhiteSpace(proxyConfig?.ProxyUri))
-        {
-            HttpUtils.SetProxy(proxyConfig);
-        }
 
         // 检查是否启动时最小化
         var appSettings = UserConfigService.GetAppSettings();

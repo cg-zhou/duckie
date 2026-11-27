@@ -87,13 +87,6 @@ public class UserConfigService
         }
     }
 
-    public static void Set(ProxyConfig proxy)
-    {
-        var config = Get();
-        config.Proxy = proxy;
-        Set(config);
-    }
-
     public static void Set(PacConfig[] pacs)
     {
         var config = Get();
