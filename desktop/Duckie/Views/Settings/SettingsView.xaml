@@ -311,7 +311,7 @@
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="220"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="{Binding Name, Mode=OneWay}" FontSize="14" FontFamily="Segoe UI"
+                                        <TextBlock Text="{Binding Name, Mode=OneWay}" FontSize="14"
                                                    Foreground="#344054" VerticalAlignment="Center" Margin="0,0,16,0" TextWrapping="Wrap"/>
                                         <common:HotKeyEditor Grid.Column="1" Operation="{Binding}"/>
                                     </Grid>

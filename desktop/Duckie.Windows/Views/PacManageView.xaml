@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:common="clr-namespace:Duckie.Shared.Views.Common;assembly=Duckie.Shared"
              xmlns:loc="clr-namespace:Duckie.Shared.Utils.Localization;assembly=Duckie.Shared"
-             FontFamily="Segoe UI" Background="White" UseLayoutRounding="True">
+             Background="White" UseLayoutRounding="True">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolVisibility"/>
     </UserControl.Resources>
@@ -13,11 +13,6 @@
                 <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
                 <StackPanel>
                     <TextBlock Text="PAC" Style="{StaticResource ToolTitle}"/>
-                    <StackPanel Orientation="Horizontal" Margin="0,8,12,0">
-                        <TextBlock Text="{loc:Localize PAC_Active}" Foreground="{StaticResource ToolMutedBrush}" FontSize="12" Margin="0,0,8,0"/>
-                        <TextBlock x:Name="CurrentConfigText" Foreground="{StaticResource ToolTextBrush}" FontSize="12"
-                                   MaxWidth="250" TextTrimming="CharacterEllipsis"/>
-                    </StackPanel>
                 </StackPanel>
                 <Button Grid.Column="1" Style="{StaticResource ToolPrimaryButton}" Click="AddPacButton_Click" VerticalAlignment="Top" Margin="0,2,0,0">
                     <StackPanel Orientation="Horizontal">
@@ -39,28 +34,13 @@
                                         <TextBlock Text="{Binding Name}" Foreground="{StaticResource ToolTextBrush}" FontSize="14"
                                                    FontWeight="Medium" TextTrimming="CharacterEllipsis" ToolTip="{Binding Name}"/>
                                         <TextBlock Text="{Binding Description}" Foreground="{StaticResource ToolMutedBrush}" FontSize="12"
-                                                   Margin="0,5,0,0" TextTrimming="CharacterEllipsis" ToolTip="{Binding Description}">
-                                            <TextBlock.ContextMenu>
-                                                <ContextMenu DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
-                                                    <MenuItem Header="{loc:Localize PAC_CopyAddress}" Tag="{Binding Config}" Click="CopyPac_Click" Visibility="{Binding CanEdit, Converter={StaticResource BoolVisibility}}"/>
-                                                </ContextMenu>
-                                            </TextBlock.ContextMenu>
-                                        </TextBlock>
+                                                   Margin="0,5,0,0" TextTrimming="CharacterEllipsis" ToolTip="{Binding Description}"/>
                                     </StackPanel>
                                 </RadioButton>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0"
                                             Visibility="{Binding CanEdit, Converter={StaticResource BoolVisibility}}">
                                     <Button Content="{loc:Localize Btn_Edit}" Style="{StaticResource ToolQuietButton}" Tag="{Binding Config}" Click="EditPacButton_Click"/>
-                                    <Button Content="···" Width="32" FontWeight="Bold" FontSize="16" Style="{StaticResource ToolQuietButton}"
-                                            ToolTip="{loc:Localize Tool_More}" Click="MoreButton_Click">
-                                        <Button.ContextMenu>
-                                            <ContextMenu DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
-                                                <MenuItem Header="{loc:Localize PAC_CopyAddress}" Tag="{Binding Config}" Click="CopyPac_Click" Visibility="{Binding CanEdit, Converter={StaticResource BoolVisibility}}"/>
-                                                <Separator/>
-                                                <MenuItem Header="{loc:Localize Btn_Delete}" Tag="{Binding Config}" Click="DeletePacButton_Click" Foreground="#B42318"/>
-                                            </ContextMenu>
-                                        </Button.ContextMenu>
-                                    </Button>
+                                    <Button Content="{loc:Localize Btn_Delete}" Style="{StaticResource ToolQuietButton}" Tag="{Binding Config}" Click="DeletePacButton_Click" Foreground="#B42318"/>
                                 </StackPanel>
                             </Grid>
                         </Border>

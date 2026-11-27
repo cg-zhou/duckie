@@ -251,8 +251,8 @@ public enum LocKey
     [En("PAC cleared")]
     Status_PACCleared,
 
-    [Cn("已切换到代理：{0}")]
-    [En("Switched to PAC: {0}")]
+    [Cn("已切换到：{0}")]
+    [En("Switched to: {0}")]
     Status_PACSwitch,
 
     [Cn("代理操作失败：{0}")]

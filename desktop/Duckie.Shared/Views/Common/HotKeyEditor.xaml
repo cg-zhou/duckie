@@ -13,7 +13,7 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <TextBox x:Name="KeyInput" IsReadOnly="True" IsReadOnlyCaretVisible="False"
-                 Height="34" MinWidth="150" Padding="10,0" FontFamily="Segoe UI" FontSize="12"
+                 Height="34" MinWidth="150" Padding="10,0" FontSize="12"
                  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                  Cursor="Hand" ToolTip="{loc:Localize Settings_HotKey_Tooltip}"
                  PreviewKeyDown="KeyInput_PreviewKeyDown"

@@ -46,11 +46,7 @@ public partial class PacManageView : UserControl
         {
             var currentUri = PacManagerService.GetCurrentPacUri();
             var configs = PacManagerService.GetAllPacConfigs();
-            var current = configs.FirstOrDefault(x => string.Equals(x.Uri, currentUri, StringComparison.OrdinalIgnoreCase));
             var direct = string.IsNullOrWhiteSpace(currentUri);
-            CurrentConfigText.Text = direct ? LocKey.Label_DirectConnection.Text()
-                : current?.Name ?? LocKey.PAC_External.Text();
-            CurrentConfigText.ToolTip = direct ? null : currentUri;
             PacItems.ItemsSource = configs.Select(config => new PacListItem
             {
                 Config = config, Name = config.Name, Description = config.Uri,
@@ -85,25 +81,6 @@ public partial class PacManageView : UserControl
                 ? e.CurrentConfig == null ? LocKey.Status_PACCleared.Text() : LocKey.Status_PACSwitch.Text(e.CurrentConfig.Name)
                 : LocKey.Status_PACFailed.Text(e.ErrorMessage), !e.IsSuccess);
         });
-    }
-
-    private void MoreButton_Click(object sender, RoutedEventArgs e)
-    {
-        var button = (Button)sender;
-        button.ContextMenu.PlacementTarget = button;
-        button.ContextMenu.Placement = PlacementMode.Bottom;
-        button.ContextMenu.IsOpen = true;
-    }
-
-    private void CopyPac_Click(object sender, RoutedEventArgs e)
-    {
-        if (!(sender is MenuItem item) || !(item.Tag is PacConfig pac)) return;
-        try
-        {
-            Clipboard.SetText(pac.Uri);
-            UiUtils.ShowToast(LocKey.PAC_AddressCopied.Text());
-        }
-        catch (Exception ex) { UiUtils.ShowToast(ex.Message, true); }
     }
 
     #region Event Handlers

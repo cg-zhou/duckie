@@ -4,6 +4,11 @@
     <SolidColorBrush x:Key="ToolMutedBrush" Color="#778191"/>
     <SolidColorBrush x:Key="ToolLineBrush" Color="#EDF0F4"/>
     <SolidColorBrush x:Key="ToolAccentBrush" Color="#006FC5"/>
+    <SolidColorBrush x:Key="ToolSurfaceBrush" Color="White"/>
+    <SolidColorBrush x:Key="ToolBorderBrush" Color="#E2E8F0"/>
+    <SolidColorBrush x:Key="ToolBorderHoverBrush" Color="#94A3B8"/>
+    <SolidColorBrush x:Key="ToolSelectionBrush" Color="#EFF6FD"/>
+    <SolidColorBrush x:Key="ToolHoverBrush" Color="#F7F9FC"/>
 
     <Style x:Key="ToolTitle" TargetType="TextBlock">
         <Setter Property="FontSize" Value="24"/>
@@ -12,10 +17,9 @@
     </Style>
     <Style x:Key="ToolButton" TargetType="Button">
         <Setter Property="FontSize" Value="13"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="Foreground" Value="{StaticResource ToolTextBrush}"/>
         <Setter Property="Background" Value="White"/>
-        <Setter Property="BorderBrush" Value="#DDE3EB"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ToolBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="14,0"/>
         <Setter Property="Height" Value="34"/>
@@ -53,7 +57,7 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderThickness" Value="2"/>
         <Setter Property="Padding" Value="14,15"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="Cursor" Value="Hand"/>
@@ -75,10 +79,10 @@
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True"><Setter Property="Background" Value="#F7F9FC"/></Trigger>
+                        <Trigger Property="IsMouseOver" Value="True"><Setter Property="Background" Value="{StaticResource ToolHoverBrush}"/></Trigger>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter Property="BorderBrush" Value="{StaticResource ToolAccentBrush}"/>
-                            <Setter Property="Background" Value="#EFF6FD"/>
+                            <Setter Property="Background" Value="{StaticResource ToolSelectionBrush}"/>
                             <Setter TargetName="Ring" Property="Stroke" Value="{StaticResource ToolAccentBrush}"/>
                             <Setter TargetName="Dot" Property="Visibility" Value="Visible"/>
                         </Trigger>

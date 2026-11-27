@@ -5,6 +5,10 @@
         <ResourceDictionary Source="pack://application:,,,/Duckie.Shared;component/Views/Styles/Tools.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
+    <FontFamily x:Key="AppFontFamily">Microsoft YaHei</FontFamily>
+    <Style TargetType="{x:Type Control}"><Setter Property="FontFamily" Value="{StaticResource AppFontFamily}"/></Style>
+    <Style TargetType="{x:Type TextBlock}"><Setter Property="FontFamily" Value="{StaticResource AppFontFamily}"/></Style>
+
     <!-- 主题色 -->
     <SolidColorBrush x:Key="PrimaryBrush" Color="#0069BA"/>
     <SolidColorBrush x:Key="SelectedBrush" Color="#EAEAEA"/>

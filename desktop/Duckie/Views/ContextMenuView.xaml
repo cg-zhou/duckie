@@ -8,8 +8,8 @@
         <Style x:Key="MenuPreview" TargetType="Button">
             <Setter Property="Width" Value="280"/>
             <Setter Property="Margin" Value="12,0,12,12"/>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="BorderBrush" Value="#E2E8F0"/>
+            <Setter Property="Background" Value="{StaticResource ToolSurfaceBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ToolBorderBrush}"/>
             <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -23,10 +23,10 @@
                                 <Border x:Name="Header" Padding="14,14" CornerRadius="9,9,0,0">
                                     <DockPanel>
                                         <Grid DockPanel.Dock="Right" Width="16" Height="16" Margin="12,0,0,0" VerticalAlignment="Center">
-                                            <Ellipse x:Name="Indicator" Stroke="#CBD5E1" StrokeThickness="1" Fill="White"/>
-                                            <Ellipse x:Name="SelectedDot" Width="8" Height="8" Fill="#0069BA" Visibility="Collapsed"/>
+                                            <Ellipse x:Name="Indicator" Stroke="#C4CDD8" StrokeThickness="1" Fill="{StaticResource ToolSurfaceBrush}"/>
+                                            <Ellipse x:Name="SelectedDot" Width="8" Height="8" Fill="{StaticResource ToolAccentBrush}" Visibility="Collapsed"/>
                                         </Grid>
-                                        <TextBlock Text="{TemplateBinding Tag}" Foreground="#1E293B" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{TemplateBinding Tag}" Foreground="{StaticResource ToolTextBrush}" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
                                     </DockPanel>
                                 </Border>
                                 <Border CornerRadius="6" Margin="10,0,10,10" Padding="0,6">
@@ -36,17 +36,17 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Card" Property="BorderBrush" Value="#94A3B8"/>
-                                <Setter TargetName="Header" Property="Background" Value="#F8FAFC"/>
+                                <Setter TargetName="Card" Property="BorderBrush" Value="{StaticResource ToolBorderHoverBrush}"/>
+                                <Setter TargetName="Header" Property="Background" Value="{StaticResource ToolHoverBrush}"/>
                             </Trigger>
                             <Trigger Property="Selector.IsSelected" Value="True">
-                                <Setter TargetName="Card" Property="BorderBrush" Value="#0069BA"/>
-                                <Setter TargetName="Header" Property="Background" Value="#F0F7FD"/>
-                                <Setter TargetName="Indicator" Property="Stroke" Value="#0069BA"/>
+                                <Setter TargetName="Card" Property="BorderBrush" Value="{StaticResource ToolAccentBrush}"/>
+                                <Setter TargetName="Header" Property="Background" Value="{StaticResource ToolSelectionBrush}"/>
+                                <Setter TargetName="Indicator" Property="Stroke" Value="{StaticResource ToolAccentBrush}"/>
                                 <Setter TargetName="SelectedDot" Property="Visibility" Value="Visible"/>
                             </Trigger>
                             <Trigger Property="IsKeyboardFocused" Value="True">
-                                <Setter TargetName="Card" Property="BorderBrush" Value="#0069BA"/>
+                                <Setter TargetName="Card" Property="BorderBrush" Value="{StaticResource ToolAccentBrush}"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Cursor" Value="Arrow"/>
