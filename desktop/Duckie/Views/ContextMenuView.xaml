@@ -45,9 +45,6 @@
                                 <Setter TargetName="Indicator" Property="Stroke" Value="{StaticResource ToolAccentBrush}"/>
                                 <Setter TargetName="SelectedDot" Property="Visibility" Value="Visible"/>
                             </Trigger>
-                            <Trigger Property="IsKeyboardFocused" Value="True">
-                                <Setter TargetName="Card" Property="BorderBrush" Value="{StaticResource ToolAccentBrush}"/>
-                            </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Cursor" Value="Arrow"/>
                                 <Setter TargetName="Card" Property="Opacity" Value="0.65"/>

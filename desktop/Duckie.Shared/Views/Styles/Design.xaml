@@ -15,6 +15,7 @@
     <SolidColorBrush x:Key="DesignHoverBrush" Color="#F1F5F9"/><!-- CSS: wb-disabled-bg -->
     <SolidColorBrush x:Key="DesignFocusBrush" Color="#64748B"/>
     <SolidColorBrush x:Key="DesignWarningBrush" Color="#B45309"/>
+    <SolidColorBrush x:Key="DesignErrorBrush" Color="#DC2626"/>
     <FontFamily x:Key="DesignFontFamily">Microsoft YaHei</FontFamily>
     <sys:Double x:Key="DesignPageWidth">600</sys:Double>
     <sys:Double x:Key="DesignTitleSize">28</sys:Double>
@@ -70,6 +71,79 @@
         <Setter Property="Background" Value="{StaticResource DesignBorderBrush}"/>
         <Setter Property="Height" Value="1"/>
         <Setter Property="Margin" Value="16,0"/>
+    </Style>
+
+    <Style x:Key="DesignButton" TargetType="Button">
+        <Setter Property="FontFamily" Value="{StaticResource DesignFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DesignBodySize}"/>
+        <Setter Property="Foreground" Value="{StaticResource DesignTextBrush}"/>
+        <Setter Property="Background" Value="{StaticResource DesignSurfaceBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource DesignInputBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="{StaticResource DesignControlPadding}"/>
+        <Setter Property="MinHeight" Value="34"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="ButtonBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{StaticResource DesignControlRadius}"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="ButtonBorder" Property="Opacity" Value="0.75"/></Trigger>
+                        <Trigger Property="IsPressed" Value="True"><Setter TargetName="ButtonBorder" Property="Opacity" Value="0.55"/></Trigger>
+                        <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.45"/></Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="DesignPrimaryButton" TargetType="Button" BasedOn="{StaticResource DesignButton}">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="{StaticResource DesignPrimaryBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource DesignPrimaryBrush}"/>
+    </Style>
+    <Style x:Key="DesignQuietButton" TargetType="Button" BasedOn="{StaticResource DesignButton}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource DesignMutedBrush}"/>
+        <Setter Property="Padding" Value="8,6"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True"><Setter Property="Background" Value="{StaticResource DesignHoverBrush}"/></Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="DesignDangerButton" TargetType="Button" BasedOn="{StaticResource DesignQuietButton}">
+        <Setter Property="Foreground" Value="{StaticResource DesignErrorBrush}"/>
+    </Style>
+    <Style x:Key="DesignChoiceRow" TargetType="RadioButton">
+        <Setter Property="Padding" Value="8,12"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Border Padding="{TemplateBinding Padding}" Background="Transparent">
+                        <Grid>
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="24"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                            <Grid Width="14" Height="14" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Ellipse x:Name="Ring" Stroke="{StaticResource DesignInputBorderBrush}" StrokeThickness="1.5"/>
+                                <Ellipse x:Name="Dot" Fill="{StaticResource DesignPrimaryBrush}" Width="6" Height="6" Visibility="Collapsed"/>
+                            </Grid>
+                            <ContentPresenter Grid.Column="1" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Ring" Property="Stroke" Value="{StaticResource DesignPrimaryBrush}"/>
+                            <Setter TargetName="Dot" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.45"/></Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="DesignSettingRow" TargetType="common:SettingRow">
@@ -155,8 +229,6 @@
                                           ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                                           ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                           IsHitTestVisible="False" Margin="12,6,34,6" VerticalAlignment="Center"/>
-                        <Border x:Name="FocusRing" BorderBrush="{StaticResource DesignFocusBrush}" BorderThickness="2"
-                                CornerRadius="10" Margin="-3" IsHitTestVisible="False" Visibility="Collapsed"/>
                         <Popup x:Name="PART_Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}"
                                AllowsTransparency="True" Focusable="False">
                             <Border Background="{StaticResource DesignSurfaceBrush}" BorderBrush="{StaticResource DesignInputBorderBrush}"
@@ -172,9 +244,6 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="SelectToggle" Property="BorderBrush" Value="{StaticResource DesignFocusBrush}"/>
-                        </Trigger>
-                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                            <Setter TargetName="FocusRing" Property="Visibility" Value="Visible"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.45"/></Trigger>
                     </ControlTemplate.Triggers>
@@ -202,13 +271,8 @@
                                 BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{StaticResource DesignControlRadius}">
                             <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" VerticalAlignment="Center"/>
                         </Border>
-                        <Border x:Name="FocusRing" BorderBrush="{StaticResource DesignFocusBrush}" BorderThickness="2"
-                                CornerRadius="10" Margin="-3" IsHitTestVisible="False" Visibility="Collapsed"/>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsKeyboardFocused" Value="True">
-                            <Setter TargetName="FocusRing" Property="Visibility" Value="Visible"/>
-                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -219,6 +283,11 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="DesignInput" TargetType="TextBox" BasedOn="{StaticResource DesignShortcutInput}">
+        <Setter Property="FontSize" Value="{StaticResource DesignBodySize}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+    </Style>
+
     <Style x:Key="DesignSwitch" TargetType="CheckBox">
         <Setter Property="MinHeight" Value="32"/>
         <Setter Property="MinWidth" Value="44"/>
@@ -226,7 +295,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBox">
-                    <Border x:Name="FocusRing" BorderBrush="Transparent" BorderThickness="2" CornerRadius="12" Padding="2" Background="Transparent">
+                    <Border BorderBrush="Transparent" BorderThickness="2" CornerRadius="12" Padding="2" Background="Transparent">
                         <Border x:Name="Track" Width="36" Height="20" CornerRadius="10" Background="{StaticResource DesignMutedBrush}"
                                 HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Ellipse x:Name="Thumb" Width="14" Height="14" Margin="3,0" HorizontalAlignment="Left" Fill="White"/>
@@ -238,9 +307,6 @@
                             <Setter TargetName="Thumb" Property="HorizontalAlignment" Value="Right"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Track" Property="Opacity" Value="0.8"/></Trigger>
-                        <Trigger Property="IsKeyboardFocused" Value="True">
-                            <Setter TargetName="FocusRing" Property="BorderBrush" Value="{StaticResource DesignFocusBrush}"/>
-                        </Trigger>
                         <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.45"/></Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

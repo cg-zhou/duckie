@@ -119,7 +119,7 @@ public partial class PacManageView : UserControl
             }
         );
 
-        dialog.ShowDialog();
+        ShowPacDialog(dialog);
     }
 
     private void EditPacButton_Click(object sender, RoutedEventArgs e)
@@ -158,8 +158,19 @@ public partial class PacManageView : UserControl
                 }
             );
 
-            dialog.ShowDialog();
+            ShowPacDialog(dialog);
         }
+    }
+
+    private void ShowPacDialog(DialogEx dialog)
+    {
+        dialog.Width = 440;
+        dialog.SizeToContent = SizeToContent.Height;
+        dialog.SetResourceReference(FontFamilyProperty, "DesignFontFamily");
+        dialog.SetResourceReference(BackgroundProperty, "DesignSurfaceBrush");
+        dialog.Resources["PrimaryButtonStyle"] = FindResource("DesignPrimaryButton");
+        dialog.Resources["ModernButtonStyle"] = FindResource("DesignButton");
+        dialog.ShowDialog();
     }
 
     private void DeletePacButton_Click(object sender, RoutedEventArgs e)

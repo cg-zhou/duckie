@@ -6,6 +6,14 @@
         <ResourceDictionary Source="Styles/Navigation.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
+    <!-- Suppress the default keyboard focus adorner throughout the desktop app.
+         Controls remain focusable; selection, pointer feedback and text editing stay intact. -->
+    <Style x:Key="{x:Static SystemParameters.FocusVisualStyleKey}" TargetType="Control">
+        <Setter Property="Template">
+            <Setter.Value><ControlTemplate TargetType="Control"><Grid/></ControlTemplate></Setter.Value>
+        </Setter>
+    </Style>
+
     <FontFamily x:Key="AppFontFamily">Microsoft YaHei</FontFamily>
     <Style TargetType="{x:Type Control}"><Setter Property="FontFamily" Value="{StaticResource AppFontFamily}"/></Style>
     <Style TargetType="{x:Type TextBlock}"><Setter Property="FontFamily" Value="{StaticResource AppFontFamily}"/></Style>
