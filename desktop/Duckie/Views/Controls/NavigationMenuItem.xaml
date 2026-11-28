@@ -28,7 +28,7 @@
                                            RadiusX="2" RadiusY="2"
                                            Fill="#0065B8" Width="4" Margin="6 10 0 10" Visibility="Collapsed"/>
                                 <!-- Content area -->
-                                <Grid Grid.Column="1" Margin="8,0,0,0">
+                                <Grid Grid.Column="1" Margin="8,0,12,0">
                                     <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                       VerticalAlignment="Center"/>
                                 </Grid>

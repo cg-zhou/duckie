@@ -112,10 +112,10 @@ public partial class MainWindow : Window, IMainWindow
     {
         _isSidebarCollapsed = !_isSidebarCollapsed;
 
-        var targetWidth = _isSidebarCollapsed ? CollapsedWidth : ExpandedWidth;
-
-        // Simple width change without complex animation
-        SidebarColumn.Width = new GridLength(targetWidth);
+        SidebarColumn.MinWidth = _isSidebarCollapsed ? CollapsedWidth : ExpandedWidth;
+        SidebarColumn.Width = _isSidebarCollapsed
+            ? new GridLength(CollapsedWidth)
+            : GridLength.Auto;
 
         foreach (var navModel in navModels)
         {

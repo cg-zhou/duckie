@@ -13,7 +13,7 @@
     <!-- 主内容区域 -->
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="SidebarColumn" Width="120"/>
+            <ColumnDefinition x:Name="SidebarColumn" Width="Auto" MinWidth="120"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
