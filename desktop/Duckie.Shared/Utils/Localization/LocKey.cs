@@ -74,6 +74,10 @@ public enum LocKey
     [En("Current configuration")]
     ContextMenu_Current,
 
+    [Cn("选择一种菜单样式，确认后会重启资源管理器。")]
+    [En("Choose a menu style. File Explorer restarts after confirmation.")]
+    ContextMenu_SelectionHint,
+
     [Cn("经典菜单")]
     [En("Classic menu")]
     ContextMenu_ClassicState,
