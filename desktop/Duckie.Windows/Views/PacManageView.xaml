@@ -41,16 +41,6 @@
                                         </Style>
                                     </Border.Style>
                                 </Border>
-                                <Border CornerRadius="{StaticResource DesignControlRadius}">
-                                    <Border.Style>
-                                        <Style TargetType="Border">
-                                            <Setter Property="Background" Value="Transparent"/>
-                                            <Style.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True"><Setter Property="Background" Value="{StaticResource DesignHoverBrush}"/></Trigger>
-                                                <DataTrigger Binding="{Binding IsActive}" Value="True"><Setter Property="Background" Value="{StaticResource DesignHoverBrush}"/></DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Border.Style>
                                     <Grid>
                                         <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
                                         <RadioButton Style="{StaticResource DesignChoiceRow}" GroupName="PacProfiles"
@@ -78,7 +68,6 @@
                                                     Tag="{Binding Config}" Click="DeletePacButton_Click"/>
                                         </StackPanel>
                                     </Grid>
-                                </Border>
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

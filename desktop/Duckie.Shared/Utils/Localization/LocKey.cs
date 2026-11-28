@@ -476,6 +476,18 @@ public enum LocKey
     [En("Press a shortcut")]
     Settings_HotKey_Record,
 
+    [Cn("点击后按下组合键；Esc 取消，Backspace 或 Delete 清除。")]
+    [En("Click and press a shortcut. Esc cancels; Backspace or Delete clears.")]
+    Settings_HotKey_Tooltip,
+
+    [Cn("清除快捷键")]
+    [En("Clear shortcut")]
+    Settings_HotKey_Clear,
+
+    [Cn("Esc 取消 · Delete 清除")]
+    [En("Esc to cancel · Delete to clear")]
+    Settings_HotKey_RecordHint,
+
     [Cn("添加")]
     [En("Add")]
     Tool_Add,

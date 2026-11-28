@@ -23,6 +23,7 @@ public partial class HotKeyEditor : UserControl
     public HotKeyEditor()
     {
         InitializeComponent();
+        Refresh();
         Loaded += (_, _) =>
         {
             HotKeyBindings.Changed += OnChanged;
@@ -49,14 +50,34 @@ public partial class HotKeyEditor : UserControl
     {
         if (KeyInput == null) return;
         var binding = Operation == null ? new HotKeyBinding() : HotKeyBindings.Get(Operation);
-        KeyInput.Text = KeyInput.IsKeyboardFocused ? LocKey.Settings_HotKey_Record.Text()
-            : binding.IsEmpty ? LocKey.Settings_HotKey_Unassigned.Text() : binding.ToString();
+        var recording = KeyInput.IsKeyboardFocused && Operation != null;
+        KeyCaps.ItemsSource = GetKeyLabels(binding);
+        KeyCaps.Visibility = !recording && !binding.IsEmpty ? Visibility.Visible : Visibility.Collapsed;
+        IdleText.Text = recording ? LocKey.Settings_HotKey_Record.Text() : LocKey.Settings_HotKey_Unassigned.Text();
+        IdleText.Visibility = recording || binding.IsEmpty ? Visibility.Visible : Visibility.Collapsed;
+        RecordingHint.Visibility = recording ? Visibility.Visible : Visibility.Collapsed;
+        System.Windows.Automation.AutomationProperties.SetName(KeyInput,
+            recording ? LocKey.Settings_HotKey_Record.Text() : binding.IsEmpty ? LocKey.Settings_HotKey_Unassigned.Text() : binding.ToString());
         KeyInput.IsEnabled = Operation != null;
+        ClearButton.IsEnabled = Operation != null && !binding.IsEmpty;
         ClearButton.Visibility = binding.IsEmpty ? Visibility.Hidden : Visibility.Visible;
         var registered = Operation != null && binding.Equals(HotKeyManager.GetRegisteredBinding(Operation.Id));
         RegistrationStatus.Text = saveError ?? (!binding.IsEmpty && !registered
             ? LocKey.Settings_HotKey_Unregistered.Text() : "");
         RegistrationStatus.Visibility = string.IsNullOrEmpty(RegistrationStatus.Text) ? Visibility.Collapsed : Visibility.Visible;
+    }
+
+    private static string[] GetKeyLabels(HotKeyBinding binding)
+    {
+        if (binding.IsEmpty) return Array.Empty<string>();
+        var labels = new List<string>();
+        if (binding.Modifiers.HasFlag(KeyModifiers.Control)) labels.Add("Ctrl");
+        if (binding.Modifiers.HasFlag(KeyModifiers.Alt)) labels.Add("Alt");
+        if (binding.Modifiers.HasFlag(KeyModifiers.Shift)) labels.Add("Shift");
+        if (binding.Modifiers.HasFlag(KeyModifiers.Win)) labels.Add("Win");
+        // Format the actual key separately: '+' must remain a keycap of its own.
+        labels.Add(new HotKeyBinding(KeyModifiers.None, binding.Key).ToString());
+        return labels.ToArray();
     }
 
     private void KeyInput_PreviewKeyDown(object sender, KeyEventArgs e)
