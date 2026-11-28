@@ -5,7 +5,6 @@ using Duckie.Utils.Registry;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 
 namespace Duckie.Views;
 
@@ -69,22 +68,7 @@ public partial class SettingsView : UserControl
     private void OnLanguageChanged(object sender, EventArgs e)
     {
         InitializeLanguageComboBox();
-        // 语言变化时更新下拉框显示的文本
-        UpdateLanguageDisplay();
         InitializeHotKeyItems();
-    }
-
-    private void UpdateLanguageDisplay()
-    {
-        // 更新下拉框中显示的语言文本
-        if (LanguageComboBox.Template?.FindName("ToggleButton", LanguageComboBox) is ToggleButton toggleButton)
-        {
-            if (toggleButton.Template?.FindName("LanguageText", toggleButton) is TextBlock languageText)
-            {
-                var currentCulture = LocUtils.CurrentCulture;
-                languageText.Text = currentCulture.Name == "zh-CN" ? "简体中文" : "English";
-            }
-        }
     }
 
     private void InitializeAppSettings()

@@ -9,6 +9,7 @@ using Duckie.Views;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace Duckie;
 
@@ -49,6 +50,15 @@ public partial class MainWindow : Window, IMainWindow
     private NavModel CreateNavModel(INavView navView)
     {
         var navMenuItem = new NavigationMenuItem();
+        navMenuItem.IconType = navView.IconType;
+        navMenuItem.SetBinding(NavigationMenuItem.TextProperty,
+            new Binding(nameof(EmbeddedLocalizationManager.CurrentCulture))
+            {
+                Source = EmbeddedLocalizationManager.Instance,
+                Converter = new LocalizationConverter(),
+                ConverterParameter = new LocalizationParameter { Key = navView.NameLocKey },
+                Mode = BindingMode.OneWay
+            });
         navMenuItem.Click += (_, _) =>
         {
             RefreshNavMenu(navMenuItem);
@@ -82,9 +92,6 @@ public partial class MainWindow : Window, IMainWindow
             var isSelected = selectedNavMenuItem == navModel.NavMenuItem;
             navModel.NavMenuItem.IsSelected = isSelected;
             navModel.UserControl.Visibility = isSelected ? Visibility.Visible : Visibility.Collapsed;
-
-            navModel.NavMenuItem.IconType = navModel.NavView.IconType;
-            navModel.NavMenuItem.Text = navModel.NavView.NameLocKey.Text();
         }
     }
 

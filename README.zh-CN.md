@@ -35,6 +35,33 @@ dotnet build desktop/Duckie/Duckie.csproj -c Release
 | `assets/` | 共享截图 |
 | `scripts/` | 便携发布脚本 |
 
+## 跨端视觉基线（试行）
+
+Web-z11g 工具、Duckie 网站和 Duckie 桌面端逐步采用同一套语义与交互规则。
+本基线由 Duckie 仓库维护。Web 组件颜色参考 web-booster 0.4.2 的 `src/styles/web-booster.css`；桌面端通过
+[共享设计资源](./desktop/Duckie.Shared/Views/Styles/Design.xaml) 映射到 WPF，保留平台原生的输入和键盘行为。
+这一阶段先以 Duckie 设置页验证模板，不要求已有页面一次迁移。
+
+| 语义 | Web 变量及当前值 | WPF 资源 |
+| --- | --- | --- |
+| 主操作、启用状态 | `--wb-primary` / `#1e293b` | `DesignPrimaryBrush` |
+| 正文 | `--wb-text` / `#0f172a` | `DesignTextBrush` |
+| 辅助说明 | `--wb-text-muted` / `#64748b` | `DesignMutedBrush` |
+| 卡片边框 | `--wb-card-border` / `#e5e7eb` | `DesignBorderBrush` |
+| 控件边框 | `--wb-button-border` / `#d5dde7` | `DesignInputBorderBrush` |
+| 浅色交互底色 | `--wb-disabled-bg` / `#f1f5f9` | `DesignHoverBrush` |
+| 容器 / 控件圆角 | `--wb-radius-lg` / `--wb-radius-md`，12 / 8 | `DesignCardRadius` / `DesignControlRadius` |
+
+共享规则：
+
+- 以 4 为基础间距单位，常用 8、12、16、24、32；先组合共享布局，再增加页面专属样式。
+- 正文、说明、分组标题、页面标题具有固定层级。桌面试行 13 / 12 / 16 / 28 DIP；Web 保留适合浏览器的字号与留白，不机械复制尺寸。
+- 设置页采用“标题 → 分组 → 卡片 → 设置行”。设置行的标题与说明在左，操作在右；空间不足时操作移到下方，文字允许换行。
+- 同一组设置使用一张卡片和内部分隔线，避免重复嵌套卡片。错误提示靠近对应操作。
+- 共享控件负责正常、悬停、键盘焦点、选中和禁用状态；页面不再复制控件模板。
+- 验证中英文、窄窗口、系统缩放与键盘操作；控件使用最小高度，避免固定高度裁切文字。
+- Logo、品牌点缀和首页展示保留产品差异；状态色只表达状态，不用于普通装饰。
+
 ## 发布
 
 1. 更新 `VERSION`，在 [`CHANGELOG.md`](./CHANGELOG.md) 顶部补充简短更新记录；需要维护商店包时同步更新 manifest 版本。
