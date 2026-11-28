@@ -154,6 +154,10 @@ public enum LocKey
     Tray_Exit,
 
     // Navigation Items
+    [Cn("切换侧边菜单")]
+    [En("Toggle sidebar")]
+    Nav_ToggleSidebar,
+
     [Cn("音量")]
     [En("Volume")]
     Nav_Volume,

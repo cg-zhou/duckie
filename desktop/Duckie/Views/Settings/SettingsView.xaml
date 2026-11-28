@@ -6,7 +6,7 @@
              xmlns:common="clr-namespace:Duckie.Shared.Views.Common;assembly=Duckie.Shared"
              xmlns:loc="clr-namespace:Duckie.Shared.Utils.Localization;assembly=Duckie.Shared"
              mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="640"
-             Background="{StaticResource DesignSurfaceBrush}"
+             Background="Transparent"
              FontFamily="{StaticResource DesignFontFamily}" UseLayoutRounding="True">
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
         <StackPanel Style="{StaticResource DesignPage}">

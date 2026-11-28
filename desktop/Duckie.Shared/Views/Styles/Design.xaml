@@ -9,6 +9,7 @@
     <SolidColorBrush x:Key="DesignTextBrush" Color="#0F172A"/><!-- CSS: wb-text -->
     <SolidColorBrush x:Key="DesignMutedBrush" Color="#64748B"/><!-- CSS: wb-text-muted -->
     <SolidColorBrush x:Key="DesignSurfaceBrush" Color="White"/><!-- opaque CSS: wb-panel -->
+    <SolidColorBrush x:Key="DesignWorkspaceBrush" Color="#F8FAFC"/><!-- web-z11g tools workspace -->
     <SolidColorBrush x:Key="DesignBorderBrush" Color="#E5E7EB"/><!-- CSS: wb-card-border -->
     <SolidColorBrush x:Key="DesignInputBorderBrush" Color="#D5DDE7"/><!-- CSS: wb-button-border -->
     <SolidColorBrush x:Key="DesignHoverBrush" Color="#F1F5F9"/><!-- CSS: wb-disabled-bg -->

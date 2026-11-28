@@ -17,7 +17,7 @@ public partial class MainWindow : Window, IMainWindow
 {
     private bool _isSidebarCollapsed = false;
     private const double CollapsedWidth = 54;
-    private const double ExpandedWidth = 120;
+    private const double ExpandedWidth = 160;
 
     private NavModel[] navModels = Array.Empty<NavModel>();
 

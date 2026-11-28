@@ -3,6 +3,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Styles/ScrollBars.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/Duckie.Shared;component/Views/Styles/Tools.xaml"/>
+        <ResourceDictionary Source="Styles/Navigation.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <FontFamily x:Key="AppFontFamily">Microsoft YaHei</FontFamily>

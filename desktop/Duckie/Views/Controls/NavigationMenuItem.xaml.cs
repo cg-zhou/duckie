@@ -1,8 +1,7 @@
-using Duckie.Shared.Utils.Ui;
 using Duckie.Shared.Views.Common;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Shapes;
+using System.Windows.Media;
 
 namespace Duckie.Views.Controls;
 
@@ -18,7 +17,7 @@ public partial class NavigationMenuItem : UserControl
 
     public static readonly DependencyProperty IsSelectedProperty =
         DependencyProperty.Register(nameof(IsSelected), typeof(bool), typeof(NavigationMenuItem),
-            new PropertyMetadata(false, OnIsSelectedChanged));
+            new PropertyMetadata(false));
 
     public static readonly DependencyProperty IsTextVisibleProperty =
         DependencyProperty.Register(nameof(IsTextVisible), typeof(bool), typeof(NavigationMenuItem),
@@ -29,6 +28,7 @@ public partial class NavigationMenuItem : UserControl
     public NavigationMenuItem()
     {
         InitializeComponent();
+        Loaded += (_, _) => UpdateIcon();
     }
 
     public IconType IconType
@@ -71,14 +71,6 @@ public partial class NavigationMenuItem : UserControl
         }
     }
 
-    private static void OnIsSelectedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-    {
-        if (d is NavigationMenuItem control)
-        {
-            control.UpdateSelectedState();
-        }
-    }
-
     private static void OnIsTextVisibleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         if (d is NavigationMenuItem control)
@@ -89,29 +81,13 @@ public partial class NavigationMenuItem : UserControl
 
     private void UpdateIcon()
     {
-        Icon.IconType = IconType;
+        Icon.Data = TryFindResource("Navigation" + IconType) as Geometry ?? Geometry.Empty;
     }
 
     private void UpdateText()
     {
         TextBlock.Text = Text ?? string.Empty;
         UpdateToolTip();
-    }
-
-    private void UpdateSelectedState()
-    {
-        var template = MenuButton.Template;
-        if (template != null)
-        {
-            MenuButton.ApplyTemplate();
-            var indicator = template.FindName("SelectionIndicator", MenuButton) as Rectangle;
-            if (indicator != null)
-            {
-                indicator.Visibility = IsSelected ? Visibility.Visible : Visibility.Collapsed;
-            }
-        }
-
-        MenuButton.Background = IsSelected ? ThemeUtils.SelectedBrush : ThemeUtils.NoneBrush;
     }
 
     private void UpdateTextVisibility()

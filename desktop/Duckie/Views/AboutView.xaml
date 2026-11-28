@@ -7,7 +7,7 @@
              xmlns:common="clr-namespace:Duckie.Shared.Views.Common;assembly=Duckie.Shared"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
-             Background="White">
+             Background="Transparent">
     <UserControl.Resources>
         <ResourceDictionary Source="Brand.xaml"/>
     </UserControl.Resources>
