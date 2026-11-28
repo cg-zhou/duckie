@@ -3,14 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:loc="clr-namespace:Duckie.Shared.Utils.Localization"
              FontFamily="{StaticResource DesignFontFamily}" UseLayoutRounding="True"
-             MinWidth="180" MaxWidth="228" HorizontalAlignment="Left">
+             MinWidth="152" MaxWidth="204" HorizontalAlignment="Left">
     <StackPanel>
         <Border x:Name="EditorFrame" Background="{StaticResource DesignSurfaceBrush}"
                 BorderBrush="{StaticResource DesignInputBorderBrush}" BorderThickness="1"
                 CornerRadius="{StaticResource DesignControlRadius}">
             <Grid>
                 <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
-                <Button x:Name="KeyInput" MinHeight="36" Padding="10,5" Cursor="Hand"
+                <Button x:Name="KeyInput" MinHeight="28" Padding="6,3" Cursor="Hand"
                         ToolTip="{loc:Localize Settings_HotKey_Tooltip}"
                         PreviewKeyDown="KeyInput_PreviewKeyDown"
                         GotKeyboardFocus="KeyInput_FocusChanged" LostKeyboardFocus="KeyInput_FocusChanged">
@@ -39,7 +39,7 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Border Background="{StaticResource DesignWorkspaceBrush}" BorderBrush="{StaticResource DesignBorderBrush}"
-                                            BorderThickness="1" CornerRadius="4" Padding="5,2" Margin="0,1,4,1" MinWidth="22">
+                                            BorderThickness="1" CornerRadius="4" Padding="4,1" Margin="0,0,3,0" MinWidth="20">
                                         <TextBlock Text="{Binding}" FontFamily="Segoe UI" FontSize="11"
                                                    Foreground="{StaticResource DesignTextBrush}" TextAlignment="Center"/>
                                     </Border>
@@ -50,17 +50,18 @@
                                    Foreground="{StaticResource DesignMutedBrush}" TextWrapping="Wrap"/>
                     </Grid>
                 </Button>
-                <Button x:Name="ClearButton" Grid.Column="1" Width="28" Height="28" Margin="0,0,3,0" VerticalAlignment="Center"
+                <Button x:Name="ClearButton" Grid.Column="1" Width="24" Height="24" Margin="0,0,2,0" VerticalAlignment="Center"
                         Click="ClearButton_Click" ToolTip="{loc:Localize Settings_HotKey_Clear}"
                         AutomationProperties.Name="{loc:Localize Settings_HotKey_Clear}">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource DesignQuietButton}">
                             <Setter Property="MinHeight" Value="0"/>
-                            <Setter Property="Padding" Value="6"/>
+                            <Setter Property="Padding" Value="5"/>
                         </Style>
                     </Button.Style>
                     <Path Data="M1,1 L9,9 M9,1 L1,9" Width="10" Height="10" StrokeThickness="1.4"
-                          Stroke="{StaticResource DesignMutedBrush}" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                          Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                          StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
                 </Button>
             </Grid>
         </Border>
@@ -68,6 +69,6 @@
                    Style="{StaticResource DesignDescription}"/>
         <TextBlock x:Name="RegistrationStatus" Visibility="Collapsed" TextWrapping="Wrap"
                    Foreground="{StaticResource DesignWarningBrush}" FontSize="{StaticResource DesignCaptionSize}"
-                   Margin="0,6,0,0" MaxWidth="228"/>
+                   Margin="0,4,0,0" MaxWidth="204"/>
     </StackPanel>
 </UserControl>

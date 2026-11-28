@@ -132,9 +132,17 @@ public enum LocKey
     [En("Duckie")]
     AppTitle,
 
-    [Cn("图像处理与PAC管理工具")]
-    [En("Image Processing and PAC Management Tool")]
+    [Cn("一个轻巧的 Windows 工具箱。")]
+    [En("A compact Windows toolbox.")]
     AppDescription,
+
+    [Cn("Duckie 官网")]
+    [En("Duckie website")]
+    About_Website,
+
+    [Cn("联系作者")]
+    [En("Contact")]
+    About_Contact,
 
     [Cn("轻量级开源实用工具")]
     [En("A lightweight open-source utility")]

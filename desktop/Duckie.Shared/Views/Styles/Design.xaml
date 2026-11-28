@@ -16,6 +16,10 @@
     <SolidColorBrush x:Key="DesignFocusBrush" Color="#64748B"/>
     <SolidColorBrush x:Key="DesignWarningBrush" Color="#B45309"/>
     <SolidColorBrush x:Key="DesignErrorBrush" Color="#DC2626"/>
+    <SolidColorBrush x:Key="DesignPressedBrush" Color="#E2E8F0"/>
+    <SolidColorBrush x:Key="DesignDangerHoverBrush" Color="#FEF2F2"/>
+    <SolidColorBrush x:Key="DesignDangerPressedBrush" Color="#FEE2E2"/>
+    <SolidColorBrush x:Key="DesignDangerActiveBrush" Color="#B91C1C"/>
     <FontFamily x:Key="DesignFontFamily">Microsoft YaHei</FontFamily>
     <sys:Double x:Key="DesignPageWidth">600</sys:Double>
     <sys:Double x:Key="DesignTitleSize">28</sys:Double>
@@ -106,16 +110,69 @@
         <Setter Property="BorderBrush" Value="{StaticResource DesignPrimaryBrush}"/>
     </Style>
     <Style x:Key="DesignQuietButton" TargetType="Button" BasedOn="{StaticResource DesignButton}">
+        <Setter Property="FontSize" Value="{StaticResource DesignCaptionSize}"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="MinHeight" Value="28"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Foreground" Value="{StaticResource DesignMutedBrush}"/>
         <Setter Property="Padding" Value="8,6"/>
+        <Setter Property="Margin" Value="2,0"/>
+        <!-- Text actions keep full contrast; do not inherit the filled button's opacity effects. -->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="ActionSurface" Background="{TemplateBinding Background}" CornerRadius="7"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
         <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True"><Setter Property="Background" Value="{StaticResource DesignHoverBrush}"/></Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True"/>
+                    <Condition Property="IsEnabled" Value="True"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource DesignHoverBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource DesignPrimaryBrush}"/>
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsPressed" Value="True"/>
+                    <Condition Property="IsEnabled" Value="True"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource DesignPressedBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource DesignPrimaryBrush}"/>
+            </MultiTrigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.45"/>
+                <Setter Property="Cursor" Value="Arrow"/>
+            </Trigger>
         </Style.Triggers>
     </Style>
     <Style x:Key="DesignDangerButton" TargetType="Button" BasedOn="{StaticResource DesignQuietButton}">
         <Setter Property="Foreground" Value="{StaticResource DesignErrorBrush}"/>
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True"/>
+                    <Condition Property="IsEnabled" Value="True"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource DesignDangerHoverBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource DesignDangerActiveBrush}"/>
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsPressed" Value="True"/>
+                    <Condition Property="IsEnabled" Value="True"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource DesignDangerPressedBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource DesignDangerActiveBrush}"/>
+            </MultiTrigger>
+        </Style.Triggers>
     </Style>
     <Style x:Key="DesignChoiceRow" TargetType="RadioButton">
         <Setter Property="Padding" Value="8,12"/>
