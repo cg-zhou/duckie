@@ -61,6 +61,12 @@ public partial class LauncherView : UserControl
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, LocKey.Launcher_SaveFailed.Text()); }
         });
+        dialog.Width = 440;
+        dialog.SizeToContent = SizeToContent.Height;
+        dialog.SetResourceReference(FontFamilyProperty, "DesignFontFamily");
+        dialog.SetResourceReference(BackgroundProperty, "DesignSurfaceBrush");
+        dialog.Resources["PrimaryButtonStyle"] = FindResource("DesignPrimaryButton");
+        dialog.Resources["ModernButtonStyle"] = FindResource("DesignButton");
         dialog.ShowDialog();
     }
 }

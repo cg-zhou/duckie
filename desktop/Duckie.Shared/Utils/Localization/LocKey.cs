@@ -6,6 +6,14 @@ public enum LocKey
     [En("Run")]
     Launcher_Run,
 
+    [Cn("暂无快捷启动项")]
+    [En("No quick launch items yet")]
+    Launcher_Empty,
+
+    [Cn("添加应用程序或脚本，并可为其设置快捷键。")]
+    [En("Add an application or script, then optionally assign a hotkey.")]
+    Launcher_EmptyHint,
+
     [Cn("目标文件")]
     [En("Target file")]
     Launcher_Target,
