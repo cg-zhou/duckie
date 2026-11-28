@@ -8,12 +8,20 @@
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              Background="White">
+    <UserControl.Resources>
+        <ResourceDictionary Source="Brand.xaml"/>
+    </UserControl.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
         <DockPanel Margin="0 30" MaxWidth="600" HorizontalAlignment="Center">
             <StackPanel DockPanel.Dock="Top">
                 <!-- App Title -->
                 <StackPanel HorizontalAlignment="Center" Margin="0,0,0,20">
-                    <common:TextEx Text="{loc:Localize AppTitle}" FontSize="32" FontWeight="Bold" Foreground="#333" HorizontalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,8,0,12">
+                        <Image Source="{StaticResource DuckLogo}" Width="64" Height="64" Margin="0,0,16,0"
+                               AutomationProperties.Name="{loc:Localize AppTitle}"/>
+                        <TextBlock FontFamily="Segoe UI" FontSize="44" FontWeight="Bold" Foreground="#202A30"
+                                   VerticalAlignment="Center"><Run Text="Duckie"/><Run Text="." Foreground="#D69C13"/></TextBlock>
+                    </StackPanel>
                     <common:TextEx x:Name="versionText" FontSize="14" Foreground="#666" Margin="0,4,0,0" HorizontalAlignment="Center"/>
                 </StackPanel>
 
